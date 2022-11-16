@@ -1,0 +1,118 @@
+.main{
+    flex: 4;
+    margin-left: 30px;
+    height:auto;
+    
+  }
+  .myCategory {
+    flex: 4;
+    margin-left: 130px;
+    height:auto;
+    margin-top: 50px;
+    width:900px;
+    -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  }
+  .myCategoryTitle{
+    margin-left: 330px;
+    margin-top: 50px;
+    color: black;
+  }
+  
+  .myCategoryForm {
+    // display: flex;
+    // flex-direction: row;
+ 
+  }
+  
+  .myCategoryItem {
+    width: 100%;
+    // display: flex;
+    // flex-direction: row;
+    margin-top: 10px;
+    margin-right: 20px;
+    margin-left: 300px;
+  }
+  
+  .myCategoryItem > label {
+    margin-bottom: 10px;
+
+    width: 100% !important;
+    font-size: 14px;
+    font-weight: 600;
+    color: rgb(151, 150, 150);
+  }
+  
+  .myCategoryItem > input {
+    width: 300px !important;
+    height: 40px;
+    padding: 10px;
+    border: 1px solid gray;
+    border-radius: 5px;
+    
+  }
+  .myCategoryItem > select {
+    width: 300px !important;
+    height: 40px;
+    padding: 10px;
+    border: 1px solid gray;
+    border-radius: 5px;
+    
+  }
+  
+  .myCategoryGender > input {
+    margin-top: 15px;
+  }
+  
+  .myCategoryGender>label{
+      margin: 10px;
+      font-size: 18px;
+      color: #555;
+  }
+  
+  .myCategorySelect{
+      height: 40px;
+      border-radius: 5px;
+      width: 300px !important;
+    
+  }
+  .label{
+    height: 40px;
+    border-radius: 5px;
+}
+  
+  .myCategoryButton{
+      width: 200px;
+      border: none;
+      
+      background-color: rgb(65, 105, 158);
+      color: white;
+      padding: 7px 10px;
+      font-weight: 600;
+      border-radius: 20px;
+      margin-top: 20px;
+      margin-bottom:20px ;
+      margin-left: 360px;
+      // margin-right: auto
+  ;
+      cursor: pointer;
+
+  }
+  .desp{
+   
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    margin-right: 20px;
+    margin-left: 260px;
+    
+  }
+  
+  .desp >input{
+    
+    height: 130px;
+    padding: 10px;
+    border: 1px solid gray;
+    border-radius: 5px;
+  }

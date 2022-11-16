@@ -1,0 +1,163 @@
+.editCouponmain{
+  flex: 4;
+  margin-left: 30px;
+}
+.editCoupon {
+  flex: 2;
+  margin-left: 130px;
+  margin-top: 50px;
+ 
+  width:800px;
+  -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+}
+.editCouponTitle{
+  //margin-left: 330px;
+  font-size: 26px;
+  padding:15px;
+  margin-top: 4px;
+  font-weight: 400;
+  font-family: 'Times New Roman', Times, serif;
+  color: whitesmoke;
+  //margin-top: 50px;
+  //background-color: rgb(65, 105, 158);
+}
+
+.editCouponForm {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+
+.editCouponItem {
+  // width: 800px;
+  display: flex;
+  flex-direction: row;
+  margin-top: 10px;
+  margin-right: 20px;
+  margin-left: 30px;
+}
+
+.editCouponItem1 {
+  // width: 800px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  margin-right: 20px;
+  margin-left: 30px;
+}
+.editCouponItem > label {
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgb(151, 150, 150);
+}
+
+.editCouponItem > input {
+  height: 40px;
+  width:400px !important;
+  padding: 10px;
+  border: 1px solid gray;
+  border-radius: 5px;
+  
+}
+
+.editCouponItem1 > input {
+  height: 40px;
+  width:400px !important;
+  padding: 10px;
+  border: 1px solid gray;
+  border-radius: 5px;
+  
+}
+.editCouponGender > input {
+  margin-top: 15px;
+}
+
+.editCouponGender>label{
+    margin: 10px;
+    font-size: 18px;
+    color: #555;
+}
+
+.editCouponSelect{
+    height: 40px;
+    border-radius: 5px;
+  
+}
+.label{
+  height: 40px;
+  border-radius: 5px;
+}
+.editCouponNav{
+  display: flex;
+  flex-direction: row;
+  height:70px;
+  background-color: rgb(65, 105, 158);
+  align-content: space-between;
+}
+.editCouponimg{
+  width:70px;
+  height:60px;
+  margin-left: auto;
+  margin-right: 20px;
+  margin-top: 6px;
+}
+.editCouponButton{
+    width: 100px;
+    border: none;
+   
+    background-color: rgb(65, 105, 158);
+    color: white;
+    font-family: 'Times New Roman', Times, serif;
+    padding: 7px 10px;
+    font-weight: 600;
+    border-radius: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left:620px;
+    cursor: pointer;
+
+}
+.editCouponButton:hover{
+  background-color: rgb(52, 114, 196);
+}
+.editCoupondesp{
+ 
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  margin-right: 20px;
+  margin-left: 260px;
+  
+}
+
+.editCoupondesp >input{
+  
+  height: 130px;
+  padding: 10px;
+  border: 1px solid gray;
+  border-radius: 5px;
+}
+
+
+.product {
+  flex: 4;
+  padding: 20px;
+}
+.cntr{
+  text-align: center;
+}
+
+.flname{
+  display:flex
+}
+.fname{
+flex:1
+}
+
+.lname{
+  flex:2
+  }
+

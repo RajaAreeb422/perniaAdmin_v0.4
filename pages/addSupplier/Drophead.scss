@@ -1,0 +1,241 @@
+.container {
+    transform: translateY(-100%);
+    margin-top: 200px;
+}
+
+.container p {
+    color: red;
+    text-align: center;
+}
+
+.head-newaddproButtondrp{
+    width: 100px;
+    border: none;
+    background-color: rgb(52, 114, 196);
+    color: white;
+    padding: 7px 10px;
+    text-align: center;
+    font-weight: 600;
+    border-radius: 10px;
+    margin-top: 20px;
+    margin-left: 460px;
+    margin-bottom:20px;
+    cursor: pointer;
+
+}
+.head-container {
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(222, 229, 230);
+    margin: 0;
+    width: 800px;
+    height: 50px;
+    margin-bottom:20px;
+    margin-left:-200px;
+    margin-top: 30px;
+    margin-right: auto;
+    border: 2px dashed #4aa1f3;
+}
+.head-img{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    width: 800px;
+    height: 200px;
+    background-color: black;
+    border: 4px solid #4aa1f3;
+}
+.head-upload-icon {
+    width: 500px;
+    height: 50px;
+    background-size: 100%;
+    text-align: center;
+    margin: 0 auto;
+    padding-top: 10px;
+    cursor: pointer;
+    margin-top: -60px;
+}
+
+.head-message {
+    text-align: center;
+    color: #4aa1f3;
+    font-family: Arial;
+    font-size: 20px;
+    //margin-top:70px ;
+}
+
+.head-hideupload{
+    visibility: hidden;
+}
+.head-file-display-container {
+    
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-left: -200px;
+    width: 800px;
+}
+
+.head-s1{
+    
+    width:800px;
+    vertical-align:top;
+    border:1px solid;
+    margin-right: 20px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    background-color: rgb(213, 224, 255);
+    position: relative;
+    
+  
+}
+.head-s1:hover{
+    opacity: 1;
+    background-color: rgb(170, 187, 235);
+    transform: scale(1.1);
+    transition: 0.5s ease;
+    box-shadow: 0 0 0 2px black;
+}
+
+// .file-status-bar > div {
+//     overflow: hidden;
+// }
+
+.head-file-type {
+    display: inline-block!important;
+    //position: absolute;
+    font-size: 12px;
+    font-weight: 700;
+    //line-height: 13px;
+   // margin-top: 25px;
+    padding: 0 4px;
+    border-radius: 2px;
+    box-shadow: 1px 1px 2px #abc;
+    color: #fff;
+    background: #0080c8;
+    text-transform: uppercase;
+}
+
+.head-file-name {
+    //display: inline-block;
+    vertical-align:top;
+    //margin-left: 50px;
+    font-size:10px ;
+   
+    color: #4aa1f3;
+}
+
+.head-file-error {
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 50px;
+    color: #9aa9bb;
+}
+
+.head-file-error-message {
+    color: red;
+}
+
+.head-file-type-logo {
+    width: 50px;
+    height: 50px;
+    
+    background-size: 100%;
+    position: absolute;
+}
+
+.head-file-size {
+    //display:inline-block;
+    //vertical-align:top;
+    color:#30693D;
+    
+    color: #444242;
+    font-weight: 700;
+    font-size: 8px;
+}
+
+.head-remove  {
+    // position: absolute;
+    // top: 20px;
+    //margin-left: 120px;
+    align-items: flex-end;
+    // line-height: 15px;
+    cursor: pointer;
+    color: red;
+    // margin-right: -10px;
+}
+
+.head-imgdiv{
+    display: flex;
+    flex-direction: column;
+    
+}
+.head-img-text{
+   display: flex;
+   direction: row;
+   align-content: space-between;
+}
+.head-thumbnail{
+   width:800px ;
+   height: 200px;
+   
+   margin-right: 70px;
+   align-content: center;
+    
+}
+.head-close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+
+
+.progress-container {
+    background: white;
+    width: 500px;
+    height: 300px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    overflow: hidden;
+}
+
+.progress-container span {
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+    font-size: 20px;
+}
+
+.progress {
+    width: 90%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background-color: #efefef;
+    height: 20px;
+    border-radius: 5px;
+}
+
+.progress-bar {
+    position: absolute;
+    background-color: #4aa1f3;
+    height: 20px;
+    border-radius: 5px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+}
+
+.error {
+    color: red;
+}

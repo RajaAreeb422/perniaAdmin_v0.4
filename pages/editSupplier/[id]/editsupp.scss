@@ -1,0 +1,128 @@
+.editSuppmain{
+  flex: 4;
+  margin-left: 30px;
+  
+}
+.editSupp {
+  flex: 4;
+  margin-left: 130px;
+  margin-top: 50px;
+  width:900px;
+  -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+}
+.editSuppTitle{
+  margin-left: 330px;
+  margin-top: 50px;
+}
+
+.editSuppForm {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.editSuppItem {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  margin-right: 20px;
+  margin-left: 260px;
+}
+.editSuppFlexItem {
+  width: 400px;
+  display: flex;
+  flex-direction: row;
+  margin-top: 10px;
+  margin-right: 20px;
+  margin-left: 260px;
+}
+.editSuppinnerBox{
+  display: flex;
+  flex-direction: column;
+}
+
+.editSuppinnerBox > label {
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgb(151, 150, 150);
+}
+
+.editSuppinnerBox > input {
+  height: 40px;
+  padding: 10px;
+  border: 1px solid gray;
+  border-radius: 5px;
+  
+}
+
+
+.editSuppItem > label {
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgb(151, 150, 150);
+}
+
+.editSuppItem > input {
+  height: 40px;
+  padding: 10px;
+  border: 1px solid gray;
+  border-radius: 5px;
+  
+}
+
+.editSuppGender > input {
+  margin-top: 15px;
+}
+
+.editSuppGender>label{
+    margin: 10px;
+    font-size: 18px;
+    color: #555;
+}
+
+.editSuppSelect{
+    height: 40px;
+    border-radius: 5px;
+  
+}
+.label{
+  height: 40px;
+  border-radius: 5px;
+}
+
+.editSuppButton{
+    width: 200px;
+    border: none;
+    margin-left: -40px;
+    background-color: rgb(52, 114, 196);;
+    color: white;
+    padding: 7px 10px;
+    font-weight: 600;
+    border-radius: 10px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    margin-left: 100px;
+    cursor: pointer;
+
+}
+.editSuppdesp{
+ 
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  margin-right: 20px;
+  margin-left: 260px;
+  
+}
+
+.editSuppdesp >input{
+  
+  height: 130px;
+  padding: 10px;
+  border: 1px solid gray;
+  border-radius: 5px;
+}

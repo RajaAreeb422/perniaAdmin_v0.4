@@ -1,0 +1,368 @@
+.order {
+  flex: 4;
+  padding: 20px;
+}
+
+.orderTitleContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.orderAddButton {
+  width: 80px;
+  border: none;
+  padding: 5px;
+  background-color: teal;
+  color: white;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.orderTop {
+  display: flex;
+}
+
+.orderTopLeft{
+  flex: 1;
+  //height:300px;
+}
+.orderTopRight {
+  flex: 2;
+}
+
+.orderTopRight {
+  display:flex;
+  flex-direction: column;
+  padding: 20px;
+  margin: 20px;
+  -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+}
+.orderTopLeft {
+  padding: 20px;
+  margin: 20px;
+  -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  margin-top: 10px;
+}
+.ordchkdiv{
+  border-style: groove;
+  box-shadow:0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  margin-top: 10px;
+}
+.ordlbel{
+  margin-top: 10px;
+  border-radius: 5px;
+
+}
+.ordc_label{
+  margin-top: 10px;
+  border-radius: 5px;
+  width:400px
+
+}
+.ordb_label{
+  display:flex;
+  flex-direction:row;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+.ords_label{
+  display:flex;
+  flex-direction:row;
+  margin-top: 10px;
+  align-content: flex-start;
+ 
+}
+.ordsearch{
+  width:200px;
+}
+.ordchkflex{
+  display: flex;
+  flex-direction: row;
+  margin-top: 18px;
+}
+.ordchkflex:hover{
+  background-color: rgb(236, 246, 255);
+}
+.ordchkboxes{
+  margin-top: 8px;
+  margin-left: 20px;
+}
+.ordchkname{
+  font-weight: 600;
+  margin-left: 20px;
+}
+.orderInfoImg {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 20px;
+}
+.ordbilledit{
+  align-content: flex-end;
+}
+.orderInfoTop {
+  //display: flex;
+   flex:2;
+   flex-direction:row ;
+   
+}
+
+.orderName {
+  font-weight: 600;
+}
+
+.orderInfoBottom {
+  margin-top: 10px;
+}
+
+.orderInfoItem {
+  width: 350px;
+  // display: flex;
+  justify-content: space-between;
+}
+
+.orderInfoValue {
+  font-weight: 300;
+}
+.ordship{
+  display:flex;
+}
+.ordradiobtns{
+  flex:5;
+  
+  align-content: flex-start;
+}
+.ordedit{
+  flex:2;
+  cursor: pointer;
+  align-content: flex-end;
+}
+.ordnewdiv{
+  display:flex;
+  flex-direction: row;
+}
+.ordprevAdd{
+  flex:2
+}
+.orderBottom {
+  
+  padding: 20px;
+  margin: 20px;
+  // height:200px;
+  -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+}
+
+.orderForm {
+  display: flex;
+  justify-content: space-between;
+}
+
+.orderFormLeft {
+  flex:2;
+  flex-direction: row;
+  margin-top: 20px;
+}
+.ordaddshipadrs {
+  flex:1;
+  margin-top: -30px;
+  align-content: flex-end;
+}
+.orduser_address{
+  margin-left: 10px;
+}
+.ordshipbtn{
+  width:100px;
+  height:35px;
+
+  font-size: 12px;
+  background-color:black;
+  color: white;
+}
+.ordabovearea{
+  display: flex;
+}
+
+.orderFormLeft > label {
+  margin-bottom: 10px;
+  color: gray;
+}
+
+.orderFormLeft > input {
+  margin-bottom: 10px;
+  border: none;
+  padding: 5px;
+  border-bottom: 1px solid gray;
+}
+
+.orderFormLeft >select{
+  margin-bottom: 10px;
+}
+
+.orderUploadImg{
+  width: 100px;
+  height: 100px;
+  border-radius: 10px;
+  object-fit: cover;
+  margin-right: 20px;
+}
+
+.orderFormRight{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.orderUpload{
+  display: flex;
+  align-items: center;
+}
+
+.orderButton{
+  border: none;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: darkblue;
+  color:white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.neworderItem {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  margin-right: 20px;
+}
+.ordlstdropdown{
+  list-style: none;
+  padding: 0px;
+  width:200px;
+  cursor: pointer;
+  border-style: groove;
+  background-color:rgb(245, 249, 255);
+  // margin: 20px;
+  // height:200px;
+  -webkit-box-shadow: 0px 0px 15px -10px rgba(2, 2, 2, 0.75);
+ box-shadow: 0px 0px 15px -10px rgba(85, 52, 52, 0.75);
+
+}
+.ordlstdropdown li:hover{
+  margin-bottom:2px;
+  background-color: rgb(232, 239, 248);
+  color: white;
+  margin-bottom: 6px;
+}
+.ordlstdropdown li{
+  -webkit-box-shadow: 0px 0px 15px -10px rgba(2, 2, 2, 0.75);
+  box-shadow: 0px 0px 15px -10px rgba(85, 52, 52, 0.75);
+  border-color: 0.3px;
+  font-weight: 450;
+  margin-bottom: 6px;
+  padding: 6px;
+  //border-style: ridge;
+  
+}
+.neworderItem2 {
+  width: auto;
+  // display: flex;
+  // flex-direction: column;
+  display: inline;
+  //float: right;
+  width: 38%;
+ // margin-right: 20px;
+ 
+}
+.neworderItem2 >input{
+   width:450px;
+}
+.ordtextarea1{
+  float:left;
+}
+.ordtextarea2{
+  float:right;
+}
+.ordgap{
+ // margin-right: 15px;
+}
+.neworderButton{
+  width: auto;
+  border: none;
+  background-color: darkblue;
+  color: white;
+  padding: 7px 10px;
+  font-weight: 600;
+  font-size:12 ;
+  border-radius: 10px;
+  margin-top: 30px;
+  
+  cursor: pointer;
+
+}
+.Item{
+  display: flex;
+  flex-direction: row;
+  width:38%;
+}
+.ordCloseButton{
+  width: auto;
+  border: none;
+  margin-left: 280px;
+  background-color: red;
+  color: white;
+  padding: 7px 10px;
+  font-weight: 600;
+  font-size:12 ;
+  border-radius: 10px;
+  margin-top: 30px;
+  
+  cursor: pointer;
+  //margin-top: 30px;
+  
+  cursor: pointer;
+
+}
+.orderprocess{
+  display: flex;
+  flex-direction: row;
+}
+.orderproduct{
+ 
+  margin-right: 160px;
+}
+.orderSummary{
+  width:400px;
+  margin-left: 100px;
+}
+
+.Loader {
+//border:16px solid #f3f3f3;
+border:16px solid black;
+border-top:16px solid #3498db;
+border-radius:50%;
+margin-left: auto;
+margin-right: auto;
+position: absolute;
+top:40%;
+left:50%;
+//right: auto;
+width:120px;
+height:120px;
+animation: spin 2s linear infinite;
+@keyframes spin{
+  0% {transform: rotate(0deg);}
+  100% {transform: rotate(360deg);}
+}
+}
+
+// @media screen and (max-width: 1500px) {
+//   .neworderItem2{
+//     width: 35%;
+//   }
+// }

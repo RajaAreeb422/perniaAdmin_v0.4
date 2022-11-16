@@ -1,0 +1,121 @@
+.suppmain{
+    flex: 4;
+    margin-left: 30px;
+    
+  }
+  .suppUser {
+    flex: 4;
+    margin-left: 130px;
+    margin-top: 50px;
+    width:800px;
+    -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  }
+  .suppUserTitle{
+     margin-left: 140px;
+     margin-right: 90px;
+     margin-top: 10px;
+  }
+  
+  .suppUserForm {
+    
+    // display: flex;
+    // flex-wrap: wrap;
+   // margin-left: 60px;
+    //margin-right: 60px;
+  }
+  
+  .suppUserItem {
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    margin-left: 20px;
+   
+    
+  }
+  
+  .suppUserItem > label {
+    margin-bottom: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-left: 20px;
+    color: rgb(151, 150, 150);
+  }
+  
+  .suppUserItem > input {
+    height: 40px;
+     margin-left: 20px;
+    width:400px;
+    padding: 10px;
+    border: 1px solid gray;
+    border-radius: 5px;
+    
+  }
+    
+  .suppUserItem > select {
+    height: 40px;
+    margin-left: 20px;
+    width:400px;
+    padding: 10px;
+    border: 1px solid gray;
+    border-radius: 5px;
+    
+  }
+  
+  .suppUserGender > input {
+    margin-top: 15px;
+  }
+  
+  .suppUserGender>label{
+      margin: 10px;
+      font-size: 18px;
+      color: #555;
+  }
+  
+  .suppUserSelect{
+      height: 40px;
+      border-radius: 5px;
+    
+  }
+  .label{
+    height: 40px;
+    border-radius: 5px;
+}
+  
+  .suppUserButton{
+      width: 200px;
+      border: none;
+      background-color: rgb(52, 114, 196);
+      color: white;
+      padding: 7px 10px;
+      font-weight: 600;
+      border-radius: 10px;
+      margin-top: 30px;
+      margin-bottom: 20px;
+       margin-left: 140px;
+      cursor: pointer;
+
+  }
+  .suppdesp{
+   
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    margin-right: 20px;
+    margin-left: 260px;
+    
+  }
+  
+  .suppdesp >input{
+    
+    height: 130px;
+    padding: 10px;
+    border: 1px solid gray;
+    border-radius: 5px;
+  }
+  .dividearea{
+    display: flex;
+    flex-direction: row;
+  }

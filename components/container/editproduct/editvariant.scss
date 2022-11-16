@@ -1,0 +1,244 @@
+.vardiv1Item {
+    width:   400px;
+    display: flex;
+    flex-direction: column;
+    border-style: groove;
+    margin-right: 20px;
+    margin-left: 130px;
+    
+    -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+    width:700px;
+  }
+
+  .variantdiv {
+    width:   400px;
+    display: flex;
+    flex-direction: column;
+    border-style: groove;
+    margin-top: 40px;
+    margin-right: 20px;
+    margin-left: 130px;
+    background-color: rgba(236, 236, 236, 0.938);
+    
+    -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+    width:700px;
+  }
+  .displaycomb {
+    width:   400px;
+    display: flex;
+    flex-direction: column;
+    border-style: groove;
+    margin-top: 40px;
+    margin-right: 20px;
+    margin-left: 130px;
+    background-color: rgba(236, 236, 236, 0.938);
+    
+    -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+    width:700px;
+  }
+
+
+  .displaydiv {
+    width:   400px;
+    display: flex;
+    flex-direction: column;
+    border-style: groove;
+    margin-right: 20px;
+    margin-left: 130px;
+    -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+    width:700px;
+  }
+  .optiondiv{
+    flex: 4;
+    margin-left: 130px;
+    margin-top: 50px;
+    width:700px;
+    height:100px;
+    border-top-left-radius: '80px';
+    border-top-right-radius: '80px';
+   // border-style: groove;
+    -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  }
+  .addAnother{
+    flex: 4;
+    margin-left: 130px;
+    
+    
+    font-weight: bold;
+    border-style: groove;
+    
+    width:700px;
+    -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  }
+  .addicn{
+    //color: skyblue;
+    color: darkblue;
+    cursor: pointer;
+    margin-top: 20px;
+    font-weight: bold;
+    margin-left: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .item1{
+      margin-top: 50px;
+      margin-left: 100px;;
+  }
+  .varDelete{
+    color: red;
+    cursor: pointer;
+    margin-right: 20px;
+}
+  .inputfld{
+      width:480px;
+      margin-left: 110px;
+      margin-right: auto;
+      margin-bottom: 10px;
+      
+  }
+  
+.movebtn{
+  width: 100px;
+  border: none;
+  background-color: rgba(20, 20, 107, 0.795);
+  color: white;
+  padding: 7px 10px;
+  text-align: center;
+  font-weight: 600;
+  border-radius: 10px;
+  margin-top: 20px;
+  margin-left: 570px;
+  margin-bottom:20px;
+  cursor: pointer;
+
+}
+  .inputfld1{
+    width:480px;
+    margin-left: 110px;
+    margin-right: auto;
+    margin-bottom: 10px;
+    
+}
+  .donebtn{
+    width:120px;
+    margin-top: 30px;;
+    margin-left: 110px;
+    margin-right: auto;
+    margin-bottom: 20px;
+    color: white;
+    background-color: rgba(20, 20, 107, 0.795);
+    border-radius: 10%;
+}
+.addvalbtn{
+    width:120px;
+    margin-top: 20px;;
+    float: right;
+    margin-bottom: 20px;
+    color: white;
+    background-color: rgba(20, 20, 107, 0.795);
+    border-radius: 10%;
+}
+.variantflex{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 30px;
+}
+
+.vvalue{
+  margin-left: 30px;
+  margin-top:3px ;
+  margin-bottom:2 ;
+}
+.vitem{
+  display: flex;
+  flex-direction: row;
+
+  align-content: center;
+  //margin-right:15px ;
+  
+  color:white;
+ 
+
+}
+.vflex{
+  margin-right: 10px;
+  background-color: gray;
+  border-radius:70%;
+  //align-items: center;
+  text-align: center;
+  //align-content: center;
+  width:100px;
+  //flex:2;
+}
+.var_flex{
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 30px;
+}
+
+.varprice{
+  flex:1;
+  width:90px;
+}
+
+.hov_div :hover{
+  background-color: rgba(160, 158, 158, 0.938);
+}
+
+.varqty{
+  flex:1;
+  width:90px;
+  margin-left:60px;
+  margin-right:60px
+}
+
+.varcom{
+  flex:2;
+  font-weight:400;
+  margin-left: 50px;
+  width:40px;
+}
+
+.v_head{
+  margin-top: 10px;
+  margin-left: 30px;
+  margin-bottom: 30px;
+  font-weight: bold;
+  font-size: 22px;
+}
+
+.opleft{
+  font-weight: bold;
+  margin-left: 20px;
+  
+}
+
+.lstdropdown{
+  list-style: none;
+  padding: 0px;
+  width:200px;
+  cursor: pointer;
+  margin-left: 110px;
+  -webkit-box-shadow: 0px 0px 15px -10px rgba(2, 2, 2, 0.75);
+  box-shadow: 0px 0px 15px -10px rgba(85, 52, 52, 0.75);
+}
+
+.lstdropdown li:hover{
+  margin-bottom:2px;
+  background-color: rgb(0, 151, 221);
+  color: white;
+}
+
+.lstdropdown li{
+  -webkit-box-shadow: 0px 0px 15px -10px rgba(2, 2, 2, 0.75);
+  box-shadow: 0px 0px 15px -10px rgba(85, 52, 52, 0.75);
+  border-color: 0.3px;
+  border-style: ridge;
+  
+}
