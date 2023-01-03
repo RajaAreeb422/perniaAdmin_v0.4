@@ -73,7 +73,7 @@ const ProductPage = memo(props => {
           } else {
             list.push(null);
           }
-          console.log(exam)
+    
           if(decoded.result.role_id==1)
           {
             

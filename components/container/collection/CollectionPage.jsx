@@ -37,7 +37,7 @@ const CollectionPage = memo(props => {
         let list=[]
         if (mounted) {
           res.data.data.map(it=>{
-            axios.get(`https://api.mazglobal.co.uk/maz-api/tag/${it.tag_id}`).then(respp=>{
+            axios.get(`https://api.mazglobal.co.uk/maz-api/tags/${it.tag_id}`).then(respp=>{
               it['tag']=respp.data.data.name;
             }).catch(error=>console.log(error))
             axios.get(`https://api.mazglobal.co.uk/maz-api/categories/${it.category_id}`).then(ress=>{
