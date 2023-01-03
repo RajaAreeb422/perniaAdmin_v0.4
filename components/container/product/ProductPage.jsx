@@ -93,8 +93,7 @@ const ProductPage = memo(props => {
           }
 
         }),
-        
-        console.log(productList)
+    
         setPath(list);
         setData(productList);
         setStates(productList);
@@ -112,11 +111,11 @@ const ProductPage = memo(props => {
         Authorization: 'Bearer ' + localStorage.getItem('token'),
       },
     };
-    console.log('id', id);
+
     axios
       .delete(`https://api.mazglobal.co.uk/maz-api/products/${id}`, config)
       .then(res => {
-        console.log(res.data.success);
+  
         setData(data.filter(item => item.id !== id));
       })
       .catch(err => console.log(err));
@@ -140,7 +139,7 @@ const ProductPage = memo(props => {
     setValue(x);
     if (x === '') {
       const filteredRows = state;
-      console.log('dataa', data);
+     
       setData(filteredRows);
     } else {
       const filteredRows = data.filter(row => {

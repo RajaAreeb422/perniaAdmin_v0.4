@@ -81,11 +81,11 @@ const Data = memo(props => {
         Authorization: 'Bearer ' + localStorage.getItem('token'),
       },
     };
-    console.log('moveeeeeeeeeeeeeeeee', id);
+    
     axios
       .delete(`https://api.mazglobal.co.uk/maz-api/shipping/${id}`, config)
       .then(response => {
-        console.log(response);
+     
         toggle();
         axios
           .get(`https://api.mazglobal.co.uk/maz-api/shipping`, config)

@@ -48,7 +48,7 @@ const EditCollectionPage = memo(props => {
         server_path.push(
           'https://api.mazglobal.co.uk/' + response.data.data.path,
         );
-        console.log('server_path', server_path);
+    
         setPath(server_path);
       })
       .catch(err => console.log(err));
@@ -70,7 +70,7 @@ const EditCollectionPage = memo(props => {
 
   const submitHandler = e => {
     e.preventDefault();
-    console.log('state', state);
+    
     const config = {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -98,7 +98,7 @@ const EditCollectionPage = memo(props => {
           .then(response => {
             var formData = new FormData();
             formData.append('imageFile', file);
-            console.log('image', file);
+     
 
             axios
               .post(
@@ -108,7 +108,7 @@ const EditCollectionPage = memo(props => {
                 {},
               )
               .then(res => {
-                console.log(res.data);
+              
                 toggle();
               })
               .catch(error => {
@@ -133,7 +133,7 @@ const EditCollectionPage = memo(props => {
 
   const handleChange = names => e => {
     const name = e.target.name;
-    console.log(name);
+    
     let value = e.target.value;
     setState({
       ...state,

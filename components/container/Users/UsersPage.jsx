@@ -51,12 +51,11 @@ const UsersPage = memo(props => {
     };
     let mounted = true;
 
-    console.log('in useeffec',config);
     //get list of registered users from database
     axios
       .get(`https://api.mazglobal.co.uk/maz-api/users`)
       .then(response => {
-        console.log('rsess', response.data);
+    
         
           var i = 1;
           response.data.data.map(exam => {
@@ -86,11 +85,11 @@ const UsersPage = memo(props => {
         Authorization: 'Bearer ' + localStorage.getItem('token'),
       },
     };
-    console.log('moveeeeeeeeeeeeeeeee', id);
+
     axios
       .delete(`https://api.mazglobal.co.uk/maz-api/users/${id}`, config)
       .then(response => {
-        console.log(response);
+    
         toggle();
         axios
           .get(`https://api.mazglobal.co.uk/maz-api/users`, config)
@@ -118,9 +117,9 @@ const UsersPage = memo(props => {
 
   // Generates aler box to delete user or not.
   const handleDelete = id => {
-    console.log(localStorage.getItem('token'));
+ 
     setId(id);
-    console.log(id);
+
     toggle();
   };
 

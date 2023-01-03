@@ -41,12 +41,12 @@ const AddSupplier = memo(props => {
   }
   const handleChild = childData => {
     setSelected({ ...childData });
-    console.log('selected', selected);
+  
    
   };
   const handleHead = child=> {
     setHeadSelected({ ...child });
-    console.log('selected', headselected);
+
    
   };
   useEffect(() => {
@@ -69,7 +69,7 @@ const AddSupplier = memo(props => {
         Authorization: 'Bearer ' + localStorage.getItem('token'),
       },
     };
-    console.log('state',state)
+    
    // https://api.mazglobal.co.uk/maz-api
     axios
       .post(
@@ -79,12 +79,12 @@ const AddSupplier = memo(props => {
         { headers: { 'content-type': 'application/json' } },
       )
       .then(response => {
-        console.log('res',response)
+     
         
         var formData = new FormData();
         for (const key of Object.keys(selected)) {
           formData.append('imageFile', selected[key]);
-          console.log('in lopppp', formData);
+ 
         }
         
         axios
@@ -95,7 +95,7 @@ const AddSupplier = memo(props => {
             {},
           )
           .then(res => {
-            console.log(res.data);
+          
             //succtoggle();
           })
       .catch(error => {
@@ -107,7 +107,7 @@ const AddSupplier = memo(props => {
       var formData2 = new FormData();
       for (const key of Object.keys(headselected)) {
         formData2.append('imageFile', headselected[key]);
-        console.log('in lopppp', formData2);
+      
       }
       
       axios
@@ -118,7 +118,7 @@ const AddSupplier = memo(props => {
           {},
         )
         .then(res => {
-          console.log(res.data);
+     
           //succtoggle();
         })
     .catch(error => {

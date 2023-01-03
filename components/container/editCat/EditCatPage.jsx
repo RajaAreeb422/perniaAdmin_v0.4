@@ -57,7 +57,7 @@ const EditCatPage = memo(props => {
     {
       var formData = new FormData();
         formData.append('imageFile', img);
-        console.log('image', img);
+       
         //    // go()
         axios
           .post(
@@ -67,7 +67,7 @@ const EditCatPage = memo(props => {
             {},      
           )
           .then(res => {
-            console.log("after upload",res.data);
+            
           }).catch(err=>console.log(err))
           //fs.unlinkSync(imagePath);
           
@@ -100,7 +100,7 @@ const EditCatPage = memo(props => {
     setUpdate(true)
     const name = e.target.name;
     const value = e.target.value;
-    console.log('vvvvv', value);
+   
     setState({
       ...state,
       [name]: e.target.value,
@@ -110,7 +110,7 @@ const EditCatPage = memo(props => {
       catgry.map(it=>{
         if(it.id==e.target.value)
         {
-         console.log('change',it.name) 
+         
         setMain(it)
         }
         else{
@@ -132,13 +132,13 @@ const EditCatPage = memo(props => {
   };
   
   useEffect(() => {
-    console.log('in useeffec');
+
     const config = {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token'),
       },
     };
-    console.log(id);
+
     if (!id) {
       return;
     }
@@ -147,7 +147,7 @@ const EditCatPage = memo(props => {
         .get(`https://api.mazglobal.co.uk/maz-api/categories/${id}`, config)
         .then(response => {
           console.log(id);
-          console.log('data', response.data.data);
+       
           setData(response.data.data);
           setState(response.data.data)
           let partition=response.data.data.path.split('/')
@@ -156,11 +156,11 @@ const EditCatPage = memo(props => {
 
           if(response.data.data.parent!=null)
           {
-            console.log('helo par',response.data.data.parent)
+            
            
          axios.get(`https://api.mazglobal.co.uk/maz-api/categories/${response.data.data.parent}`, config)
          .then(res=>{
-           console.log('cc',res.data.data)
+          
            setMain(res.data.data)
            setHasParent(true) 
          }

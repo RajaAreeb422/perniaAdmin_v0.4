@@ -23,6 +23,9 @@ const AddCollectionPage = memo(props => {
   const [selected, setSelected] = useState([]);
   const [brand, setBrand] = useState([]);
   const [tag, setTag] = useState([]);
+  const [user, setUser] = useState({});
+  const [loader, setLoader] = useState();
+  const [supplier, setSupplier] = useState([]);
   const [categories, setCategories] = useState([]);
   const [file, setFile] = useState();
   const [data, setData] = useState([]);
@@ -45,10 +48,10 @@ const AddCollectionPage = memo(props => {
   const Errortoggle = () => setErrorModal(!errormodal);
   useEffect(() => {
     var decoded = jwt_decode(localStorage.getItem('token'));
-  console.log('local',localStorage.getItem('token'))
+    setUser(decoded.result)
    setState({...state,['brand_id']:decoded.result.supplier_id})
     axios
-    .get('https://api.mazglobal.co.uk/maz-api/tag')
+    .get('https://api.mazglobal.co.uk/maz-api/tags')
     .then(res => setTag(res.data.data))
     .catch(err => console.log(err));
     if(decoded.result.role_id==1)
@@ -56,6 +59,10 @@ const AddCollectionPage = memo(props => {
       axios
       .get(`https://api.mazglobal.co.uk/maz-api/categories`)
       .then(res => setCategories(res.data.data))
+      .catch(err => console.log(err));
+      axios
+      .get(`https://api.mazglobal.co.uk/maz-api/suppliers`)
+      .then(res => setSupplier(res.data.data))
       .catch(err => console.log(err));
     }
     else{
@@ -68,8 +75,9 @@ const AddCollectionPage = memo(props => {
   }, []);
   
   const submitHandler = e => {
+
+    setLoader(true)
     e.preventDefault();
-    console.log("state",state);
     const config = {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -78,9 +86,15 @@ const AddCollectionPage = memo(props => {
 
     // if(state.coupon_code==''||state.coupon_type==''||state.coupon_description==''||state.expiry_date==''
     // ||state.discount_type==''|| state.discount_value==null || state.usage_limit_per_coupon==null ||state.usage_limit_per_user==null)
+   
+   if(user.role_id==1)
+   {
     if(state.name=='' || state.category_id=='' || state.category_id==null
-    ||state.tag_id=='' ||state.tag_id==null  || selected.length==0)
+    ||state.tag_id=='' ||state.tag_id==null  ||  state.brand_id==null || selected.length==0)
+    {
+    setLoader(false)
     Errortoggle()
+    }
     else
     {
       let bb=parseInt(state.brand_id);
@@ -99,7 +113,7 @@ const AddCollectionPage = memo(props => {
         var formData = new FormData();
         for (const key of Object.keys(selected)) {
           formData.append('imageFile', selected[key]);
-          console.log('in lopppp', formData);
+        
         }
         
         axios
@@ -110,15 +124,72 @@ const AddCollectionPage = memo(props => {
             {},
           )
           .then(res => {
-            console.log(res.data);
+         
+            setLoader(false)
             toggle()
             //succtoggle();
           })
       .catch(error => {
+        setLoader(false)
         servertoggle()
         console.log(error);
       });
     }).catch(err=>console.log(err))
+        
+
+    }
+  }
+  else{
+    if(state.name=='' || state.category_id=='' || state.category_id==null
+    ||state.tag_id=='' ||state.tag_id==null  || selected.length==0)
+    {
+    setLoader(false)
+    Errortoggle()
+    }
+    else
+    {
+      let bb=parseInt(state.brand_id);
+      let cc=parseInt(state.category_id);
+      let tt=parseInt(state.tag_id);
+      state.brand_id=bb;
+      state.category_id=cc;
+      state.tag_id=tt;
+      
+      axios
+      .post(
+        `https://api.mazglobal.co.uk/maz-api/collections`,
+        state,
+      ).then(response=>{
+
+        var formData = new FormData();
+        for (const key of Object.keys(selected)) {
+          formData.append('imageFile', selected[key]);
+         
+        }
+        
+        axios
+          .post(
+            `https://api.mazglobal.co.uk/maz-api/collections/uploadCollectionImage/${response.data.InsertedId}`,
+            formData,
+            config,
+            {},
+          )
+          .then(res => {
+           
+            setLoader(false)
+            toggle()
+            //succtoggle();
+          })
+      .catch(error => {
+        setLoader(false)
+        servertoggle()
+        console.log(error);
+      });
+    }).catch(err=>{
+      setLoader(false)
+      servertoggle()
+      console.log(err)
+    })
         
     // axios
     // .post(
@@ -143,15 +214,16 @@ const AddCollectionPage = memo(props => {
 
     }
 
+  }
+
   };
 
   const handleChange = names => e => {
    
     const name = e.target.name;
-    console.log(name);
+
     let value = e.target.value;
-    
-    console.log(value);
+
     setState({
       ...state,
       [name]: value,
@@ -160,7 +232,7 @@ const AddCollectionPage = memo(props => {
 
   const handleChild = childData => {
     setSelected({ ...childData });
-    console.log('selected', selected);
+   
    
   };
   const move = ()  => {
@@ -169,6 +241,13 @@ const AddCollectionPage = memo(props => {
 
   const PostCategory = () => (
     <div className="main">
+      {loader && <div className="Loader" />}
+      <div
+        className="order"
+        style={
+          loader === true ? { backgroundColor: 'black', opacity: '0.2' } : {}
+        }
+      >
       <div className="newCoupon">
       <ToastContainer align={"right"} position={"middle"}/>
         <div className='couponNav'>
@@ -233,7 +312,7 @@ const AddCollectionPage = memo(props => {
           <div className="newCouponItem">
          
        
-          <div style={{padding:'20px',width:'100%'}}>
+          <div style={{padding:'20px'}}>
             <label style={{marginLeft:'0px'}}>Category</label>
             <select
             className="form-control"
@@ -251,6 +330,25 @@ const AddCollectionPage = memo(props => {
                 }
             </select>
             </div>
+
+           {user.role_id==1 &&
+           <div style={{padding:'20px',width:'340px'}}>
+            <label style={{marginLeft:'0px'}}>Supplier</label>
+            <select
+              className="form-control"
+              id="brand"
+              required
+              name="brand_id"
+              value={state.brand_id}
+              onChange={handleChange(name)}
+            >
+              {supplier.map(p => (
+                <option value={p.id}>{p.name}</option>
+              ))}
+              <option value="null">Select Supplier</option>
+            </select>
+          </div>
+          }
           </div>
 
           <div className="newCouponItem1">
@@ -315,6 +413,7 @@ const AddCollectionPage = memo(props => {
           
         </ModalFooter>
       </Modal>
+     </div> 
     </div>
   );
 

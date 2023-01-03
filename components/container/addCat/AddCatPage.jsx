@@ -15,6 +15,8 @@ toast.configure();
 const AddCatPage = memo(props => {
   const [modal, setModal] = React.useState(false);
   const toggle = () => setModal(!modal);
+  const [dbmodal, setDBModal] = React.useState(false);
+  const dbtoggle = () => setDBModal(!dbmodal);
   const [errormodal, setErrorModal] = React.useState(false);
   const errortoggle = () => setErrorModal(!errormodal);
   const [mydiv, setDiv] = useState(false);
@@ -27,16 +29,17 @@ const AddCatPage = memo(props => {
     path: null,
   });
   const [parnt_cat, setParent] = useState([]);
+  const [supplier, setSupplier] = useState([]);
   const [subCat, setSubCat] = useState([]);
   const [img, setImg] = useState();
+  const [loader, setLoader] = useState(false);
   const [user, setUser] = useState({});
 
   const { name, parent, status,supplier_id } = state;
 
   useEffect(() => {
     var decoded = jwt_decode(localStorage.getItem('token'));
-    console.log('local',localStorage.getItem('token'))
-    console.log('lres',decoded.result)
+
     setUser(decoded.result)
     setState({...state,['supplier_id']:decoded.result.supplier_id})
 
@@ -54,6 +57,12 @@ const AddCatPage = memo(props => {
         setParent(response.data.data);
       })
       .catch(err => console.log(err));
+      axios
+      .get(`https://api.mazglobal.co.uk/maz-api/suppliers`, config)
+      .then(response => {
+        setSupplier(response.data.data);
+      })
+      .catch(err => console.log(err));
     }
     else{
       axios
@@ -64,9 +73,75 @@ const AddCatPage = memo(props => {
   }, []);
 
   const submitHandler = e => {
+    
+    setLoader(true)
     e.preventDefault();
+    if(user.role_id==1)
+    { 
+   
+    if(state.name==''|| img=='' || state.supplier_id==null)
+    {
+
+    setLoader(false)
+    errortoggle()
+    } 
+    else{
+ 
+    const config = {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      },
+    };
+
+    if (sub != 'null') state.parent = sub;
+    // https://api.perniacouture.pk/pernia-api/categories
+    axios
+      .post(
+        `https://api.mazglobal.co.uk/maz-api/categories`,
+        state,
+        config,
+
+        { headers: { 'content-type': 'application/json' } },
+      )
+      .then(response => {
+        
+        var formData = new FormData();
+        formData.append('imageFile', img);
+      
+
+        axios
+          .post(
+            `https://api.mazglobal.co.uk/maz-api/categories/uploadImage/${response.data.InsertedId}`,
+            formData,
+            config,
+            {},
+            
+          )
+          .then(res => {
+           
+            setLoader(false)
+            toggle();
+          })
+          .catch(error => {
+            setLoader(false)
+            dbtoggle()
+            console.log(error);
+          });
+      })
+      .catch(error => {
+        setLoader(false)
+      dbtoggle()
+      });
+      };
+
+    }
+    else{
     if(state.name==''|| img=='')
-    errortoggle
+    {
+    setLoader(false)
+    errortoggle()
+    }
+  
     else{
 
     
@@ -87,10 +162,10 @@ const AddCatPage = memo(props => {
         { headers: { 'content-type': 'application/json' } },
       )
       .then(response => {
-        console.log('ress and state', response.data.InsertedId,state);
+       
         var formData = new FormData();
         formData.append('imageFile', img);
-        console.log('image', img);
+        
         //    // go()
 
         axios
@@ -102,19 +177,24 @@ const AddCatPage = memo(props => {
             
           )
           .then(res => {
-            console.log("after upload",res.data);
+        
+            setLoader(false)
             toggle();
           })
           .catch(error => {
+            setLoader(false)
+            dbtoggle()
             console.log(error);
           });
       })
       .catch(error => {
-      errortoggle()
+        setLoader(false)
+      dbtoggle()
+      console.log(error);
       });
   };
   }
- 
+}
 
   const handleSubChange = name => e => {
     setSub(e.target.value);
@@ -159,6 +239,13 @@ const AddCatPage = memo(props => {
 
   const PostCategory = () => (
     <div className="main">
+           {loader && <div className="Loader" />}
+      <div
+        className="order"
+        style={
+          loader === true ? { backgroundColor: 'black', opacity: '0.2' } : {}
+        }
+      >
       <div className="myCategory">
         
         <h1 className="myCategoryTitle">New Category</h1>
@@ -211,6 +298,25 @@ const AddCatPage = memo(props => {
             </div>
           )}
 
+           {user.role_id==1 &&
+           <div className="myCategoryItem">
+            <label for="exampleFormControlSelect1">Supplier</label>
+            <select
+              className="myCategorySelect"
+              id="supplier"
+              required
+              name="supplier_id"
+              value={state.supplier_id}
+              onChange={handleChange(name)}
+            >
+              {supplier.map(p => (
+                <option value={p.id}>{p.name}</option>
+              ))}
+              <option value="null">Select Supplier</option>
+            </select>
+          </div>
+         }
+
           <div className="myCategoryItem">
               <label
                 for="exampleInputName"
@@ -238,6 +344,7 @@ const AddCatPage = memo(props => {
           
         </form>
       </div>
+      </div>
       <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader toggle={toggle}>Alert</ModalHeader>
         <ModalBody>
@@ -253,10 +360,21 @@ const AddCatPage = memo(props => {
       <Modal isOpen={errormodal} toggle={errortoggle}>
         <ModalHeader toggle={errortoggle}>Alert</ModalHeader>
         <ModalBody>
-          <>!Please Add image or Enter Name</>
+          <>!Please Add the required fields</>
         </ModalBody>
         <ModalFooter>
           <Button color="primary" onClick={errortoggle}>
+            OK
+          </Button>
+        </ModalFooter>
+      </Modal>
+      <Modal isOpen={dbmodal} toggle={dbtoggle}>
+        <ModalHeader toggle={dbtoggle}>Alert</ModalHeader>
+        <ModalBody>
+          <>!Database Connection Error</>
+        </ModalBody>
+        <ModalFooter>
+          <Button color="primary" onClick={dbtoggle}>
             OK
           </Button>
         </ModalFooter>

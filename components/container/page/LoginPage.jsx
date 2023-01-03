@@ -45,10 +45,10 @@ const LoginPage = ({ props }) => {
 
   const handleChange = names => e => {
     const name = names;
-    console.log(name);
+  
     const value = e.target.value;
     const v = '';
-    console.log('Value isgggggggggggg');
+   
     if (name == 'email') {
       setField({
         ...validate,
@@ -75,7 +75,7 @@ const LoginPage = ({ props }) => {
         setDisable(true);
         if (validate.password.length > 3) {
           setDisable(false);
-          console.log(' hello Validate is', validate);
+     
         }
       }
       // }
@@ -95,10 +95,10 @@ const LoginPage = ({ props }) => {
       .then(response => {
         console.log(response.data);
         if (response.data.success == 1) {
-          console.log(localStorage.getItem('token'));
+          
 
           localStorage.setItem('token', response.data.token);
-          console.log('ttttttttt', localStorage.getItem('token'));
+        
           router.push('/home/Home');
         } else {
           setPermison(true);

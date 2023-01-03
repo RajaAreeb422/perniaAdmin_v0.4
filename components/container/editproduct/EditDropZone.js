@@ -23,7 +23,7 @@ const EditDropZone = (props) => {
   const [fileurl, setURL] = useState([]);
 
   useEffect(() => {
-    console.log('path',props.path)
+
     setSelectedFiles(props.path)
     let filteredArray=props.path
     // let filteredArray = props.path.reduce((file, current) => {
@@ -59,7 +59,7 @@ const EditDropZone = (props) => {
   };
 
   const handleimgChange = name => e => {
-    console.log('heloooooooo');
+
     // if (e.target.files) {
     //   setFile({ ...file, ['ImageFile']: [...e.target.files] });
     //   }
@@ -74,7 +74,7 @@ const EditDropZone = (props) => {
   const urlarr = [];
   const handleFiles = files => {
     const urlarr = [];
-    console.log('file issssssssssssssss', files);
+    
     var newurl = [];
     for (let i = 0; i < files.length; i++) {
       if (validateFile(files[i])) {
@@ -82,19 +82,19 @@ const EditDropZone = (props) => {
 
         var x = URL.createObjectURL(files[i]);
         newurl.push(x);
-        console.log('nammme', files[i]);
+       
         // console.log("int ",int)
         // var up=int + 1;
         // console.log("up ",up)
         // setInt(up)
         // urlarr[int]=(x)
         setSelectedFiles(prevArray => [...prevArray, files[i]]);
-        console.log('select', selectedFiles);
+
         // setValidFiles(prevArray => [...prevArray, files[i]])
         console.log('valid', validFiles);
         //uploadFiles()
       } else {
-        console.log('Invalid');
+      
         files[i]['invalid'] = true;
         setSelectedFiles(prevArray => [...prevArray, files[i]]);
         setErrorMessage('File type not permitted');
@@ -105,7 +105,7 @@ const EditDropZone = (props) => {
     }
 
     setURL(newurl);
-    console.log('alllllllllllll ', urlarr);
+  
   };
 
   const validateFile = file => {

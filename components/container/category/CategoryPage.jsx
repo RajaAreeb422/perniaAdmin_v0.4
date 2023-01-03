@@ -47,7 +47,7 @@ const CategoryPage = memo(props => {
       axios
       .get('https://api.mazglobal.co.uk/maz-api/categories', config)
       .then(response => {
-        console.log(response.data);
+        
         if (mounted) {
           var i = 1;
          let activelist=[]
@@ -57,7 +57,7 @@ const CategoryPage = memo(props => {
             let pp = 'https://api.mazglobal.co.uk/' + exam.path;
             pp=pp.toString();
             exam['path']=pp
-            console.log("ppp",pp)
+          
             
             setPath(pp)
             if (exam.parent) {
@@ -93,7 +93,7 @@ const CategoryPage = memo(props => {
       axios
       .get(`https://api.mazglobal.co.uk/maz-api/categories/getCategoriesBySupplierId/${decoded.result.supplier_id}`, config)
       .then(response => {
-        console.log(response.data);
+        
         if (mounted) {
           var i = 1;
          let activelist=[]
@@ -103,7 +103,7 @@ const CategoryPage = memo(props => {
             let pp = 'https://api.mazglobal.co.uk/' + exam.path;
             pp=pp.toString();
             exam['path']=pp
-            console.log("ppp",pp)
+         
             
             setPath(pp)
             if (exam.parent) {
@@ -148,7 +148,7 @@ const CategoryPage = memo(props => {
         Authorization: 'Bearer ' + localStorage.getItem('token'),
       },
     };
-    console.log('moveeeeeeeeeeeeeeeee', id);
+    
     axios
     .delete(`https://api.mazglobal.co.uk/maz-api/categories/${id}`)
       .then(response => {
@@ -159,21 +159,25 @@ const CategoryPage = memo(props => {
           .then(res => {
             var i=1
             res.data.data.map(exam => {
+              if(exam.id==id)
+              {
+
+              }
+              else{
               exam['_id'] = i++;
-              console.log("path",exam.path)
+              
               let pp = 'https://api.mazglobal.co.uk/' + exam.path;
               pp=pp.toString();
-              exam['path']=pp
-              console.log("ppp",pp)
+             
 
               setPath(pp)
 
               if (exam.parent) {
-                console.log('exam', exam.parent);
+               
                 res.data.data.map(p_v => {
                   if (exam.parent == p_v.id) {
                     exam['parent_name'] = p_v.name;
-                    console.log(p_v.name);
+                
                   }
                 });
               } else {
@@ -181,6 +185,7 @@ const CategoryPage = memo(props => {
               }
   
               switchstate['switch-' + exam.id] = exam.status;
+            }
             }),
               setData(res.data.data);
              
@@ -240,7 +245,7 @@ const CategoryPage = memo(props => {
         status: status == false ? 0 : 1,
       })
       .then(response => {
-        console.log(response.data);
+      
       })
       .catch(error => {
         console.log(error);

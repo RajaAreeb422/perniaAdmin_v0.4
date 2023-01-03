@@ -67,7 +67,7 @@ const EditVariants = props => {
         Authorization: 'Bearer ' + localStorage.getItem('token'),
       },
     };
-    console.log(config);
+
     axios
       .get(`https://perniacouture.pk/pernia-api/products/variants`)
       .then(response => {
@@ -75,7 +75,7 @@ const EditVariants = props => {
         setData(props.variants);
         setVariant(data[0]);
         setCombination(data[1]);
-        console.log('callllllllllll is', props.variants[0].name);
+      
         // if (mounted) {
 
         // }
@@ -99,7 +99,6 @@ const EditVariants = props => {
       ['id']: item.id,
     });
 
-    console.log('Add Search');
     const config = {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -137,7 +136,6 @@ const EditVariants = props => {
       setFilterrow(filteredRows);
     }
 
-    console.log(filterrow);
   };
 
   const handleChkbox = e => {
@@ -226,7 +224,7 @@ const EditVariants = props => {
         values: variantVal,
       });
       setVariant(list);
-      console.log('list', list);
+  
       var x = int;
       x = x + 1;
       setInt(x);
@@ -247,16 +245,14 @@ const EditVariants = props => {
         name: '',
         id: null,
       });
-      console.log('variant', variant);
+     
       setCombination([]);
       Combinations(list);
     }
   };
 
   const Combinations = list => {
-    console.log('comboooooooo', combination);
-    console.log('variantssssssssss', variant);
-    console.log('listssssssssss', list);
+  
     if (list.length === 0) {
       setVariantDiv(false);
       setVariant([
@@ -279,7 +275,7 @@ const EditVariants = props => {
                   list[1].values[j].value +
                   '/' +
                   list[2].values[k].value;
-                console.log('xxx', x);
+               
                 const arr = {
                   product_variant_name: x,
                   sku: '',
@@ -288,9 +284,9 @@ const EditVariants = props => {
                 setCombination(prevArr => [...prevArr, arr]);
               }
             } else {
-              console.log('else');
+            
               var x = list[0].values[i].value + '/' + list[1].values[j].value;
-              console.log('2nnddddd var', x);
+            
               const arr = {
                 product_variant_name: x,
                 sku: '',
@@ -300,64 +296,18 @@ const EditVariants = props => {
             }
           }
         } else {
-          console.log('item value');
+       
           const arr = {
             product_variant_name: list[0].values[i].value,
             sku: '',
             regular_price: null,
           };
-          console.log(arr);
+        
           setCombination(prevArr => [...prevArr, arr]);
         }
       }
     }
-    // variant[0].variant_value.map((item,i)=>{
-    //   console.log('lengthlllllll')
-    //   if(variant.length>1)
-    //   {
-    //     console.log('iffff')
-    //     variant[1].variant_value.map((item1,i)=>{
-    //       if(variant.length>2)
-    //       {
-    //         variant[2].variant_value.map((item2,i)=>{
-    //           var x=item.value+'/'+item1.value+'/'+item2.value
-    //           console.log('xxx',x)
-    //           const arr={
-    //             product_variant_name:x,
-    //             sku:'',
-    //             regular_price:null
-    //           }
-    //            setCombination(prevArr=>[...prevArr,arr])
-    //         }
-    //         )
-
-    //       }
-    //       else{
-    //         console.log('else')
-    //         var x=item.value+'/'+item1.value
-    //         console.log('2nnddddd var',x)
-    //         const arr={
-    //           product_variant_name:x,
-    //           sku:'',
-    //           regular_price:null
-    //         }
-    //          setCombination(prevArr=>[...prevArr,arr])
-    //       }
-    //     }
-    //     )
-    //   }
-    //   else{
-    //     console.log('item value',item.value)
-    //     const arr={
-    //       product_variant_name:item.value,
-    //       sku:'',
-    //       regular_price:null
-    //     }
-    //     console.log(arr)
-    //      setCombination(prevArr=>[...prevArr,arr])
-    //   }
-    // }
-    // )
+    
   };
 
   const handleThrdAddVariant = index => {
@@ -394,7 +344,7 @@ const EditVariants = props => {
         name: '',
         id: null,
       });
-      console.log('variant', variant);
+     
       setCombination([]);
       Combinations(list);
     }
@@ -410,7 +360,7 @@ const EditVariants = props => {
   };
   const skuChange = (e, index) => {
     // const{name,value}=e.target
-    console.log('price value', e.target.value);
+   
     // var arr=combination
     //   arr[index]={
     //   product_variant_name:arr[index].product_variant_name,
@@ -424,7 +374,7 @@ const EditVariants = props => {
       sku: e.target.value,
       regular_price: combination[index].regular_price,
     };
-    console.log(combination[index]);
+
     setCombination(combination);
   };
 
@@ -443,14 +393,14 @@ const EditVariants = props => {
     }
   };
   const saveChange = i => {
-    console.log('hhhhhhhaftatar');
+ 
     // setModalOpen(false)
     if (confirm('Are you sure you want to delete this??????')) {
       // Save it!
       deleteComb(i);
     } else {
       // Do nothing!
-      console.log('Thing was not saved to the database.');
+    
     }
   };
   const deleteVariant = index => {
@@ -487,7 +437,7 @@ const EditVariants = props => {
     var finalarr = [];
     finalarr[0] = variant;
     finalarr[1] = combination;
-    console.log('fileeeeee', finalarr);
+
     props.variantCall(finalarr);
     setVariantDiv(false);
     setShowComb(true);

@@ -62,7 +62,7 @@ const Variants = props => {
         Authorization: 'Bearer ' + localStorage.getItem('token'),
       },
     };
-    console.log(config);
+    
     axios
       .get(`https://api.mazglobal.co.uk/maz-api/products/variants`)
       .then(response => {
@@ -89,7 +89,7 @@ const Variants = props => {
       ['id']: item.id,
     });
 
-    console.log('Add Search');
+
     const config = {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -127,7 +127,6 @@ const Variants = props => {
       setFilterrow(filteredRows);
     }
 
-    console.log(filterrow);
   };
 
   const handleChkbox = e => {
@@ -210,7 +209,7 @@ const Variants = props => {
         values: variantVal,
       });
       setVariant(list);
-      console.log('list', list);
+      
       var x = int;
       x = x + 1;
       setInt(x);
@@ -227,16 +226,14 @@ const Variants = props => {
         name: '',
         id: null,
       });
-      console.log('variant', variant);
+
       setCombination([]);
       Combinations(list);
     }
   };
 
   const Combinations = list => {
-    console.log('comboooooooo', combination);
-    console.log('variantssssssssss', variant);
-    console.log('listssssssssss', list);
+   
     if (list.length === 0) {
       setVariantDiv(false);
       setVariant([
@@ -268,9 +265,9 @@ const Variants = props => {
                 setCombination(prevArr => [...prevArr, arr]);
               }
             } else {
-              console.log('else');
+              
               var x = list[0].values[i] + '_' + list[1].values[j];
-              console.log('2nnddddd var', x);
+              
               const arr = {
                 product_variant_name: x,
                 sku: '',
@@ -280,13 +277,13 @@ const Variants = props => {
             }
           }
         } else {
-          console.log('item value');
+         
           const arr = {
             product_variant_name: list[0].values[i],
             sku: '',
             regular_price: null,
           };
-          console.log(arr);
+         
           setCombination(prevArr => [...prevArr, arr]);
         }
       }
@@ -305,7 +302,7 @@ const Variants = props => {
     if (status==true) {
       setErrorDiv(true);
     } else {
-      const list = [...variant];
+ 
 
       list.push({
         name: variantname.name,
@@ -329,7 +326,7 @@ const Variants = props => {
         name: '',
         id: null,
       });
-      console.log('variant', variant);
+   
       setCombination([]);
       Combinations(list);
     }
@@ -344,14 +341,14 @@ const Variants = props => {
     setCombination(combination);
   };
   const skuChange = (index)=>(e) => {
-    console.log('price value', e.target.value);
+    
     const { name, value } = e.target;
     combination[index] = {
       product_variant_name: combination[index].product_variant_name,
       sku: e.target.value,
       regular_price: combination[index].regular_price,
     };
-    console.log(combination[index]);
+  
     setCombination(combination);
   };
 
@@ -368,7 +365,7 @@ const Variants = props => {
     //    })
     //   )
     combination.map((co,i)=>{
-      console.log('comb',co.price, co.sku)
+  
       if(co.regular_price==null )
       status=true
       //list[i].price=true
@@ -387,7 +384,7 @@ const Variants = props => {
     setPrError(list)
     if(status==false)
     {
-    console.log('fileeeeee', finalarr);
+
     props.variantCall(finalarr);
     setVariantDiv(false);
     setShowComb(true);
@@ -409,14 +406,13 @@ const Variants = props => {
     }
   };
   const saveChange = i => {
-    console.log('hhhhhhhaftatar');
+   
     // setModalOpen(false)
     if (confirm('Are you sure you want to delete this??????')) {
       // Save it!
       deleteComb(i);
     } else {
-      // Do nothing!
-      console.log('Thing was not saved to the database.');
+    
     }
   };
   const deleteVariant = index => {

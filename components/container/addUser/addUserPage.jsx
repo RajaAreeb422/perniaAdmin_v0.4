@@ -78,7 +78,7 @@ const AddUserPage = memo(props => {
 
   const submitHandler = e => {
     e.preventDefault();
-    console.log(state);
+  
     const config = {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -92,11 +92,10 @@ const AddUserPage = memo(props => {
       )
       .then(response => {
         toggle()
-        
-        console.log("respoooos",response);
+      
       })
       .catch(error => {
-        console.log('error',error)
+       
         setError('This email already exists')
         setDiv(true)
         errortoggle()
@@ -107,9 +106,9 @@ const AddUserPage = memo(props => {
   const handleChange = names => e => {
    
     const name = e.target.name;
-    console.log(name);
+   
     const value = e.target.value;
-    console.log(value);
+  
     setState({
       ...state,
       [name]: value,

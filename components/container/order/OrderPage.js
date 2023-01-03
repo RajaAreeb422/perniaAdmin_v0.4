@@ -20,8 +20,7 @@ const OrderPage = memo(props => {
 
   useEffect(() => {
     var decoded = jwt_decode(localStorage.getItem('token'));
-    console.log('local',localStorage.getItem('token'))
-    console.log('lres',decoded.result)
+  
     setUser(decoded.result)
     const config = {
       headers: {
@@ -29,12 +28,11 @@ const OrderPage = memo(props => {
       },
     };
     let mounted = true;
-    console.log('in useeffec');
+   
     //get list of orders from the database
     axios
       .get('http://localhost:8080/pernia-api/orders')
       .then(response => {
-        console.log(response.data);
        
           var i = 1;
           let row=[]
@@ -76,7 +74,7 @@ const OrderPage = memo(props => {
       setData(filteredRows);
     } else {
       const filteredRows = data.filter(row => {
-        console.log('hey',row.name)
+  
         if(row.name==undefined)
         ''
         else
@@ -88,9 +86,8 @@ const OrderPage = memo(props => {
   
 //generates alert box to delete order or not.
   const handleDelete = id => {
-    console.log(localStorage.getItem('token'));
+ 
     setId(id);
-    console.log(id);
     toggle();
   };
   
@@ -101,7 +98,7 @@ const OrderPage = memo(props => {
         Authorization: 'Bearer ' + localStorage.getItem('token'),
       },
     };
-    console.log('moveeeeeeeeeeeeeeeee', id);
+  
     axios
       .delete(`http://95.111.240.143:8080/ecom-api/orders/${id}`, config)
       .then(response => {

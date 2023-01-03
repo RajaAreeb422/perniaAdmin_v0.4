@@ -19,8 +19,7 @@ const CollectionPage = memo(props => {
   const toggle = () => setModal(!modal);
   useEffect(() => {
     var decoded = jwt_decode(localStorage.getItem('token'));
-    console.log('local',localStorage.getItem('token'))
-    console.log('lres',decoded.result)
+    
     setUser(decoded.result)
     const config = {
       headers: {
@@ -34,7 +33,7 @@ const CollectionPage = memo(props => {
       axios
       .get('https://api.mazglobal.co.uk/maz-api/collections')
       .then(res => {
-        console.log("colections",res.data.data)
+       
         let list=[]
         if (mounted) {
           res.data.data.map(it=>{
@@ -56,7 +55,7 @@ const CollectionPage = memo(props => {
       axios
       .get(`https://api.mazglobal.co.uk/maz-api/collections/byBrand/${decoded.result.supplier_id}`)
       .then(res => {
-        console.log("colections",res.data.data)
+
         let list=[]
         if (mounted) {
           res.data.data.map(it=>{

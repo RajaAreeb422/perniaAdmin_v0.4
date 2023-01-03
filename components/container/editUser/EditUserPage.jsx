@@ -106,19 +106,19 @@ const EditUserPage = memo(props => {
   //for submition of new ship address form
   const submitHandler=(e)=>{
     e.preventDefault();
-    console.log("before",state);
+ 
    ship.type='shipping'
     axios.post(`http://95.111.240.143:8080/ecom-api/addresses/${id}`,ship,
   
   {headers: { 'content-type': 'application/json' }}
   )
   .then(response=>{
-    console.log("rsponse",response.data);
+    
     toast.notify(`New Address Added Succesfully`,{
       type:'success'
     })
     setNewShipDiv(false)
-    console.log("Add Search")
+    
     const config = {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -173,7 +173,7 @@ const EditUserPage = memo(props => {
 //for submition of edit bill address form
   const submitEditBillHandler = e => {
     e.preventDefault();
-    console.log('before', billput);
+
     newship.type = 'billing';
     axios
       .put(
@@ -181,7 +181,7 @@ const EditUserPage = memo(props => {
         billput,
       )
       .then(response => {
-        console.log('rsponse', response.data);
+       
         toast.notify(`Billing Address Updated!`,{
           type:'success'
         })
@@ -202,16 +202,16 @@ const EditUserPage = memo(props => {
 //for submition of edit ship address form
   const submitEditHandler=(e)=>{
     e.preventDefault();
-    console.log("before",newshipput);
+    
     newship.type='shipping'
     axios.put(`http://95.111.240.143:8080/ecom-api/addresses/${newship.id}`,newshipput)
   .then(response=>{
-    console.log("rsponse",response.data)
+
     toast.notify(`Shipping Address Updated!`,{
       type:'success'
     })
     setEditShipDiv(false)
-      console.log("Add Search")
+   
       const config = {
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -272,8 +272,7 @@ const EditUserPage = memo(props => {
     
     const name = e.target.name;
     const value = e.target.value;
-    console.log("value",value);
-  //   setShipPut({
+   
       
   //     [name]: value
   // })
@@ -290,7 +289,7 @@ const EditUserPage = memo(props => {
     
     const name = e.target.name;
     const value = e.target.value;
-    console.log('value', value,e.target.name);
+ 
    
     setBillPut({
       [name]: value
@@ -306,7 +305,7 @@ const EditUserPage = memo(props => {
     
     const name = e.target.name;
     const value = e.target.value;
-    console.log('value', value);
+   
    
     setNewShipPut({
       [name]: value
@@ -326,8 +325,7 @@ const EditUserPage = memo(props => {
     setRadiobtn({
       selected: e.target.value,
     });
-   
-    console.log(e.target.value);
+
   };
   
   const shipdetails = () => {
@@ -363,7 +361,7 @@ const EditUserPage = memo(props => {
         Authorization: 'Bearer ' + localStorage.getItem('token'),
       },
     };
-    console.log('in Edit page useeffec');
+   
     axios
       .get(`http://95.111.240.143:8080/ecom-api/users/${id}`, config)
       .then(response => {
@@ -392,7 +390,7 @@ const EditUserPage = memo(props => {
         axios
           .get(`http://95.111.240.143:8080/ecom-api/addresses/${id}`, config)
           .then(response => {
-            console.log('oooooooooooo', response.data.data)
+        
             var i=0
               response.data.data.map(item => {
                 if (item.type === 'shipping') {
@@ -513,7 +511,7 @@ const EditUserPage = memo(props => {
                           placeholder={newship.user_address}
                           className="form-control"
                           name="user_address"
-                          className="gap"
+                          //className="gap"
                           required
                           value={newship.user_address}
                           onChange={handleEditChange('user_address')}

@@ -120,7 +120,7 @@ const HomePage = (props) => {
 
   useEffect(() => {
     let mounted = true;
-    console.log('in useeffec');
+    
     const config = {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token'),

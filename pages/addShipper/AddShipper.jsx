@@ -13,6 +13,9 @@ import jwt_decode from "jwt-decode";
 
 const AddShipper = memo(props => {
   const [user, setUser] = useState({});
+  const [supplier, setSupplier] = useState([]);
+  const [error, setError] = useState('');
+  const [loader, setLoader] = useState();
   const [modal, setModal] = React.useState(false);
   const [errormodal, setErrorModal] = React.useState(false);
   const [pr, setPrice] = useState(8);
@@ -35,9 +38,25 @@ const AddShipper = memo(props => {
    var decoded = jwt_decode(localStorage.getItem('token'));
    setUser(decoded.result)
    setState({...state,['supplier_id']:decoded.result.supplier_id})
+   if(decoded.result.role_id==1)
+   {
+    axios
+      .get(
+        `https://api.mazglobal.co.uk/maz-api/suppliers`,
+        state,
+      )
+      .then(response => {
+    setSupplier(response.data.data)
+        
+      })
+      .catch(error => {
+        console.log(error)
+      });
+   }
   }, []);
 
   const submitHandler = e => {
+    setLoader(true)
     e.preventDefault();
     const config = {
       headers: {
@@ -45,7 +64,35 @@ const AddShipper = memo(props => {
       },
     };
     state.price=pr
-    console.log('sss',state)
+    
+    if(user.role_id==1)
+    {
+      if(state.supplier_id==null)
+      {
+        setLoader(false)
+        setError("Supplier is required")
+        errortoggle()
+      }
+      else{
+        axios
+        .post(
+          `https://api.mazglobal.co.uk/maz-api/shipping`,
+          state,config,
+  
+          { headers: { 'content-type': 'application/json' } },
+        )
+        .then(response => {
+          setLoader(false)
+          toggle()
+          
+        })
+        .catch(error => {
+          setLoader(false)
+         errortoggle()
+        });
+      }
+    }
+    else{
     axios
       .post(
         `https://api.mazglobal.co.uk/maz-api/shipping`,
@@ -54,12 +101,15 @@ const AddShipper = memo(props => {
         { headers: { 'content-type': 'application/json' } },
       )
       .then(response => {
+        setLoader(false)
         toggle()
         
       })
       .catch(error => {
+        setLoader(false)
        errortoggle()
       });
+    }
   };
   const move =  e => {
     router.push('/shipSystem/Ship')
@@ -84,11 +134,16 @@ const AddShipper = memo(props => {
 
   const PostCategory = () => (
     <div className="suppmain">
+          {loader && <div className="Loader" />}
+      <div
+        className="order"
+        style={
+          loader === true ? { backgroundColor: 'black', opacity: '0.2' } : {}
+        }
+      >
       <div className="suppUser">
       <div className="dividearea">
-          
-        
-        
+
         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ78viL0UazMV3hwxe
         PIdu6aNDF8O41WUnFydp8Trg6fewhLI9yb8Ed4npUr-Fn59_MQEM&usqp=CAU" />
         
@@ -123,6 +178,24 @@ const AddShipper = memo(props => {
           </select>
 
           </div>
+          {user.role_id==1 &&
+           <div className="suppUserItem">
+            <label for="exampleInputName">Supplier</label>
+            <select
+              //className="myCategorySelect"
+              id="supplier"
+              required
+              name="supplier_id"
+              value={state.supplier_id}
+              onChange={handleChange(name)}
+            >
+              {supplier.map(p => (
+                <option value={p.id}>{p.name}</option>
+              ))}
+              <option value="null">Select Supplier</option>
+            </select>
+          </div>
+         }
         
           <div className="suppUserItem">
             <div style={{display:'flex',flexDirection:'row',alignContent:'space-evenly',marginTop:'10px',marginLeft:'20px'}}>
@@ -158,7 +231,7 @@ const AddShipper = memo(props => {
         </form>
       </div>
       </div>
-
+</div>
       <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader toggle={toggle}>Alert</ModalHeader>
         <ModalBody>
@@ -175,7 +248,11 @@ const AddShipper = memo(props => {
       <Modal isOpen={errormodal} toggle={errortoggle}>
         <ModalHeader style={{color:'red'}} toggle={errortoggle}>Alert</ModalHeader>
         <ModalBody>
-          <>!OOPs soory something went wrong.Try Again</>
+          <>{error!=''?
+          <div>{error}</div>:
+          <div>!Database Error.Try Again</div>
+        }
+          </>
         </ModalBody>
         <ModalFooter>
           

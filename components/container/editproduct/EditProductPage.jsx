@@ -106,16 +106,16 @@ const EditProductPage = memo(props => {
     if (!id) {
       return;
     }
-    console.log('in useeffec');
+
     const fetchSomethingById = () => {
       if(mounted===true)
       {
       axios
         .get(`https://perniacouture.pk/pernia-api/products/${id}`)
         .then(response => {
-          console.log("quantity",response.data.data)
+      
           setData(response.data.data);
-          console.log('data',response.data.data.images);
+    
           setState(response.data.data);
           let list=[]
          
@@ -131,7 +131,7 @@ const EditProductPage = memo(props => {
               //   x=x+p[i]
               // }
               list.push(x)
-              console.log('list',list)
+         
             })
          
         //  })
@@ -194,7 +194,7 @@ const EditProductPage = memo(props => {
                   if (cid.parent == null) {
                     showDiv(false);
                     setParentName(cid);
-                    console.log('parrrr', parnt.name, parnt.id);
+                   
                   } else {
                     showDiv(true);
                     setCatName(cid.name);
@@ -230,15 +230,14 @@ const EditProductPage = memo(props => {
         Authorization: 'Bearer ' + localStorage.getItem('token'),
       },
     };
-    console.log(state);
+
     if (sub) {
       state.category_id = sub;
     }
-    console.log('in put', sub);
-    console.log('in put state', state);
+
     state.variants = variant;
     state.combinations = combination;
-    console.log(state);
+
     
     // if(state.name=='' || state.sku==''||state.quantity==null||state.price==null||state.product_description==''||
     // state.category_id==null||state.supplier_id==null )
@@ -294,7 +293,7 @@ const EditProductPage = memo(props => {
     axios
       .put(`https://perniacouture.pk/pernia-api/products/${id}`, state, config)
       .then(response => {
-        console.log(response.data);
+      
         //setUpdatedAt(response.data.updatedAt);
         succtoggle()
       })
@@ -331,7 +330,7 @@ const EditProductPage = memo(props => {
 
   const handleChild = childData => {
     setSelected({ ...childData });
-    console.log('selected', selected);
+    
   };
   const handleVariant = child => {
     setVariants({ ...child });
@@ -355,8 +354,7 @@ const EditProductPage = memo(props => {
       showDiv(false);
       for (var i = 0; i < all_cat.length; i++) {
         if (all_cat[i].parent == value) {
-          console.log('pcat ', all_cat[i].parent);
-          console.log('val ', value);
+          
           showDiv(true);
           break;
         }
@@ -400,7 +398,6 @@ const EditProductPage = memo(props => {
       ['id']: item.id,
     });
 
-    console.log('Add Search');
     const config = {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -602,7 +599,7 @@ const EditProductPage = memo(props => {
           sku: '',
           regular_price: null,
         };
-        console.log(arr);
+        
         setCombination(prevArr => [...prevArr, arr]);
       }
     }
@@ -643,14 +640,14 @@ const EditProductPage = memo(props => {
         name: '',
         id: null,
       });
-      console.log('variant', variant);
+
       setCombination([]);
       Combinations(list);
     }
   };
   const priceChange = (e, index) => {
     const { name, value } = e.target;
-    console.log('changing price in combination values',e.target.value)
+   
     combination[index] = {
       product_variant_name: combination[index].product_variant_name,
       sku: combination[index].sku,
@@ -660,7 +657,6 @@ const EditProductPage = memo(props => {
   };
   const skuChange = (e, index) => {
     
-    console.log('price value', e.target.value);
     
     const { name, value } = e.target;
     combination[index] = {
@@ -668,7 +664,7 @@ const EditProductPage = memo(props => {
       sku: e.target.value,
       regular_price: combination[index].regular_price,
     };
-    console.log(combination[index]);
+
     setCombination(combination);
   };
 
@@ -702,7 +698,7 @@ const EditProductPage = memo(props => {
       deleteComb(i);
     } else {
       // Do nothing!
-      console.log('Thing was not saved to the database.');
+      
     }
   };
   const saveVarChange = i => {
@@ -712,7 +708,7 @@ const EditProductPage = memo(props => {
       deleteVariant(i);
     } else {
       // Do nothing!
-      console.log('Thing was not saved to the database.');
+
     }
   };
 
@@ -720,7 +716,7 @@ const EditProductPage = memo(props => {
     var arr = [];
     for (var i = 0; i < variant.length; i++) {
       if (i === index) {
-        console.log('in iff');
+       
         if (index === 0) {
           if (variant.length === 1) {
             setfDiv(true);
@@ -743,14 +739,14 @@ const EditProductPage = memo(props => {
 
         if (index === 2) setThrdAddBtn(true);
       } else {
-        console.log('in elsee');
+        
         arr.push(variant[i]);
       }
     }
 
-    console.log('arr is', arr);
+
     if (arr.length === 0) {
-      console.log('in arr iff');
+   
       setVariantDiv(false);
      
       setVariantVal(['']);
@@ -758,7 +754,7 @@ const EditProductPage = memo(props => {
       setCombination([]);
       setShowComb(false);
     } else {
-      console.log('in arr else');
+     
       setVariant(arr);
       setCombination([]);
       Combinations(arr);
@@ -784,9 +780,9 @@ const EditProductPage = memo(props => {
     setDisable(false)
     if (editvariantVal.length === 1 && editvariantVal[0] === '') {
       setEditErrorDiv(true);
-      console.log('in error');
+    
     } else {
-      console.log('editvariantVal', editvariantVal);
+    
       var arr = variant[j].values;
       for (var i = 0; i < editvariantVal.length; i++) {
         arr.push(editvariantVal[i]);
@@ -800,16 +796,15 @@ const EditProductPage = memo(props => {
     }
   };
   const EditValue = j => {
-    console.log('before', variantVal);
-    console.log('before', variantname);
+   
     variantVal === variant[j].values;
-    console.log('after', variantVal);
+ 
     setInt(j);
     setVariantName({
       name: variant[j].name,
       id: variant[j].id,
     });
-    console.log('after', variantname);
+
     setEditValueDiv(true);
   };
   const move = () => {

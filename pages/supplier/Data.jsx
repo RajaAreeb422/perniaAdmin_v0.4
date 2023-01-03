@@ -18,7 +18,7 @@ const Data = memo(props => {
 
   useEffect(() => {
     let mounted = true;
-    console.log('in useeffec');
+  
     //get list of supplier from the datbase
     axios
       .get('https://api.mazglobal.co.uk/maz-api/suppliers')
@@ -27,7 +27,7 @@ const Data = memo(props => {
           var i = 1;
           response.data.data.map(exam => {
             exam['_id'] = i++;
-            console.log("exam",exam)
+          
           }),
             setData(response.data.data);
           setList(response.data.data);
@@ -59,11 +59,11 @@ const Data = memo(props => {
         Authorization: 'Bearer ' + localStorage.getItem('token'),
       },
     };
-    console.log('id', id);
+   
     axios
       .delete(`https://api.mazglobal.co.uk/maz-api/suppliers/${id}`, config)
       .then(res => {
-        console.log(res.data.success);
+ 
         setData(data.filter(item => item.id !== id));
       })
       .catch(err => console.log(err));
@@ -93,7 +93,7 @@ const Data = memo(props => {
     axios
       .delete(`https://api.mazglobal.co.uk/maz-api/suppliers/${id}`, config)
       .then(response => {
-        console.log(response);
+ 
         toggle();
         axios
           .get(`https://api.mazglobal.co.uk/maz-api/suppliers`, config)
@@ -143,7 +143,7 @@ const Data = memo(props => {
       <h1>Suppliers</h1>
      
      {/* Link to Add Supplier Page */}
-      <Link href="../addSupplier/index">
+     <Link href="../addSupplier/index">
         <a>
           <button className="proAddButton">Add Supplier</button>
         </a>

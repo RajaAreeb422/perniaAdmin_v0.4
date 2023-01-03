@@ -29,7 +29,7 @@ const Drop = props => {
   const [fileurl, setURL] = useState([]);
 
   useEffect(() => {
-    console.log('path',props.path)
+   
     if(props.path)
     {
       setSelectedFiles(props.path)
@@ -74,7 +74,7 @@ const Drop = props => {
   };
 
   const handleimgChange = name => e => {
-    console.log('heloooooooo');
+  
     // if (e.target.files) {
     //   setFile({ ...file, ['ImageFile']: [...e.target.files] });
     //   }
@@ -89,7 +89,7 @@ const Drop = props => {
   const urlarr = [];
   const handleFiles = files => {
     const urlarr = [];
-    console.log('file issssssssssssssss', files);
+  
     var newurl = [];
     for (let i = 0; i < files.length; i++) {
       if (validateFile(files[i])) {
@@ -97,7 +97,7 @@ const Drop = props => {
 
         var x = URL.createObjectURL(files[i]);
         newurl.push(x);
-        console.log('nammme', files[i]);
+     
        // props.parentCall(files[i]);
         // console.log("int ",int)
         // var up=int + 1;
@@ -105,20 +105,20 @@ const Drop = props => {
         // setInt(up)
         // urlarr[int]=(x)
         setSelectedFiles(prevArray => [...prevArray, files[i]]);
-        console.log('select', selectedFiles);
+     
         setValidFiles(prevArray => [...prevArray, files[i]])
      
        
         //uploadFiles()
       } else {
-        console.log('Invalid');
+    
         files[i]['invalid'] = true;
         setSelectedFiles(prevArray => [...prevArray, files[i]]);
         setErrorMessage('File type not permitted');
       }
       //uploadFiles()
     }
-    console.log('new', newurl);
+
     setURL(newurl);
   
    // console.log('fileeeeee',files[i] );
@@ -174,7 +174,7 @@ const Drop = props => {
 
   const uploadFiles = () => {
     
-    console.log('fileeeeee', selectedFiles);
+ 
     props.parentCall(validFiles);
     setUploadBtn(false);
 

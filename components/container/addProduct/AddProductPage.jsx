@@ -32,6 +32,7 @@ const AddProductPage = memo(props => {
     combinations: [],
   });
   const [modal, setModal] = React.useState(false);
+  const [dbmodal, setDBModal] = React.useState(false);
   const [brandmodal, setBrandModal] = React.useState(false);
   const [Imgmodal, setImgModal] = React.useState(false);
   const [succmodal, setSuccModal] = React.useState(false);
@@ -48,10 +49,12 @@ const AddProductPage = memo(props => {
   const [sub, setSub] = useState(state.category_id);
   const [protext, setProText] = useState('');
   const [prolist, setProList] = useState(false);
+  const [user, setUser] = useState({});
   const [profilterrow, setProFilterrow] = useState([]);
   const [collectiondiv, setCollectionDiv] = useState(false);
   const [collections, setCollections] = useState([]);
-  const [prodata, setProData] = useState([]);
+  const [dberror, setDBError] = useState('');
+  const [loader, setLoader] = useState();
   const {
     name,
     category_id,
@@ -65,15 +68,15 @@ const AddProductPage = memo(props => {
     supplier_id
   } = state;
   const toggle = () => setModal(!modal);
+  const dbtoggle = () => setDBModal(!dbmodal);
   const brandtoggle = () => setBrandModal(!brandmodal);
   const Imgtoggle = () => setImgModal(!Imgmodal);
   const succtoggle = () => setSuccModal(!succmodal);
   useEffect(() => {
     let mounted = true;
     var decoded = jwt_decode(localStorage.getItem('token'));
-    console.log('local',localStorage.getItem('token'))
-    console.log('lres',decoded.result)
-   // setUser(decoded.result)
+    
+    setUser(decoded.result)
     setState({...state,['supplier_id']:decoded.result.supplier_id})
     // 95.111.240.143
     // axios.get(`http://localhost:8080/ecom-api/products`).then(response => {
@@ -109,10 +112,8 @@ const AddProductPage = memo(props => {
         Authorization: 'Bearer ' + localStorage.getItem('token'),
       },
     };
+    setLoader(true)
     e.preventDefault();
-    console.log('subbbbbbb', sub);
-    console.log('coll id', state);
-   
     let pp=state.price
     let qq=state.quantity
     let col=0;
@@ -135,20 +136,27 @@ const AddProductPage = memo(props => {
     else{
       state.variants = null;
       state.combinations = null;
-      console.log('vvvvv', variantss);
-    console.log('product issss', state);
+
     }
    
-    if(state.name=='' || state.category_id=='' || state.category_id==null||state.sku==''||state.quantity==null||state.price==null||state.product_description==''
-      )
-    toggle()
+    if(user.role_id==1)
+    {
+
+      if(state.name=='' || state.category_id=='' || state.category_id==null||state.sku==''||state.quantity==null||state.price==null||state.product_description==''
+      || state.supplier_id==null)
+    {
+
+            setLoader(false)
+             toggle()
+    }
     else if(selected.length==0)
     {
+      setLoader(false)
       Imgtoggle()
     }
    
     else{
-      console.log('state issss', state);
+     
      // https://api.mazglobal.co.uk/maz-api/products
     axios
     .post(
@@ -159,14 +167,12 @@ const AddProductPage = memo(props => {
       { headers: { 'content-type': 'application/json' } },
     )
     .then(response => {
-      console.log("State",state)
-      console.log('Insert Id', response.data);
-      console.log('Selectd', selected);
+  
      
         var formData = new FormData();
         for (const key of Object.keys(selected)) {
           formData.append('imageFile', selected[key]);
-          console.log('in lopppp', formData);
+          
         }
         
         axios
@@ -177,10 +183,12 @@ const AddProductPage = memo(props => {
             {},
           )
           .then(res => {
-            console.log(res.data);
+           
+            setLoader(false)
             succtoggle();
           })
       .catch(error => {
+        setLoader(false)
         console.log(error);
       });
         
@@ -189,6 +197,72 @@ const AddProductPage = memo(props => {
     }).catch(err=>console.log(err))
 
   }
+    }
+    else{
+   
+    if(state.name=='' || state.category_id=='' || state.category_id==null||state.sku==''||state.quantity==null||state.price==null||state.product_description==''
+      )
+      {
+       setLoader(false)
+       toggle()
+      }
+    else if(selected.length==0)
+    {
+      setLoader(false)
+      Imgtoggle()
+    }
+   
+    else{
+     
+     // https://api.mazglobal.co.uk/maz-api/products
+    axios
+    .post(
+      `https://api.mazglobal.co.uk/maz-api/products`,
+      state,
+      config,
+
+      { headers: { 'content-type': 'application/json' } },
+    )
+    .then(response => {
+    
+     
+        var formData = new FormData();
+        for (const key of Object.keys(selected)) {
+          formData.append('imageFile', selected[key]);
+          
+        }
+        
+        axios
+          .post(
+            `https://api.mazglobal.co.uk/maz-api/products/uploadProductImages/${response.data.InsertedId}`,
+            formData,
+            config,
+            {},
+          )
+          .then(res => {
+            setLoader(false)
+           
+            succtoggle();
+          })
+      .catch(error => {
+        setLoader(false)
+        setDBError("Error Uploading Image")
+        dbtoggle()
+        console.log(error);
+      });
+        
+      
+     
+    }).catch(err=>
+      {
+        setLoader(false)
+        setDBError("Database Problem")
+        dbtoggle()
+        console.log(err)
+      })
+
+  }
+}
 };
   const move = () => {
     router.push('/product/product');
@@ -205,7 +279,7 @@ const AddProductPage = memo(props => {
     //onClick={()=>addToast("success",{appearence:"success"})}
     const name = e.target.name;
     const value = e.target.value;
-    console.log('supp value', value);
+    
     setState({
       ...state,
       ['supplier_id']: value,
@@ -245,7 +319,6 @@ const AddProductPage = memo(props => {
         }
       }
 
-      console.log('After Change', mydiv);
     } else {
       showDiv(false);
     }
@@ -260,16 +333,16 @@ const AddProductPage = memo(props => {
 
   const handleChild = childData => {
     setSelected({ ...childData });
-    console.log('selected', selected);
+   
   };
   const handleVariant = child => {
     setVariants({ ...child });
-    console.log('parent Variants array', variantss);
+   
   };
   
   const InputProSearch = name => e => {
     const val = e.target.value;
-    console.log("val",val);
+    
     setProText(val);
     if (val === '') {
       setProList(false);
@@ -281,7 +354,7 @@ const AddProductPage = memo(props => {
         return row.name.toLowerCase().includes(protext.toLowerCase());
       });
       // setData(filteredRows);
-      console.log("suppliers",filteredRows)
+     
       setProFilterrow(filteredRows);
     }
 
@@ -377,6 +450,13 @@ const AddProductPage = memo(props => {
 
   const PostProduct = () => (
     <div className="addpromain">
+        {loader && <div className="Loader" />}
+      <div
+        className="order"
+        style={
+          loader === true ? { backgroundColor: 'black', opacity: '0.2' } : {}
+        }
+      >
       <h1 className="newaddproTitle">New Product</h1>
 
       <div className="newaddpro">
@@ -529,6 +609,25 @@ const AddProductPage = memo(props => {
             </div>
           </div>
 
+          {user.role_id==1 &&
+          <div className="newaddproItem">
+            <label for="exampleFormControlSelect1">Supplier</label>
+            <select
+              className="newaddproSelect"
+              id="supplier"
+              required
+              name="supplier_id"
+              value={state.supplier_id}
+              onChange={handleChange(name)}
+            >
+              {supplier.map(p => (
+                <option value={p.id}>{p.name}</option>
+              ))}
+              <option value="null">Select Supplier</option>
+            </select>
+          </div>
+          }
+
           <div className="newaddproItem">
             <label for="exampleFormControlSelect1">Description</label>
             
@@ -564,7 +663,7 @@ const AddProductPage = memo(props => {
       <button type="submit" onClick={submitHandler} className="newaddproButton">
         Save
       </button>
-
+</div>
       <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader toggle={toggle}>Product Status</ModalHeader>
         <ModalBody>
@@ -576,6 +675,19 @@ const AddProductPage = memo(props => {
           </Button>
         </ModalFooter>
       </Modal>
+
+      <Modal isOpen={dbmodal} toggle={dbtoggle}>
+        <ModalHeader toggle={dbtoggle}>Alert</ModalHeader>
+        <ModalBody>
+          <>{dberror}</>
+        </ModalBody>
+        <ModalFooter>
+          <Button color="primary" onClick={dbtoggle}>
+            Okay
+          </Button>
+        </ModalFooter>
+      </Modal>
+
       <Modal isOpen={Imgmodal} toggle={Imgtoggle}>
         <ModalHeader toggle={Imgtoggle}>Product Status</ModalHeader>
         <ModalBody>

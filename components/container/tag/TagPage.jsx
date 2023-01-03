@@ -22,8 +22,7 @@ const TagPage = memo(props => {
 
  useEffect(() => {
   var decoded = jwt_decode(localStorage.getItem('token'));
-  console.log('local',localStorage.getItem('token'))
-  console.log('lres',decoded.result)
+  
   setUser(decoded.result)
     
     axios
@@ -33,7 +32,7 @@ const TagPage = memo(props => {
           var i = 1;
           response.data.data.map(exam => {
             exam['_id'] = i++;
-            console.log("exam",exam)
+        
           }),
             setData(response.data.data);
           setList(response.data.data);
@@ -75,12 +74,12 @@ const TagPage = memo(props => {
     };
 
     axios
-      .delete(`https://api.mazglobal.co.uk/maz-api/tag/${id}`, config)
+      .delete(`https://api.mazglobal.co.uk/maz-api/tags/${id}`, config)
       .then(response => {
-        console.log(response);
+       
         toggle();
         axios
-          .get(`https://api.mazglobal.co.uk/maz-api/tag`, config)
+          .get(`https://api.mazglobal.co.uk/maz-api/tags`, config)
           .then(res => {
             setData(res.data.data);
           })
@@ -105,12 +104,12 @@ const TagPage = memo(props => {
           <>
           {user.role_id==1?
           <div>
-            <Link
+            {/* <Link
               href="../editSupplier/[id]"
               as={`/editSupplier/${params.row.id}`}
             >
               <EditOutlined className="tag1Edit">Edit</EditOutlined>
-            </Link>
+            </Link> */}
 
             <DeleteOutline
               className="tag1ListDelete"

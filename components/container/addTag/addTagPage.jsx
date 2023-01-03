@@ -33,7 +33,7 @@ const AddTagPage = memo(props => {
   
   const submitHandler = e => {
     e.preventDefault();
-    console.log(state);
+   
     const config = {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -45,9 +45,11 @@ const AddTagPage = memo(props => {
     else
     {
       
+      // 
+      //http://localhost:8080/pernia-api/tag
     axios
     .post(
-      `https://api.mazglobal.co.uk/maz-api/tag`,
+      `https://api.mazglobal.co.uk/maz-api/tags`,
       state,config,
 
       { headers: { 'content-type': 'application/json' } },
@@ -55,11 +57,10 @@ const AddTagPage = memo(props => {
 
     .then(response => {
       toggle()
-      
-      console.log("respoooos coupon",response);
+    
     })
     .catch(error => {
-      console.log('error',error)
+     
       toast.notify(`Sorry! Something went wrong..`,{
         type:'error'
       })
@@ -83,7 +84,7 @@ const AddTagPage = memo(props => {
     //      value=100
     //   }
     // }
-    console.log(value);
+
     setState({
       ...state,
       [name]: value,
