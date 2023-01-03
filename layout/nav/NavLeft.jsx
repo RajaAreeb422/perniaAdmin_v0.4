@@ -17,8 +17,7 @@ function NavLeft(props) {
   })
  useEffect(() => {
   var decoded = jwt_decode(localStorage.getItem('token'));
-  console.log('local',localStorage.getItem('token'))
-  console.log('lres',decoded.result)
+  
   setUser(decoded.result)
 },[])
 

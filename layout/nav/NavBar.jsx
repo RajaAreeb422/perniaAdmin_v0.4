@@ -26,14 +26,13 @@ const NavBar = () => {
 
   function deletetoken() {
     localStorage.removeItem('token');
-    console.log(localStorage.getItem('token'));
+
     localStorage.clear();
   }
 
   useEffect(() => {
    var decoded = jwt_decode(localStorage.getItem('token'));
-   console.log('local',localStorage.getItem('token'))
-   console.log('lres',decoded.result)
+   
    setUser(decoded.result)
    if(decoded.result.role_id==1)
    {
@@ -45,7 +44,7 @@ const NavBar = () => {
      `https://api.mazglobal.co.uk/maz-api/suppliers/${decoded.result.supplier_id}`
    )
    .then(res => {
-     console.log("bb",res.data.data)
+   
      setBrand(res.data.data)
    })
    .catch(err => console.log(err));
