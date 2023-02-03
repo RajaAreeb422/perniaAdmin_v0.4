@@ -145,9 +145,9 @@ const CollectionPage = memo(props => {
       renderCell: params => {
         return (
           <>
-            <Link href="/editCollection/[id]" as={`/editCollection/${params.row.id}`}>
+            {/* <Link href="/editCollection/[id]" as={`/editCollection/${params.row.id}`}>
               <EditOutlined className="copEdit">Edit</EditOutlined>
-            </Link>
+            </Link> */}
 
             {/* <EmailOutlined
               className="coupon-user-btn"

@@ -15,7 +15,7 @@ const AddCollectionPage = memo(props => {
   const [state, setState] = useState({
      name:'',
      brand_id:null,
-     tag_id:null,
+     tag_id:-1,
      category_id:null
    
   });
@@ -236,7 +236,7 @@ const AddCollectionPage = memo(props => {
    
   };
   const move = ()  => {
-    router.push('/coupon/Coupon')
+    router.push('/collections/Collection')
   }
 
   const PostCategory = () => (

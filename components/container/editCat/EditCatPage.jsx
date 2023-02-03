@@ -190,9 +190,9 @@ const EditCatPage = memo(props => {
     <div className="user">
       <div className="userTitleContainer">
         <h1 className="userTitle">Edit Category</h1>
-        <Link href="/addCat/addCat">
+        {/* <Link href="/addCat/addCat">
           <button className="userAddButton">Add</button>
-        </Link>
+        </Link> */}
       </div>
       <div className="userContainer">
         <div className="userUpdate">
