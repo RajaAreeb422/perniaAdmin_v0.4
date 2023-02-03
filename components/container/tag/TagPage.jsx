@@ -143,7 +143,7 @@ const TagPage = memo(props => {
         value={valu}
         style={{ height: '50px' }}
         autoComplete="off"
-        placeholder="  Search Supplier"
+        placeholder="  Search Tag"
         className="form-control"
         onChange={requestSearch('search')}
       />
