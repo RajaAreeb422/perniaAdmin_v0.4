@@ -246,11 +246,11 @@ const AddCatPage = memo(props => {
           loader === true ? { backgroundColor: 'black', opacity: '0.2' } : {}
         }
       >
-      <div className="myCategory">
+      <div className="addCategory">
         
-        <h1 className="myCategoryTitle">New Category</h1>
-        <form className="myCategoryForm" onSubmit={submitHandler} >
-          <div  className="myCategoryItem">
+        <h1 className="addCategoryTitle">New Category</h1>
+        <form className="addCategoryForm" onSubmit={submitHandler} >
+          <div  className="addCategoryItem">
             <label for="exampleInputName">Name</label>
             <input
               type="text"
@@ -263,10 +263,10 @@ const AddCatPage = memo(props => {
               onChange={handleChange(name)}
             />
           </div>
-          <div className="myCategoryItem">
+          <div className="addCategoryItem">
             <label for="exampleFormControlSelect1">Parent Category</label>
             <select
-              className="myCategorySelect"
+              className="addCategorySelect"
               id="parent"
               required
               name="parent"
@@ -280,10 +280,10 @@ const AddCatPage = memo(props => {
             </select>
           </div>
           {mydiv && (
-            <div className="myCategoryItem">
+            <div className="addCategoryItem">
               <label for="exampleFormControlSelect1">Sub Category</label>
               <select
-                className="myCategorySelect"
+                className="addCategorySelect"
                 id="parent"
                 
                 name="sub"
@@ -299,10 +299,10 @@ const AddCatPage = memo(props => {
           )}
 
            {user.role_id==1 &&
-           <div className="myCategoryItem">
+           <div className="addCategoryItem">
             <label for="exampleFormControlSelect1">Supplier</label>
             <select
-              className="myCategorySelect"
+              className="addCategorySelect"
               id="supplier"
               required
               name="supplier_id"
@@ -317,7 +317,7 @@ const AddCatPage = memo(props => {
           </div>
          }
 
-          <div className="myCategoryItem">
+          <div className="addCategoryItem">
               <label
                 for="exampleInputName"
               >
@@ -337,7 +337,7 @@ const AddCatPage = memo(props => {
             </div>
 
             
-            <button type="submit" className="myCategoryButton" >
+            <button type="submit" className="addCategoryButton" >
               Add
             </button>
            
