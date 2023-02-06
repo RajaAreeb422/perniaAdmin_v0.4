@@ -179,19 +179,19 @@ const DropLogo = props => {
     <>
     {div &&
       <div
-        className="drop-container"
+        className="droplogo-container"
         onDragOver={dragOver}
         onDragEnter={dragEnter}
         onDragLeave={dragLeave}
         onDrop={fileDrop}
         //   onClick={fileInputClicked}
       >
-        <div className="drop-message">
-          <div className="upload-icon">
+        <div className="droplogo-message">
+          <div className="uploadlogo-icon">
             <input
               multiple
               type="file"
-              className="hideupload"
+              className="hideuploadlogo"
               id="file"
               
                accept="image/*"
@@ -211,24 +211,24 @@ const DropLogo = props => {
         </div>
       </div>
 }
-      <div className="file-display-container">
+      <div className="file-displaylogo-container">
         {validFiles.map((data, i) => (
-          <div className="s1">
-            <div className="imgdiv">
+          <div className="logos1">
+            <div className="logoimgdiv">
               <div>
-                <img className="thumbnail" src={fileurl[i]} />
+                <img className="logothumbnail" src={fileurl[i]} />
               </div>
-              <div className="img-text">
+              <div className="logoimg-text">
                 <span
-                  className={`file-name ${data.invalid ? 'file-error' : ''}`}
+                  className={`logofile-name ${data.invalid ? 'logofile-error' : ''}`}
                 >
                   {data.name}
                 </span>
-                <span className="file-size">({fileSize(data.size)})</span>
+                <span className="logofile-size">({fileSize(data.size)})</span>
                 {data.invalid && (
-                  <span className="file-error-message">({errorMessage})</span>
+                  <span className="logofile-error-message">({errorMessage})</span>
                 )}
-                <span className="remove" onClick={() => removeFile(data.name)}>
+                <span className="logoremove" onClick={() => removeFile(data.name)}>
                   <DeleteOutline />
                 </span>
               </div>

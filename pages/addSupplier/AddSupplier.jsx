@@ -14,6 +14,8 @@ toast.configure();
 
 const AddSupplier = memo(props => {
   const [modal, setModal] = React.useState(false);
+  const [imgmodal, setImgModal] = React.useState(false);
+  const [servermodal, setServerModal] = React.useState(false);
   const [selected, setSelected] = useState([]);
   const [headselected, setHeadSelected] = useState([]);
   const [errormodal, setErrorModal] = React.useState(false);
