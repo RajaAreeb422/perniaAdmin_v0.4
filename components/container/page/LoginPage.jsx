@@ -165,8 +165,8 @@ const LoginPage = ({ props }) => {
               />
             </FormGroup>
           </fieldset>
+          {/* disabled={disable} */}
           <Button
-            disabled={disable}
             color="primary"
             block
             size="lg"
