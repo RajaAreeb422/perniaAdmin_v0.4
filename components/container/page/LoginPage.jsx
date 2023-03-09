@@ -118,7 +118,7 @@ const LoginPage = ({ props }) => {
               <h3 className="mt-2 ml-3 text-light text-center">Login</h3>
             </legend>
             <FormGroup>
-              <Label for="exampleInputEmail3" style={{ width: '100%' }}>
+              <Label for="exampleInputEmail3" style={{ width: '60%' }}>
                 Email address
               </Label>
               <Input
@@ -133,7 +133,7 @@ const LoginPage = ({ props }) => {
               />
             </FormGroup>
             <FormGroup>
-              <Label for="exampleInputPassword3" style={{ width: '100%' }}>
+              <Label for="exampleInputPassword3" style={{ width: '60%' }}>
                 Password
               </Label>
 
