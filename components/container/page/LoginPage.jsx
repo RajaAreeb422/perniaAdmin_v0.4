@@ -118,13 +118,13 @@ const LoginPage = ({ props }) => {
               <h3 className="mt-2 ml-3 text-light text-center">Login</h3>
             </legend>
             <FormGroup>
-              <Label for="exampleInputEmail3" style={{ width: '60%' }}>
+              <Label for="exampleInputEmail3" >
                 Email address
               </Label>
               <Input
                 type="email"
                 className="form-control"
-                style={{ width: '60%' }}
+                style={{ width: '40%',marginLeft:'auto',marginRight:'auto' }}
                 id="exampleInputEmail3"
                 name="email"
                 value={validate.email}
@@ -141,7 +141,7 @@ const LoginPage = ({ props }) => {
                 type={values.showPassword ? 'text' : 'password'}
                 value={validate.password}
                 className="form-control"
-                style={{ width: '60%' }}
+                style={{ width: '40%',marginLeft:'auto',marginRight:'auto' }}
                 name="password"
                 onChange={handleChange('password')}
                 endAdornment={
