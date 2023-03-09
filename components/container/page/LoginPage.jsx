@@ -124,7 +124,7 @@ const LoginPage = ({ props }) => {
               <Input
                 type="email"
                 className="form-control"
-                style={{ width: '40%',marginLeft:'auto',marginRight:'auto' }}
+                style={{ width: '40%'}}
                 id="exampleInputEmail3"
                 name="email"
                 value={validate.email}
@@ -133,7 +133,7 @@ const LoginPage = ({ props }) => {
               />
             </FormGroup>
             <FormGroup>
-              <Label for="exampleInputPassword3" style={{ width: '60%' }}>
+              <Label for="exampleInputPassword3" >
                 Password
               </Label>
 
