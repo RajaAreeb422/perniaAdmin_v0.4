@@ -117,7 +117,7 @@ const LoginPage = ({ props }) => {
             <legend className="text-primary bg-gradient-primary font-weight-bold uppercase">
               <h3 className="mt-2 ml-3 text-light text-center">Login</h3>
             </legend>
-            <FormGroup tyle={{ width: '80%',marginLeft:'auto',marginRight:'auto' }}>
+            <FormGroup style={{ width: '80%',marginLeft:'auto',marginRight:'auto' }}>
               <Label for="exampleInputEmail3" >
                 Email address
               </Label>
@@ -132,7 +132,7 @@ const LoginPage = ({ props }) => {
                 onChange={handleChange('email')}
               />
             </FormGroup>
-            <FormGroup tyle={{ width: '80%',marginLeft:'auto',marginRight:'auto' }}>
+            <FormGroup style={{ width: '80%',marginLeft:'auto',marginRight:'auto' }}>
               <Label for="exampleInputPassword3" s >
                 Password
               </Label>
