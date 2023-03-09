@@ -124,7 +124,7 @@ const LoginPage = ({ props }) => {
               <Input
                 type="email"
                 className="form-control"
-                style={{ width: '100%' }}
+                style={{ width: '60%' }}
                 id="exampleInputEmail3"
                 name="email"
                 value={validate.email}
@@ -141,7 +141,7 @@ const LoginPage = ({ props }) => {
                 type={values.showPassword ? 'text' : 'password'}
                 value={validate.password}
                 className="form-control"
-                style={{ width: '100%' }}
+                style={{ width: '60%' }}
                 name="password"
                 onChange={handleChange('password')}
                 endAdornment={
