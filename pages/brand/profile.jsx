@@ -3,7 +3,7 @@
 import React from 'react';
 
 import MainLayout from '../../layout/MainLayout';
-import ProfileContainer from '../../components/container/brand/profileContainer';
+import ProfileContainer from '../../components/container/brand/ProfileBContainer';
 import HeadDefault from '../../layout/head/HeadDefault';
 
 class Profile extends React.Component {

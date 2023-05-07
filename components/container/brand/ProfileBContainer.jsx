@@ -3,19 +3,19 @@ import React from 'react';
 // import propTypes from 'prop-types';
 
 /** components */
-import ProfilePage from './profilePage';
+import ProfileBPage from './ProfileBPage';
 
-function ProfileContainer({ dispatch, storeLayout }) {
+function ProfileBContainer({ dispatch, storeLayout }) {
   const props = {
     dispatch,
     storeLayout,
   };
 
-  return <ProfilePage {...props} />;
+  return <ProfileBPage {...props} />;
 }
 
 // ProfileContainer.propTypes = {
 //   isMobile: propTypes.bool.isRequired,
 // };
 
-export default ProfileContainer;
+export default ProfileBContainer;

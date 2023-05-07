@@ -71,6 +71,7 @@ const AddSupplier = memo(props => {
     {
       imgtoggle()
     }
+    
     else{
     const config = {
       headers: {

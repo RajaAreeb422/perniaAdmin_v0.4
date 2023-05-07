@@ -10,7 +10,7 @@ import jwt_decode from "jwt-decode";
 
 toast.configure();
 
-const ProfilePage = ()=> {
+const ProfileBPage = ()=> {
   const [modal, setModal] = React.useState(false);
   const [logoModal, setLogoModal] = React.useState(false);
   const [user, setUser] = useState();
@@ -322,4 +322,4 @@ const ProfilePage = ()=> {
     </>
   );
 };
-export default ProfilePage;
+export default ProfileBPage;
