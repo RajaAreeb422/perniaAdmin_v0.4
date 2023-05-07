@@ -16,88 +16,34 @@ import { toast, ToastContainer } from 'react-nextjs-toast';
 
 const EditOrderPage = memo(props => {
   const [text, setText] = useState('');
-  //const { addToast } = useToasts();
-  const [protext, setProText] = useState('');
   const [nproduct, setNewProduct] = useState([]);
-  const [list, setList] = useState(false);
-  const [prolist, setProList] = useState(false);
-  const [shipp, setShipping] = useState([]);
-  const [combdiv, setCombDiv] = useState(false);
-  const [comVal, setComVal] = useState([]);
-  const [modal, setModal] = React.useState(false);
   const [total, setTotal] = useState(0);
   const [wholetotal, setWholeTotal] = useState(0);
   const [price, setPrice] = useState(0);
-  const [dvalue, setDValue] = useState(0);
   const [sum, setSum] = useState(0);
   const [pay, setPay] = useState('');
   const [dlv, setDelievry] = useState('');
+  const [comVal, setComVal] = useState([]);
+  const [orderDetails, setOrderDetails] = useState({
+    payment_method:'',
+    delivery_method:'',
+    payment_status:'',
+    fulfillment_status:''
+  });
   const router = useRouter();
   const { id } = router.query;
-  // Toggle for Modal
-  const toggle = () => setModal(!modal);
-  const [billput, setBillPut] = useState();
-  const [shipput, setShipPut] = useState();
-   //for current billing address
-  const [bill, setAddresses] = useState({
-    id: null,
-    user_address: '',
-    type: '',
-    name: '',
-    city: '',
-    province: '',
-    postal_code: '',
-    country: '',
-  });
  
-  
-  //for new billing address
-  const [newship, setNewShip] = useState({
-    id: null,
-    user_address: '',
-    type: '',
-    name: '',
-    city: '',
-    province: '',
-    postal_code: '',
-    country: '',
-  });
-  //for current shipping address
-  const [currentship, setCurrentShip] = useState({
-    id: null,
-    user_address: '',
-    type: '',
-    name: '',
-    city: '',
-    province: '',
-    postal_code: '',
-    country: '',
-  });
- 
-  const [addship, setAddShip] = useState({
-    id: null,
-    user_address: '',
-    type: '',
-    name: '',
-    city: '',
-    province: '',
-    postal_code: '',
-    country: '',
-  });
   
   const [o_data, setO_Data] = useState({
         
   userId:null,
   products:[],
   orderInfo:{},
+  userInfo:{},
   billing_info:{id:null},
   shipping_info:{id:null}
   
 });
-
-  const [radio, setRadiobtn] = useState({
-    selected: '',
-  });
   const [user_Id, setUserId] = useState(null);
   const [state, setOrder] = useState({
     o_id: null,
@@ -112,20 +58,6 @@ const EditOrderPage = memo(props => {
     delivery_method: '',
     payment_method: '',
     products: [],
-    product_variant_name: [
-      {
-        name: 'size',
-        values: ['small', 'large', 'xl', 'medium'],
-      },
-      {
-        name: 'color',
-        values: ['Red', 'blue', 'black', 'green', 'white'],
-      },
-      {
-        name: 'medium',
-        values: ['cotton', 'rubber', 'plastic'],
-      },
-    ],
   });
   const {
     o_id,
@@ -144,17 +76,11 @@ const EditOrderPage = memo(props => {
   } = state;
   //const [data, setState] = useState([]);
   const [prodata, setProData] = useState([]);
-  const [product, setProduct] = useState([]);
- 
-  const [combination, setCombination] = useState([]);
+  const [loader, setLoader] = useState(false);
   const [shipId, setShipId] = useState(null);
   const [billId, setBillId] = useState(null);
-  const [profilterrow, setProFilterrow] = useState([]);
-  const [mydiv, setDiv] = useState(false);
-  const [shipdiv, setShipDiv] = useState(false);
-  const [billdiv, setBillDiv] = useState(false);
-  const [editshipdiv, setEditShipDiv] = useState(false);
-  const [editbilldiv, setEditBillDiv] = useState(false);
+  const [movemodal, setMoveModal] = React.useState(false);
+  const movetoggle = () => setMoveModal(!movemodal);
 
   useEffect(() => {
  
@@ -164,17 +90,23 @@ const EditOrderPage = memo(props => {
         Authorization: 'Bearer ' + localStorage.getItem('token'),
       },
     };
-    console.log('calling use effect',config);
-    axios
-      .get(`http://95.111.240.143:8080/ecom-api/orders/${id}`, config)
+    //https://api.mazglobal.co.uk/maz-api
+    axios.get(`https://api.mazglobal.co.uk/maz-api/orders/${id}`, config)
       .then(response => {
-        
         setNewProduct(response.data.data.products)
         setPay(response.data.data.payment_method)
         setDelievry(response.data.data.delivery_method)
+        setBillId(response.data.data.billing_id)
+        setShipId(response.data.data.shipping_id)
+        console.log("response",response.data.data)
+        setOrderDetails({
+          payment_method:response.data.data.payment_method,
+          delivery_method:response.data.data.delivery_method,
+          payment_status:response.data.data.payment_status,
+          fulfillment_status:response.data.data.fulfillment_status
+        })
         if(response.data.data.delivery_method=='standard')
         {
-          
           setTotal(response.data.data.total_amount-8);
           setPrice(8)
         }
@@ -184,16 +116,13 @@ const EditOrderPage = memo(props => {
           setPrice(10)
         } 
         setUserId(response.data.data.user_id)
-        requestSearch(response.data.data.user_id)
-        axios
-      .get(`http://95.111.240.143:8080/ecom-api/users/${response.data.data.user_id}`, config)
+        
+        axios.get(`https://api.mazglobal.co.uk/maz-api/users/${response.data.data.user_id}`, config)
       .then(res=>{
 
-        console.log("user is",res.data.data.first_name)
         setText(res.data.data.first_name)})
       .catch(error=>console.log(error))
-      axios
-      .get(`http://95.111.240.143:8080/ecom-api/products`, config)
+      axios.get(`https://api.mazglobal.co.uk/maz-api/products`, config)
       .then(res=>setProData(res.data.data))
       .catch(error=>console.log(error))
         setOrder(response.data.data);
@@ -208,244 +137,78 @@ const EditOrderPage = memo(props => {
   }, []);
 
   const SplitProduct=(products)=>{
-        
-    console.log("products",products)
-        const list = [...nproduct];
-        products.map(com => {
-        
-          
-          var variantsArr = [];
-          if(com.product_variant_name!='')
-          {
-          var arr = com.product_variant_name.split('_');
-          for (var x = 0; x < arr.length; x++) {
-            state.product_variant_name.map(item => {
-             
-              item.values.map(val => {
-                
-                if (val === arr[x]) {
-                  variantsArr.push({
-                    name: item.name,
-                    value: val,
-                  });
-                }
-              });
-            });
-          }
-          list.push({...com,
-            product_id:com.id,
-            product_variant_id:com.product_variant_id
-           } );
-          
-          if (arr.length == 3) {
-            var st1 = arr[0];
-            var st2 = arr[1];
-            var st3 = arr[2];
-            list[list.length - 1]['variantname'] = variantsArr;
-          }
-          if (arr.length == 2) {
-            var st1 = arr[0];
-            var st2 = arr[1];
-            list[list.length - 1]['variantname'] = variantsArr;
-          }
-          if (arr.length == 1) {
-            var st1 = arr[0];
-            list[list.length - 1]['variantname'] = variantsArr;
-          }
-          setComVal(list);
-        }
-        else{
-          list.push({...com,
-            product_id:com.id,
-            product_variant_id:com.product_variant_id
-           } );
-          list[list.length-1]['variantname']=variantsArr
-          setComVal(list);
-        }
-          
-
-          
-        });
-      
+    
+    const list = [...nproduct];
+      products.map(com => {
+    
+     var variantsArr = [];
+      if(com.product_variant_id)
+       {
+   
+    variantsArr=com.variants;
      
-  }
-
+      list.push({...com,
+        product_id:com.product_id,
+        product_variant_id:com.product_variant_id
+       } );
+      list[list.length - 1]['variantname'] = variantsArr;
+    //   if (arr.length == 3) {
+    //     var st1 = arr[0];
+    //     var st2 = arr[1];
+    //     var st3 = arr[2];
+    //     list[list.length - 1]['variantname'] = variantsArr;
+    //   }
+    //   if (arr.length == 2) {
+    //     var st1 = arr[0];
+    //     var st2 = arr[1];
+    //     list[list.length - 1]['variantname'] = variantsArr;
+    //   }
+    //   if (arr.length == 1) {
+    //     var st1 = arr[0];
+    //     list[list.length - 1]['variantname'] = variantsArr;
+    //   }
   
-  const submitHandler = e => {
-    e.preventDefault();
-  
-    newship.type = 'shipping';
-
-    axios
-      .post(
-        `http://95.111.240.143:8080/ecom-api/addresses/${user_Id}`,
-        newship,
-
-        { headers: { 'content-type': 'application/json' } },
-      )
-      .then(response => {
-        
-        setShipDiv(false);
-        setNewShip({
-          id: null,
-          user_address: '',
-          type: '',
-          name: '',
-          city: '',
-          province: '',
-          postal_code: '',
-          country: '',
-        });
+    }
+    else{
+      list.push({...com,
+        product_id:com.product_id,
+        product_variant_id:com.product_variant_id
+       } );
+       list[list.length-1]['variantname']=variantsArr
        
-        const config = {
-          headers: {
-            Authorization: 'Bearer ' + localStorage.getItem('token'),
-          },
-        };
-        const ship_arr = [];
-        const selected_ship = [];
-        axios
-          .get(
-            `http://95.111.240.143:8080/ecom-api/addresses/${user_Id}`,
-            config,
-          )
-          .then(response => {
-            var i = 0;
-            response.data.data.map(item => {
-              if (item.type == 'shipping') {
-                if (i == 0) {
-                  ship_arr.push(item);
-                  setOrder({
-                    ...state,
-                    ['shipping_id']:  item.id
-                  });
-                  setShipId(item.id)
-                  setRadiobtn({
-                    selected: item.id,
-                  });
+    }
+  })
 
-                  i = i + 1;
-                } else {
-                  ship_arr.push(item);
-                }
-              } else {
-                setAddresses(item);
-                setBillId(item.id)
-                setOrder({
-                  ...state,
-                  ['billing_id']:  item.id ,
-                });
-              }
-            });
-            setShipping(ship_arr);
-            
-          })
-          .catch(err => console.log(err));
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
+  setComVal(list);
+}
 
-  //for request to backend for the updation of billing address
-  const submitEditBillHandler = e => {
-    e.preventDefault();
-   
-    bill.type = 'billing';
-    axios
-      .put(
-        `http://95.111.240.143:8080/ecom-api/addresses/${bill.id}`,
-        billput,
-      )
-      .then(response => {
-        
-        toast.notify(`Billing Address Updated Succesfully`, {
-          type: 'success',
-        });
+const handleChild = childData => {
+  setTotal(childData);
+  setWholeTotal(childData+price)
 
-        setEditBillDiv(false);
-        
-       // setAddresses(bill);
-      }).catch(err=>{
-        toast.notify(`Sorry Something went wrong!! Try Again`, {
-          type: 'error',
-        });
-      });
-  };
-  const submitEditHandler = e => {
-    e.preventDefault();
-   
-   
-    const config = {
-      headers: {
-        Authorization: 'Bearer ' + localStorage.getItem('token'),
-      },
-    };
-    currentship.type = 'shipping';
-    axios
-      .put(
-        `http://95.111.240.143:8080/ecom-api/addresses/${newship.id}`,
-        shipput,
-      )
-      .then(response => {
-       
-        setEditShipDiv(false);
-       
-        toast.notify(`Shipping Address Updated Succesfully`, {
-          type: 'success',
-        });
-        
-        const ship_arr = [];
+};
+const handletotal = data => {
+  setSum(data);
+};
+const handleProduct = (child,com) => {
+  state.products = child;
 
-        axios
-          .get(
-            `http://95.111.240.143:8080/ecom-api/addresses/${user_Id}`,
-            config,
-          )
-          .then(response => {
-            var i = 0;
-            response.data.data.map(item => {
-              if (item.type == 'shipping') {
-                if (i == 0) {
-                  ship_arr.push(item);
-                  setShipId(item.id)
-                  setOrder({
-                    ...state,
-                    ['shipping_id']:  item.id ,
-                  });
-                  setRadiobtn({
-                    selected: item.id,
-                  });
+  setComVal(com)
+};
 
-                  i = i + 1;
-                } else {
-                  ship_arr.push(item);
-                }
-              } else setAddresses(item);
-            });
-            setShipping(ship_arr);
-          })
-          .catch(err => {
-            toast.notify(`OOPs, something went wrong !! Try again`, {
-              type: 'error',
-            });
-          });
-      })
-      .catch(error => {
-        console.log(error);
-        toast.notify(`OOPs, something went wrong !! Try again`, {
-          type: 'error',
-        })
-      });
-  };
 
   const handlePMethodChange = name => e => {
     const name = e.target.name;
     const value = e.target.value;
-   
     setPay(value)
-    
     setOrder({ ...state, ['payment_method']: value });
+    setOrderDetails({ ...orderDetails, ['payment_method']: value });
+  };
+
+  const handlePaymentStatusChange = name => e => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setOrderDetails({ ...orderDetails, ['payment_status']: value });
   };
   const handleDMethodChange = name => e => {
     const name = e.target.name;
@@ -461,345 +224,11 @@ const EditOrderPage = memo(props => {
       setPrice(10)
     }
  
-   
     setOrder({ ...state, ['delivery_method']: value });
-  };
-
-  const handleChange = name => e => {
-    //onClick={()=>addToast("success",{appearence:"success"})}
-    const name = e.target.name;
-    const value = e.target.value;
-  
-    setShipPut({
-      [name]:value
-    })
-    setCurrentShip({
-      ...currentship,
-      [name]: value,
-    });
-  };
-  const handleNewChange = name => e => {
-    //onClick={()=>addToast("success",{appearence:"success"})}
-    const name = e.target.name;
-    const value = e.target.value;
-    console.log('value', value);
-    setNewShip({
-      ...newship,
-      [name]: value,
-    });
-    
-  };
-
-  //for billing address updation
-  const handleEditChange = name => e => {
-    const name = e.target.name;
-    const value = e.target.value;
-    
-    setBillPut({
-      [name]:value
-    })
-    setAddresses({
-      ...bill,
-      [name]: value,
-    });
-  };
-
-  const handleChild = childData => {
-    setTotal(childData);
-    setWholeTotal(childData+price)
-  
-  };
-  const handletotal = data => {
-    setSum(data);
-  };
-  const handleProduct = (child,com) => {
-    state.products = child;
- 
-    setComVal(com)
-  };
-  const InputSearch = name => e => {
-    const val = e.target.value;
-    
-    setText(val);
-    if (val === '') {
-      setList(false);
-      
-    } else {
-      setList(true);
-
-      const filteredRows = data.filter(row => {
-        return row.first_name.toLowerCase().includes(text.toLowerCase());
-      });
-      // setData(filteredRows);
-      setFilterrow(filteredRows);
-    }
-
-    console.log(filterrow);
-  };
-  const InputProSearch = name => e => {
-    const val = e.target.value;
-
-    setProText(val);
-    if (val === '') {
-      setProList(false);
-     
-    } else {
-      setProList(true);
-
-      const filteredRows = prodata.filter(row => {
-        return row.name.toLowerCase().includes(protext.toLowerCase());
-      });
-      // setData(filteredRows);
-      setProFilterrow(filteredRows);
-    }
-
-   
-  };
-
- 
-
-  function requestproSearch(item) {
-    setProList(false);
-
-    axios
-      .get(`http://95.111.240.143:8080/ecom-api/products/${item.id}`)
-      .then(res => {
-        
-        setProText(item.name);
-        setProduct(res.data.data);
-        
-        let list = [];
-        let x;
-        if (res.data.data.combinations.length > 0) {
-          
-          res.data.data.combinations.map(it => {
-            list.push({
-              ...it,
-              ['product_id']: item.id,
-              ['path']:item.path
-            });
-          });
-         
-          setCombination(list);
-          setCombDiv(true);
-        } else {
-          setCombDiv(false);
-          setProText(item.name);
-          const list = [...comVal];
-          const prolist = [...nproduct];
-          let s = sum;
-          s = s + 1;
-          setSum(s);
-         
-          if(item.path.includes("//95.111.240.143/ecom-api"))
-          {
-          x="http"+item.path
-          console.log("new img",x)
-          }
-        
-        else
-        {
-        x="http//95.111.240.143/ecom-api/"+item.path
-        console.log("new img",x)
-        }
-          prolist.push({
-            product_id: item.id,
-            product_variant_id: null,
-            product_variant_name: '',
-            product_name: item.name,
-            price: item.price,
-            path:item.path,
-            quantity: 1,
-          });
-          state.products = prolist;
-          setNewProduct(prolist);
-          list.push({
-            product_id: item.id,
-            product_variant_id: null,
-            product_variant_name: '',
-            product_name: item.name,
-            price: item.price,
-            path:item.path,
-            variantname:[],
-            quantity: 1,
-          });
-       
-          setComVal(list);
-          
-          var tt = total;
-          tt = tt + item.price;
-          setTotal(tt);
-          setWholeTotal(tt+price)
-        }
-      })
-      .catch(err => console.log(err));
-
-    //}
-    //}
-  }
-
-  function requestSearch(uid) {
-    
-    const config = {
-      headers: {
-        Authorization: 'Bearer ' + localStorage.getItem('token'),
-      },
-    };
-
-   
-    
-    
-
-    const ship_arr = [];
-    const selected_ship = [];
-    axios
-      .get(
-        `http://95.111.240.143:8080/ecom-api/addresses/${uid}`,
-        config,
-      )
-      .then(response => {
-        
-         var i = 0;
-        // setUserId(item.user_id);
-        // state.userId = item.user_id;
-        response.data.data.map(item => {
-          setText(item.first_name);
-          if (item.type === 'shipping') {
-            if (i === 0) {
-              setShipId(item.id)
-              setOrder({
-                ...state,
-                ['shipping_id']:  item.id ,
-              });
-              
-              ship_arr.push(item);
-              setRadiobtn({
-                selected: item.id,
-              });
-
-              i = i + 1;
-            } else {
-              ship_arr.push(item);
-         
-            }
-          }
-          if (item.type === 'billing') {
-            setBillId(item.id)
-            setOrder({
-              ...state,
-              ['billing_id']:  item.id ,
-            });
-           
-            setAddresses(item);
-          }
-        });
-        setShipping(ship_arr);
-      })
-      .catch(err => console.log(err));
-  }
-
-  const handleradioChange = item => e => {
-    setRadiobtn({
-      selected: e.target.value,
-    });
-    setOrder({
-      ...state,
-      ['shipping_id']: 
-         item.id,
-      
-    });
-    setShipId(item.id)
-    
-  };
-
-  const handleChkboxChange = com => e => {
-    const list = [...comVal];
-    const prolist = [...nproduct];
-    var str = '';
-    var st = '';
-    var variantsArr = [];
-    if (e.target.checked == true) {
-      var s = sum;
-      s = s + 1;
-      setSum(s);
-      
-      var arr = com.product_variant_name.split('_');
-      
-      var cid = parseInt(com.id);
-      prolist.push({
-        product_variant_id: cid,
-        product_variant_name: com.product_variant_name,
-        product_name: protext,
-        price: com.regular_price,
-        path:com.path,
-        quantity: 1,
-      });
-      setNewProduct(prolist)
-     
-      
-      //list.push(prolist);
-      for (var x = 0; x < arr.length; x++) {
-        state.product_variant_name.map(item => {
-          
-          item.values.map(val => {
-           
-            if (val ==arr[x]) {
-              variantsArr.push({
-                name: item.name,
-                value: val,
-              });
-            }
-          });
-        });
-      }
-      
-      if (arr.length === 3) {
-        var st1 = arr[0];
-        var st2 = arr[1];
-        var st3 = arr[2];
-        prolist[prolist.length - 1]['variantname'] = variantsArr;
-      }
-      if (arr.length === 2) {
-        var st1 = arr[0];
-        var st2 = arr[1];
-        prolist[prolist.length - 1]['variantname'] = variantsArr;
-      }
-      if (arr.length === 1) {
-        var st1 = arr[0];
-        prolist[prolist.length - 1]['variantname'] = variantsArr;
-      }
-
-      var tt = total;
-      tt = tt + com.regular_price;
-      setTotal(tt);
-      setWholeTotal(tt+price)
-      // console.log('prolist iss',prolist)
-      setComVal(prolist);
-     
-    } else {
-      const arr = [];
-     
-      if (comVal != []) {
-        for (var i = 0; i < comVal.length; i++) {
-          if (comVal[i].product_variant_name === com.product_variant_name) {
-          } else {
-            arr.push(comVal[i]);
-          }
-        }
-      }
-     // console.log('arr iss',arr)
-      setComVal(arr);
-    }
+    setOrderDetails({ ...orderDetails, ['delivery_method']: value });
   };
 
 
-
-  const AddProduct = () => {
-    setCombination([]);
-    setCombDiv(false);
-    setProText('');
-    toggle();
-  };
 
   const submitOrder = () => {
     const config = {
@@ -807,72 +236,84 @@ const EditOrderPage = memo(props => {
         Authorization: 'Bearer ' + localStorage.getItem('token'),
       },
     };
-    o_data.orderInfo = {
-      total_amount: wholetotal,
-      total_items: sum,
-      payment_method: pay,
-      delivery_method: dlv,
-    };
-        o_data.billing_info={
+    setLoader(true);
+    let products_o=[]
+    let totalItem=0;
+    
+    o_data.billing_info={
       id:billId
     }
     o_data.shipping_info={
       id:shipId
     }
-    o_data.products=nproduct
+    o_data.userInfo = {
+      email: state.ship_details.email,
+      first_name: state.ship_details.first_name,
+      last_name: state.ship_details.last_name,
+      password: 'agag'
+    }
+    products_o=state.products
+      products_o.map(it=>{
+      products_o.push({
+      product_variant_id:it.product_variant_id,
+      product_id:it.product_id,
+      product_variant_name:it.product_variant_name,
+      product_name:it.product_name,
+      price:it.price,
+      supplier_id:it.supplier_id,
+      path:it.path,
+      quantity:it.quantity
+    })
+    totalItem=totalItem+it.count
+  
+  })
+  setSum(totalItem)
+  o_data.products=products_o
+  o_data.orderInfo = {
+    total_amount: wholetotal,
+    total_items: sum,
+    payment_method: pay,
+    delivery_method: dlv,
+    payment_status:orderDetails.payment_status,
+    fulfillment_status:orderDetails.fulfillment_status
+  };
     o_data.userId=user_Id
-    axios
-      .put(
-        `http://95.111.240.143:8080/ecom-api/orders/${id}`,
-        o_data,
-        config
+    console.log(o_data)
+    let orderStatusDetails={
+      payment_method: pay,
+      delivery_method: dlv,
+      payment_status:orderDetails.payment_status,
+    }
+    //https://api.mazglobal.co.uk/maz-api/orders
+    axios.put(`https://api.mazglobal.co.uk/maz-api/orders/updateOrderStatus/${id}`,
+        orderStatusDetails,
       )
       .then(res => {console.log(res.data)
-        toast.notify("order updated Successfully",{
-        type:"success"})
-       
-      
-      }).catch(err => console.log(err));
-      
-     // movep()
-    console.log('order details are', nproduct);
+        setLoader(false);
+        movetoggle();
+        toast.notify("order updated Successfully",{type:"success"})
+      }).catch(err => {
+        console.log(err)
+        toast.notify(`Sorry! There is some problem..`, {
+          type: 'error',
+        });
+      });
+    
   };
-  const movep=()=>{
+  const move=()=>{
     router.push('/order/order')
-  }
-
-  const shipdetails = () => {
-    if (editshipdiv == false) setShipDiv(true);
-  };
-  const billdetails = () => {
-    if (editbilldiv == false) setBillDiv(true);
-  };
-
-  function editshipdetails(id) {
-    shipp.map(item => {
-      if (item.id == id) setCurrentShip(item);
-    });
-    if (shipdiv == false) {
-      setEditShipDiv(true);
-    }
-  }
-  function editbilldetails(id) {
-  //  if (bill.id == id) setNewShip(bill);
-
-    if (billdiv == false) {
-      setEditBillDiv(true);
-    }
-  }
-  function searchValue(v) {
-    console.log('VV', v);
-    setText(v);
-    setList(false);
-    console.log('text issssssssssssss', text);
   }
 
   return (
     <div className="product">
-      <div className="productTitleContainer">
+      {/* <div className="productTitleContainer"> */}
+      {loader && <div className="editLoader" />}
+      <div
+        className="productTitleContainer"
+        style={
+          loader === true ? { backgroundColor: 'black', opacity: '0.2' } : {}
+        }
+      >
         <h1 className="productTitle">Edit Order</h1>
         {/* <Link href="/newproduct">
               <button className="productAddButton">Create</button>
@@ -881,9 +322,7 @@ const EditOrderPage = memo(props => {
       <div className="productTop">
         <div className="productTopLeft">
         <ToastContainer align={'right'} position={'middle'} />
-          {/* <label className="c_label" for="exampleFormControlSelect1">
-            Customer Name
-          </label> */}
+        
           <div className='imgpart'>
           <img 
               src="https://www.kindpng.com/picc/m/495-4952535_create-digital-profile-icon-blue-user-profile-icon.png"
@@ -897,26 +336,26 @@ const EditOrderPage = memo(props => {
           <label style={{ marginTop: '10px' }}>Payment Method</label>
           <select
             className="form-control"
-            id="parent"
+            id="payment_method"
             required
             name="payment_method"
             style={{ marginBottom: '10px' }}
-            value={state.payment_method}
+            value={orderDetails.payment_method}
             onChange={handlePMethodChange('payment_method')}
           >
-            <option value="credit card">Credit Card</option>
-            <option value="bank transfer">Bank Transfer</option>
+            <option value="CD">Credit Card</option>
+            {/* <option value="bank transfer">Bank Transfer</option> */}
             <option value="COD">Cash On Delivery</option>
           </select>
 
-          <label>Delievery Method</label>
+          <label>Delivery Method</label>
           <select
             className="form-control"
-            id="parent"
+            id="delivery_method"
             required
             name="delivery_method"
             style={{ marginBottom: '10px' }}
-            value={state.delivery_method}
+            value={orderDetails.delivery_method}
             onChange={handleDMethodChange('delivery_method')}
           >
             <option value="standard">Standard</option>
@@ -928,396 +367,66 @@ const EditOrderPage = memo(props => {
           </label>
           <select
             className="form-control"
-            id="parent"
+            id="payment_status"
             required
-            name="category_id"
-            value={state.payment_status}
-            // onChange={handleChange(name)}
+            name="payment_status"
+            value={orderDetails.payment_status}
+            onChange={handlePaymentStatusChange('payment_status')}
+
           >
-            <option value="">Paid</option>
-            <option value="">UnPaid</option>
+            <option value="paid">Paid</option>
+            <option value="pending">Pending</option>
           </select>
+          <SummaryItemButton onClick={() => submitOrder()}>
+                    Update Order
+          </SummaryItemButton>
         </div>
         <div className="productTopRight">
-          <h4>Billing Address</h4>
-          <div className="productInfoTop">
-            <div className="b_label">
-              
-                <>
-                  <div className="billbtns">
-                    <div className="newdiv">
-                      <div className="prevAdd">
-                        <label>{bill.user_address}</label>
-                      </div>
-                        <div className="edit">
-                          <Edit
-                            onClick={() => editbilldetails(bill.id)}
-                            className="billedit"
-                          ></Edit>
-                          <label>Edit</label>
-                        </div>
-                      
-                      
-                    </div>
-                      
-
-                    {editbilldiv && (
-                      <>
-                        <form
-                          onSubmit={submitEditBillHandler}
-                         className="editForm"
-                        >
-                          <div className="editItem">
-                            <div className="form-group" style={{width:'410px'}}>
-                              <label>Address</label>
-                              <input
-                                type="text"
-                                placeholder="Type Address"
-                                className="form-control"
-                                name="user_address"
-                                value={bill.user_address}
-                                onChange={handleEditChange('user_address')}
-                              />
-                            </div>
-                          </div>
-                          <div className="editItem">
-                            <div className="form-group" style={{width:'410px'}}>
-                              <label>Title</label>
-                              <input
-                                type="text"
-                                placeholder="Type Title"
-                                className="form-control"
-                                name="name"
-                                value={bill.name}
-                                onChange={handleEditChange('name')}
-                              />
-                            </div>
-                          </div>
-
-                          <div className="editItem2">
-                            <div className="textarea1">
-                              <label>City</label>
-                              <input
-                                type="text"
-                                name="city"
-                                value={bill.city}
-                                className="gap"
-                                placeholder="Your City"
-                                onChange={handleEditChange('city')}
-                              />
-                            </div>
-
-                            <div className="textarea2">
-                              <label>Postal Code</label>
-                              <input
-                                type="text"
-                                name="postal_code"
-                                value={bill.postal_code}
-                                placeholder="City Code"
-                                onChange={handleEditChange('postal_code')}
-                              />
-                            </div>
-                          </div>
-
-                          <div className="editItem2">
-                            <div className="textarea1">
-                              <label>Country</label>
-                              <input
-                                type="text"
-                                name="country"
-                                value={bill.country}
-                                className="gap"
-                                placeholder="Your Country"
-                                onChange={handleEditChange('country')}
-                              />
-                            </div>
-
-                            <div className="textarea2">
-                              <label>State/Province</label>
-                              <input
-                                type="text"
-                                name="province"
-                                value={bill.province}
-                                placeholder="Your State"
-                                onChange={handleEditChange('province')}
-                              />
-                            </div>
-                          </div>
-                          <button type="submit" className="editButton">
-                            Update
-                          </button>
-                          <button
-                            onClick={() => setEditBillDiv(false)}
-                            className="CloseButton"
-                          >
-                            Close
-                          </button>
-                        </form>
-                      </>
-                    )}
-                  </div>
-
-                  
-                </>
-              
-            </div>
-          </div>
-          <div className="productFormLeft">
-            <h4>Shipping Address</h4>
-            <div className="s_label">
-           
-                <>
-                  <div className="radiobtns">
-                    {shipp.map(item => {
-                      return (
-                        <div className="newdiv">
-                          <div className="prevAdd">
-                            <input
-                              type="radio"
-                              name="address"
-                              value={item.id}
-                              checked={
-                                radio.selected === item.id
-                                  ? true
-                                  : radio.selected == item.id
-                              }
-                              onChange={handleradioChange(item)}
-                            />
-                            <label className="user_address">
-                              {item.user_address}
-                            </label>
-                          </div>
-                          <div className="edit">
-                            <Edit
-                              onClick={() => editshipdetails(item.id)}
-                            ></Edit>
-                            <label>Edit</label>
-                          </div>
-                        </div>
-                      );
-                    })}
-
-                    {shipdiv && (
-                      <>
-                      
-                        {/* form to add new shipping address */}
-                        <form onSubmit={submitHandler} className="editForm">
-                          <div className="editItem">
-                            <div className="form-group" style={{width:'410px'}}>
-                              <label>Address</label>
-                              <input
-                                type="text"
-                                placeholder="Type Address"
-                                className="form-control"
-                                name="user_address"
-                                value={newship.user_address}
-                                onChange={handleNewChange('user_address')}
-                              />
-                            </div>
-                          </div>
-                          <div className="editItem">
-                            <div className="form-group" style={{width:'410px'}}>
-                              <label>Title</label>
-                              <input
-                                type="text"
-                                placeholder="Type Title"
-                                className="form-control"
-                                name="name"
-                                value={newship.name}
-                                onChange={handleNewChange('name')}
-                              />
-                            </div>
-                          </div>
-
-                          <div className="editItem2">
-                            <div className="textarea1">
-                              <label>City</label>
-                              <input
-                                type="text"
-                                name="city"
-                                value={newship.city}
-                                className="gap"
-                                placeholder="Your City"
-                                onChange={handleNewChange('city')}
-                              />
-                            </div>
-
-                            <div className="textarea2">
-                              <label>Postal Code</label>
-                              <input
-                                type="text"
-                                name="postal_code"
-                                value={newship.postal_code}
-                                placeholder="City Code"
-                                onChange={handleNewChange('postal_code')}
-                              />
-                            </div>
-                          </div>
-
-                          <div className="editItem2">
-                            <div className="textarea1">
-                              <label>Country</label>
-                              <input
-                                type="text"
-                                name="country"
-                                value={newship.country}
-                                className="gap"
-                                placeholder="Your Country"
-                                onChange={handleNewChange('country')}
-                              />
-                            </div>
-
-                            <div className="textarea2">
-                              <label>State/Province</label>
-                              <input
-                                type="text"
-                                name="province"
-                                value={newship.province}
-                                placeholder="Your State"
-                                onChange={handleNewChange('province')}
-                              />
-                            </div>
-                          </div>
-
-                          <button type="submit" className="editButton">
-                            Add
-                          </button>
-                          <button
-                            onClick={() => setShipDiv(false)}
-                            className="CloseButton"
-                          >
-                            Close
-                          </button>
-                        </form>
-                      </>
-                    )}
-                    
-                    {/* form to update the selceted  shipping address */}
-                    {editshipdiv && (
-                      <>
-                        <form
-                          onSubmit={submitEditHandler}
-                          className="editForm"
-                        >
-                          <div className="editItem">
-                            <div className="form-group" style={{width:'410px'}}>
-                              <label>Address</label>
-                              <input
-                                type="text"
-                                placeholder="Type Address"
-                                className="form-control"
-                                name="user_address"
-                                value={currentship.user_address}
-                                onChange={handleChange('user_address')}
-                              />
-                            </div>
-                          </div>
-                          <div className="editItem">
-                            <div className="form-group" style={{width:'410px'}}>
-                              <label>Title</label>
-                              <input
-                                type="text"
-                                placeholder="Type Title"
-                                className="form-control"
-                                name="name"
-                                value={currentship.name}
-                                onChange={handleChange('name')}
-                              />
-                            </div>
-                          </div>
-
-                          <div className="editItem2">
-                            <div className="textarea1">
-                              <label>City</label>
-                              <input
-                                type="text"
-                                name="city"
-                                value={currentship.city}
-                                className="gap"
-                                placeholder="Your City"
-                                onChange={handleChange('city')}
-                              />
-                            </div>
-
-                            <div className="textarea2">
-                              <label>Postal Code</label>
-                              <input
-                                type="text"
-                                name="postal_code"
-                                value={currentship.postal_code}
-                                placeholder="City Code"
-                                onChange={handleChange('postal_code')}
-                              />
-                            </div>
-                          </div>
-
-                          <div className="editItem2">
-                            <div className="textarea1">
-                              <label>Country</label>
-                              <input
-                                type="text"
-                                name="country"
-                                value={currentship.country}
-                                className="gap"
-                                placeholder="Your Country"
-                                onChange={handleChange('country')}
-                              />
-                            </div>
-
-                            <div className="textarea2">
-                              <label>State/Province</label>
-                              <input
-                                type="text"
-                                name="province"
-                                value={currentship.province}
-                                placeholder="Your State"
-                                onChange={handleChange('province')}
-                              />
-                            </div>
-                          </div>
-                          <button type="submit" className="editButton">
-                            Update
-                          </button>
-                          <button
-                            onClick={() => setEditShipDiv(false)}
-                            className="CloseButton"
-                          >
-                            Close
-                          </button>
-                        </form>
-                      </>
-                    )}
-                  </div>
-                  <div className="addshipadrs">
-                    <button onClick={shipdetails} className="shipbtn">
-                      Add Address
-                    </button>
-                  </div>
-                </>
-              
-            </div>
-          </div>
+        <Summary>
+                <SummaryNav>
+                  <SummaryTitle>ORDER SUMMARY</SummaryTitle>
+                </SummaryNav>
+                <SummaryItem>
+                  <SummaryItemText>Subtotal</SummaryItemText>
+                  <SummaryItemPrice>{total} PKR</SummaryItemPrice>
+                </SummaryItem>
+                <SummaryItem>
+                  <SummaryItemText>Total Items</SummaryItemText>
+                  <SummaryItemPrice>{sum}</SummaryItemPrice>
+                </SummaryItem>
+                <SummaryItem>
+                  <SummaryItemText>Estimated Shipping</SummaryItemText>
+                  <SummaryItemPrice>{price} PKR</SummaryItemPrice>
+                </SummaryItem>
+                <SummaryItem>
+                  <SummaryItemText>Shipping Discount</SummaryItemText>
+                  <SummaryItemPrice>0.0 PKR</SummaryItemPrice>
+                </SummaryItem>
+                <SummaryItem type="total">
+                  <SummaryItemText>Total</SummaryItemText>
+                  <SummaryItemPrice>
+                    <strong>{wholetotal} PKR</strong>
+                  </SummaryItemPrice>
+                </SummaryItem>
+               
+                 
+                
+              </Summary>
         </div>
       </div>
 
-      <button
-        onClick={toggle}
-        style={{ marginLeft: '20px' }}
-        className="shipbtn"
-      >
-        Add Product
-      </button>
 
-      <div className="productBottom">
+     <div className="productBottom">
         <div className="orderprocess">
-          <div className="orderproducts" style={{ width: '600px' }}>
-            
-            {
+          
+          <div className="orderSummary">
+                        
+          {
               comVal.map((item, i) => (
                 
-                item.variantname==undefined?'':
+                // item.variantname==undefined?'':
                 <EditShoppingCart
-                  id={item.id}
+                  id={item.product_id}
                   index={i}
                   qty={parseInt(item.quantity)}
                   product_variant_name={item.product_variant_name}
@@ -1335,107 +444,23 @@ const EditOrderPage = memo(props => {
                 />
               ))
               }
-          </div>
-          <div className="orderSummary">
             
-            
-              <Summary>
-                <SummaryNav>
-                  <SummaryTitle>ORDER SUMMARY</SummaryTitle>
-                </SummaryNav>
-                <SummaryItem>
-                  <SummaryItemText>Subtotal</SummaryItemText>
-                  <SummaryItemPrice>${total}</SummaryItemPrice>
-                </SummaryItem>
-                <SummaryItem>
-                  <SummaryItemText>Total Items</SummaryItemText>
-                  <SummaryItemPrice>{sum}</SummaryItemPrice>
-                </SummaryItem>
-                <SummaryItem>
-                  <SummaryItemText>Estimated Shipping</SummaryItemText>
-                  <SummaryItemPrice>$ {price}</SummaryItemPrice>
-                </SummaryItem>
-                <SummaryItem>
-                  <SummaryItemText>Shipping Discount</SummaryItemText>
-                  <SummaryItemPrice>$ 0.0</SummaryItemPrice>
-                </SummaryItem>
-                <SummaryItem type="total">
-                  <SummaryItemText>Total</SummaryItemText>
-                  <SummaryItemPrice>
-                    <strong>${wholetotal}</strong>
-                  </SummaryItemPrice>
-                </SummaryItem>
-                <SummaryButton>
-                  <SummaryItemButton onClick={() => submitOrder()}>
-                    Update Order
-                  </SummaryItemButton>
-                </SummaryButton>
-              </Summary>
+              
             
           </div>
         </div>
-      </div>
-      <Modal isOpen={modal} toggle={toggle}>
-        <ModalHeader toggle={AddProduct}>Products</ModalHeader>
-        <ModalBody>
-          <form>
-            <label for="exampleFormControlSelect1">Product Name</label>
-            <input
-              type="text"
-              name="search"
-              id="header-search"
-              autoComplete="off"
-              // options={searchList}
-              value={protext}
-              // openMenuOnClick={false}
-              placeholder="Search Product"
-              className="form-control"
-              onChange={InputProSearch('search')}
-            />
-            {prolist && (
-              <div className="lstdropdown">
-                {profilterrow.map((item, i) => {
-                  return i < 10 ? (
-                    <li
-                      className="ulistitem"
-                      onClick={() => requestproSearch(item)}
-                    >
-                      <span style={{ marginLeft: '10px' }}>{item.name}</span>
-                    </li>
-                  ) : (
-                    <></>
-                  );
-                })}
-              </div>
-            )}
-            {combdiv && (
-              <div className="chkdiv">
-                {combination.map((com, i) => {
-                  return (
-                    <div className="chkflex">
-                      <input
-                        name="isGoing"
-                        type="checkbox"
-                        className="chkboxes"
-                        //checked={this.state.isGoing}
-                        onChange={handleChkboxChange(com)}
-                      />
-                      <label className="chkname">
-                        {com.product_variant_name}
-                      </label>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
-          </form>
-        </ModalBody>
-        <ModalFooter>
-          <Button color="primary" onClick={AddProduct}>
-            Okay
-          </Button>
-        </ModalFooter>
-      </Modal>
+      </div> 
+      <Modal isOpen={movemodal} toggle={movetoggle}>
+          <ModalHeader toggle={movetoggle}>Order Status</ModalHeader>
+          <ModalBody>
+            <>Order Updated Successfully</>
+          </ModalBody>
+          <ModalFooter>
+            <Button color="primary" onClick={move}>
+              Okay
+            </Button>
+          </ModalFooter>
+        </Modal>
     </div>
   );
 });
@@ -1453,25 +478,25 @@ const SummaryTitle = styled.h1`
   font-weight: 200;
 
   color: white;
-  margin-left: 30px;
+  
 `;
 const SummaryNav = styled.div`
   font-weight: 200;
   background-color: black;
   color: white;
+  text-align:center;
   border-radius: 10px;
-  margin-top: -19px;
-  width: 394px;
-  margin-left: -18px;
+  
 `;
 const SummaryButton = styled.div`
   font-weight: 200;
   type: button;
   background-color: black;
   color: white;
+  text-align:center;
   border-radius: 10px;
   margin-top: -19px;
-  width: 394px;
+  width: auto;
   margin-left: -18px;
   height: 30px;
   cursor: pointer;
@@ -1486,14 +511,18 @@ const SummaryItem = styled.div`
 `;
 
 const SummaryItemText = styled.span``;
-const SummaryItemButton = styled.span`
-  text-align: center;
-  margin-top: 30px;
-  margin-left: 140px;
+const SummaryItemButton = styled.button`
+ font-weight: 200;
+  type: button;
+  background-color: black;
+  color: white;
+  text-align:center;
+  border-radius: 10px;
+  margin-top: 20px;
+  width: auto;
+  margin-left: 5px;
+  height: 30px;
   cursor: pointer;
-  font-size: 16px;
-
-  margin-right: 140px;
 `;
 
 const SummaryItemPrice = styled.span``;

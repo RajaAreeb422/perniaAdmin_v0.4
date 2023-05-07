@@ -11,20 +11,18 @@ import {
   FormFeedback,
   FormText,
   FormControl,
-  Button,
 } from 'reactstrap';
-
-import { useSelector, useDispatch } from 'react-redux';
-
 import axios from 'axios';
 import Input from '@material-ui/core/Input';
 import IconButton from '@material-ui/core/IconButton';
-import InputLabel from '@material-ui/core/InputLabel';
 import Visibility from '@material-ui/icons/Visibility';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import validator from 'validator'
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+import { Error, LabelImportantOutlined } from '@material-ui/icons';
 
-const LoginPage = ({ props }) => {
+const LoginPage = () => {
   const [validate, setField] = useState({
     email: '',
     password: '',
@@ -34,7 +32,14 @@ const LoginPage = ({ props }) => {
   const router = useRouter();
   const [disable, setDisable] = useState(true);
   const [access, setPermison] = useState(false);
-
+  const [resMessg, setResponseMsg] = useState('')
+  const [remail, setREmail] = useState({
+    email:''
+  })
+  const [forgotmodal, setForgotModal] = React.useState(false);
+  const forgottoggle = () => setForgotModal(!forgotmodal);
+  const [responsemodal, setResponseModal] = React.useState(false);
+  const responsetoggle = () => setResponseModal(!responsemodal);
   const [values, setValues] = useState({
     showPassword: false,
   });
@@ -109,8 +114,57 @@ const LoginPage = ({ props }) => {
       });
   };
 
-  const GetLogin = () => (
+  const forgetpassword = () => {
+
+    console.log('in forgett')
+    forgottoggle()
+  }
+  const validateEmail = (e) => {
+    let email=e.target.value
+   if(email=='')
+   {
+     setError('')
+   }
+   else if (validator.isEmail(email)) {
+
+     setREmail({email:e.target.value})
+     setError('')
+   } else {
+     setError("Invalid Email.Please Enter Correct format abc123@xyz.com")
+   }
+ }
+ 
+ const chkemail = () => {
+     
+   //https://api.mazglobal.co.uk/maz-api
+     axios.post(`https://api.mazglobal.co.uk/maz-api/users/account/forgotPasswordByAdmin`, remail,
+            { headers: { 'content-type': 'application/json' } }
+         ).then(response => {
+          forgottoggle()
+  
+           setResponseMsg(`${response.data.message}`)
+           responsetoggle()
+
+              
+             }).catch((err) => {
+          
+              forgottoggle()
+              setResponseMsg(`${err.response.data.message}`)
+              responsetoggle()
+        
+                
+             });
+ 
+ 
+           
+ 
+ };
+ 
+
+  return (
+    <>
     <Card className="w-25 box-shadow">
+       
       <CardBody>
         <Form onSubmit={submitHandler}>
           <fieldset>
@@ -118,13 +172,14 @@ const LoginPage = ({ props }) => {
               <h3 className="mt-2 ml-3 text-light text-center">Login</h3>
             </legend>
             <FormGroup>
-              <Label for="exampleInputEmail3" style={{ width: '800px' }}>
+              <Label for="exampleInputEmail3" style={{ width: '60%' }}
+              >
                 Email address
               </Label>
               <Input
                 type="email"
                 className="form-control"
-                style={{ width: '335px' }}
+                style={{ width: '60%' }}
                 id="exampleInputEmail3"
                 name="email"
                 value={validate.email}
@@ -133,7 +188,7 @@ const LoginPage = ({ props }) => {
               />
             </FormGroup>
             <FormGroup>
-              <Label for="exampleInputPassword3" style={{ width: '800px' }}>
+              <Label for="exampleInputPassword3" style={{ width: 'auto' }}>
                 Password
               </Label>
 
@@ -141,7 +196,7 @@ const LoginPage = ({ props }) => {
                 type={values.showPassword ? 'text' : 'password'}
                 value={validate.password}
                 className="form-control"
-                style={{ width: '335px' }}
+                style={{ width: 'auto' }}
                 name="password"
                 onChange={handleChange('password')}
                 endAdornment={
@@ -166,7 +221,7 @@ const LoginPage = ({ props }) => {
             </FormGroup>
           </fieldset>
           <Button
-            disabled={disable}
+            
             color="primary"
             block
             size="lg"
@@ -175,12 +230,48 @@ const LoginPage = ({ props }) => {
             Submit
           </Button>
           {access && <Alert color="danger">Invalid email or password</Alert>}
+          
         </Form>
+        <p style={{cursor:'pointer',textDecoration:'underline'}} onClick={()=>forgetpassword()}>Forget Password ?</p>
       </CardBody>
     </Card>
+
+    <Modal isOpen={forgotmodal} toggle={forgottoggle}>
+          <ModalBody>
+            
+            <Input style={{width:'100%'}}
+             type='email' name='email' placeholder='Enter Registered Email'
+             error={error}
+              onChange={(e) => validateEmail(e)}>
+            </Input>
+           
+           
+          </ModalBody>
+          <ModalFooter>
+            {remail.email!='' && error==''?
+            <Button color="primary" onClick={chkemail}>
+              Okay
+            </Button>:''
+             }
+          </ModalFooter>
+        </Modal>
+
+        <Modal isOpen={responsemodal} toggle={responsetoggle}>
+       
+          <ModalBody>
+            <p style={{color:'red'}}>{resMessg}</p>
+          </ModalBody>
+          <ModalFooter>
+      
+            <Button color="primary" onClick={responsetoggle}>
+              Okay
+            </Button>
+       
+          </ModalFooter>
+        </Modal>
+    </>
   );
 
-  return <>{GetLogin()}</>;
 };
 
 export default LoginPage;

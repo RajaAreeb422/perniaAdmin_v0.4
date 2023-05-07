@@ -1,6 +1,13 @@
 // Menus
 const MENUS = [
   {
+    name: 'brand profile',
+    as: 'a',
+    href: '/brand/profile',
+    label: 'Brand Profile',
+    icon: 'fas fa-user',
+  },
+  {
     name: 'categories',
     as: 'a',
     href: '/category/Category',

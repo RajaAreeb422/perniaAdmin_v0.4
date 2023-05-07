@@ -62,7 +62,7 @@ const Variants = props => {
         Authorization: 'Bearer ' + localStorage.getItem('token'),
       },
     };
-    
+    //https://api.mazglobal.co.uk/maz-api/products
     axios
       .get(`https://api.mazglobal.co.uk/maz-api/products/variants`)
       .then(response => {
@@ -807,7 +807,7 @@ const Variants = props => {
                     onChange={e => priceChange(e, i)}
                     type="number"
                   />
-                  {data.regular_price==null?
+                  {!data.regular_price?
                     <p style={{color:'red'}}>required</p>:''
                   }
                   </div>

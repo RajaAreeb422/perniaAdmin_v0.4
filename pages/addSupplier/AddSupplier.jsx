@@ -15,6 +15,8 @@ toast.configure();
 const AddSupplier = memo(props => {
   const [modal, setModal] = React.useState(false);
   const [imgmodal, setImgModal] = React.useState(false);
+  const [logomodal, setLogoModal] = React.useState(false);
+  const [headermodal, setHeaderModal] = React.useState(false);
   const [servermodal, setServerModal] = React.useState(false);
   const [selected, setSelected] = useState([]);
   const [headselected, setHeadSelected] = useState([]);
@@ -23,6 +25,8 @@ const AddSupplier = memo(props => {
   const imgtoggle = () => setImgModal(!imgmodal);
   const servertoggle = () => setServerModal(!servermodal);
   const errortoggle = () => setErrorModal(!errormodal);
+  const logotoggle = () => setLogoModal(!logomodal);
+  const headertoggle = () => setHeaderModal(!headermodal);
   const [state, setState] = useState({
     name: '',
     address:'',
@@ -30,7 +34,9 @@ const AddSupplier = memo(props => {
     email:'',
     description:'',
     featured:'No',
-    reference:''
+    reference:'',
+    logo:null,
+    header:null
     
   });
   
@@ -82,16 +88,18 @@ const AddSupplier = memo(props => {
       )
       .then(response => {
      
-        
+       
         var formData = new FormData();
         for (const key of Object.keys(selected)) {
           formData.append('imageFile', selected[key]);
  
         }
         
+      
         axios
-          .post(
-            `https://api.mazglobal.co.uk/maz-api/suppliers/uploadBrandLogo/${response.data.data.insertId}`,
+          .put(
+            `https://api.mazglobal.co.uk/maz-api/suppliers/uploadBrandLogo/${response.data.data.results.insertId}`,
+           
             formData,
             config,
             {},
@@ -101,7 +109,7 @@ const AddSupplier = memo(props => {
             //succtoggle();
           })
       .catch(error => {
-        servertoggle()
+        logotoggle()
         console.log(error);
       });
 
@@ -113,8 +121,8 @@ const AddSupplier = memo(props => {
       }
       
       axios
-        .post(
-          `https://api.mazglobal.co.uk/maz-api/suppliers/uploadBrandHead/${response.data.data.insertId}`,
+        .put(
+          `https://api.mazglobal.co.uk/maz-api/suppliers/uploadBrandHead/${response.data.data.results.insertId}`,
           formData2,
           config,
           {},
@@ -124,11 +132,9 @@ const AddSupplier = memo(props => {
           //succtoggle();
         })
     .catch(error => {
-      servertoggle()
+      headertoggle()
       console.log(error);
     });
-
-
 
         toggle();
         //router.push('/supplier/Supplier')
@@ -316,6 +322,31 @@ const AddSupplier = memo(props => {
         <ModalFooter>
           
           <Button color="primary" onClick={servertoggle}>
+            OK
+          </Button>
+        </ModalFooter>
+      </Modal>
+      <Modal isOpen={logomodal} toggle={logotoggle}>
+        <ModalHeader style={{color:'red'}} toggle={logotoggle}>Alert</ModalHeader>
+        <ModalBody>
+          <>!Error Adding Logo</>
+        </ModalBody>
+        <ModalFooter>
+          
+          <Button color="primary" onClick={logotoggle}>
+            OK
+          </Button>
+        </ModalFooter>
+      </Modal>
+
+      <Modal isOpen={headermodal} toggle={headertoggle}>
+        <ModalHeader style={{color:'red'}} toggle={headertoggle}>Alert</ModalHeader>
+        <ModalBody>
+          <>!Error Adding Header Image</>
+        </ModalBody>
+        <ModalFooter>
+          
+          <Button color="primary" onClick={headertoggle}>
             OK
           </Button>
         </ModalFooter>

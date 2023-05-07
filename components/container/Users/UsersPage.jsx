@@ -52,6 +52,7 @@ const UsersPage = memo(props => {
     let mounted = true;
 
     //get list of registered users from database
+    //https://api.mazglobal.co.uk/maz-api
     axios
       .get(`https://api.mazglobal.co.uk/maz-api/users`)
       .then(response => {

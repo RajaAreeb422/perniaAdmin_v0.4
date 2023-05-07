@@ -23,13 +23,19 @@ import { toast, ToastContainer } from 'react-nextjs-toast'
 import jwt_decode from "jwt-decode";
 
 const ProfilePage = memo(props => {
-  const [user,setUser]=useState({})
-const [data, setData] = useState();
+const [user,setUser]=useState({})
+const [newPassword,setNewPassword]=useState({})
+const [confirmPswd,setConfirmPassword]=useState({})
+const [msg, setMsg] = useState();
 const [modal, setModal] = React.useState(false);
+const [msgmodal, setMsgModal] = React.useState(false);
+const [infomodal, setInfoModal] = React.useState(false);
 const [movemodal, setMoveModal] = React.useState(false);
 const toggle = () => setModal(!modal);
+const msgtoggle = () => setMsgModal(!msgmodal);
+const infotoggle = () => setInfoModal(!infomodal);
 const movetoggle = () => setMoveModal(!movemodal);
-
+const [info, setInfo] = useState({})
 const [state, setState] = useState({
   first_name: '',
   last_name: '',
@@ -65,7 +71,7 @@ useEffect(() => {
   };
 
   axios
-    .get(`https://api.mazglobal.co.uk/maz-api//users/${decoded.result.id}`, config)
+    .get(`https://api.mazglobal.co.uk/maz-api/users/${decoded.result.id}`, config)
     .then(response => {
      
       let date=''
@@ -91,18 +97,97 @@ useEffect(() => {
 
 }, []);
 
-const handleChange = names => e => {
+const handleChange =  e => {
+   
+  const name = e.target.name;
+
+  let value = e.target.value;
+  setNewPassword(value);
+};
+const handleConfirmChange =  e => {
+   
+  const name = e.target.name;
+
+  let value = e.target.value;
+  setConfirmPassword(value);
+};
+const handleInfoChange = e => {
    
   const name = e.target.name;
 
   let value = e.target.value;
   
 
-  setState({
-    ...state,
+  setInfo({
+    ...info,
     [name]: value,
   });
 };
+
+const updateInfo = ()=> {
+//https://api.mazglobal.co.uk/maz-api
+
+
+if(info.email==undefined && !info.email)
+{
+   info.email=state.email
+}
+if(info.first_name==undefined && info.last_name==undefined)
+{
+  infotoggle()
+  setMsg('Please Fill Out First Name And Last Name Fields')
+  msgtoggle()
+}
+else{
+  axios
+  .put(`https://api.mazglobal.co.uk/maz-api/users/${user.id}`,info)
+  .then(response => {
+    setMsg(response.data.message)
+    infotoggle()
+    msgtoggle()
+  }).catch(err=>{
+    setMsg(err.response.data.message)
+    infotoggle()
+    msgtoggle()
+  })
+}
+};
+
+const updatePassword= ()=> {
+  //https://api.mazglobal.co.uk/maz-api
+  
+  
+  if(newPassword==null && confirmPswd==null)
+  {
+    toggle()
+    setMsg('Please Fill Out All Fields')
+    msgtoggle()
+  }
+  else if(newPassword!==confirmPswd)
+  {
+    toggle()
+    setMsg('Password do not matched.')
+    msgtoggle()
+  }
+  else{
+    //
+    axios
+    .put(`https://api.mazglobal.co.uk/maz-api/users/account/updatePassword/${user.id}`,{newPassword})
+    .then(response => {
+      setMsg(response.data.message)
+      toggle()
+      msgtoggle()
+    }).catch(err=>{
+      setMsg(err.response.data.message)
+      toggle()
+      msgtoggle()
+    })
+  }
+  };
+
+const load=()=>{
+  router.reload()
+}
 
   return (
     <>
@@ -133,9 +218,13 @@ const handleChange = names => e => {
         
         <div className="userShowBottom">
           <span className="userShowTitle">User Info</span>
-          <button style={{float:'right',fontSize:'10px',width:'130px'}} 
+          <button style={{float:'right',fontSize:'10px'}} 
           onClick={toggle} className="DoneButton">
           Change Password
+        </button>
+          <button style={{float:'right',fontSize:'10px'}} 
+          onClick={infotoggle} className="DoneButton">
+          Edit Info 
         </button>
           <div className="userShowInfo">
             <PermIdentity className="userShowIcon" />
@@ -178,18 +267,7 @@ const handleChange = names => e => {
   <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader toggle={toggle}>Change Password</ModalHeader>
         <ModalBody>
-             <div style={{padding:'20px'}}>
-              <label  style={{marginLeft:'0px'}}>Current Password</label>
-              <input
-                type="text"
-                style={{marginLeft:'0px',width:'300px'}}
-                placeholder=""
-                className="form-control"
-                name="name"
-                value={state.name}
-                onChange={handleChange('name')}
-              />
-            </div>
+            
             <div style={{padding:'20px'}}>
               <label  style={{marginLeft:'0px'}}>New Password</label>
               <input
@@ -197,9 +275,9 @@ const handleChange = names => e => {
                 style={{marginLeft:'0px',width:'300px'}}
                 placeholder=""
                 className="form-control"
-                name="name"
+                name="password"
                 value={state.name}
-                onChange={handleChange('name')}
+                onChange={e=>handleChange(e)}
               />
             </div>
             <div style={{padding:'20px'}}>
@@ -209,20 +287,90 @@ const handleChange = names => e => {
                 style={{marginLeft:'0px',width:'300px'}}
                 placeholder=""
                 className="form-control"
-                name="name"
+                name="confirmpassword"
                 value={state.name}
-                onChange={handleChange('name')}
+                onChange={e=>handleConfirmChange(e)}
               />
             </div>
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" >
-          {/* onClick={move} */}
+          <Button color="primary" onClick={updatePassword}>
+      
             OK
           </Button>
           
         </ModalFooter>
       </Modal>
+     
+      <Modal isOpen={infomodal} toggle={infotoggle}>
+        <ModalHeader toggle={infotoggle}>My Info</ModalHeader>
+        <ModalBody>
+             <div style={{padding:'20px'}}>
+              <label  style={{marginLeft:'0px'}}>First Name</label>
+              <input
+                type="text"
+                style={{marginLeft:'0px',width:'300px'}}
+                placeholder=""
+                className="form-control"
+                required
+                name="first_name"
+                value={info.first_name}
+                onChange={e=>handleInfoChange(e)}
+              />
+            </div>
+            <div style={{padding:'20px'}}>
+              <label  style={{marginLeft:'0px'}}>Last Name</label>
+              <input
+                type="text"
+                style={{marginLeft:'0px',width:'300px'}}
+                placeholder=""
+                required
+                className="form-control"
+                name="last_name"
+                value={info.last_name}
+                onChange={e=>handleInfoChange(e)}
+              />
+            </div>
+            <div style={{padding:'20px'}}>
+              <label  style={{marginLeft:'0px'}}>Email</label>
+              <input
+                type="text"
+                style={{marginLeft:'0px',width:'300px'}}
+                placeholder={state.email}
+                required
+                className="form-control"
+                name="email"
+                value={info.email}
+                onChange={e=>handleInfoChange(e)}
+              />
+            </div>
+        </ModalBody>
+        <ModalFooter>
+          
+          <Button color="primary" onClick={updateInfo}>
+            Update
+          </Button>
+         
+        </ModalFooter>
+      </Modal>
+      
+      <Modal isOpen={msgmodal} toggle={msgtoggle}>
+        <ModalHeader toggle={msgtoggle}></ModalHeader>
+        <ModalBody>
+             <>
+             <p>{msg}</p>
+             </>
+        </ModalBody>
+        <ModalFooter>
+          <Button color="primary" onClick={load}>
+            OK
+          </Button>
+          
+        </ModalFooter>
+      </Modal>
+
+
+
     </>
   );
 });

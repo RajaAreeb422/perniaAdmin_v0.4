@@ -240,7 +240,7 @@ const DropLogo = props => {
         <button
           onClick={() => uploadFiles()}
           type="submit"
-          className="newaddproButtondrp"
+          className="addlogoButton"
         >
           Done
         </button>

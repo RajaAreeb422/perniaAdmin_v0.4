@@ -30,8 +30,11 @@ const OrderPage = memo(props => {
     let mounted = true;
    
     //get list of orders from the database
+    if(decoded.result.role_id==1)
+    {
+      //https://api.mazglobal.co.uk/maz-api
     axios
-      .get('http://localhost:8080/pernia-api/orders')
+      .get('https://api.mazglobal.co.uk/maz-api/orders')
       .then(response => {
        
           var i = 1;
@@ -48,7 +51,7 @@ const OrderPage = memo(props => {
             //get the user name and other details from the database using user_id from order detail.
             axios
               .get(
-                `http://localhost:8080/pernia-api/users/${exam.user_id}`,
+                `https://api.mazglobal.co.uk/maz-api/users/${exam.user_id}`,
                 config,
               )
               .then(res => {
@@ -62,6 +65,34 @@ const OrderPage = memo(props => {
         
       })
       .catch(err => console.log(err));
+    }else{
+      axios.get(`https://api.mazglobal.co.uk/maz-api/orders/allSuppliers/${decoded.result.supplier_id}`)
+      .then(response => {
+          var i = 1;
+          let row=[]
+          response.data.data.map(exam => {
+            let date=''
+            const d = new Date(exam.date);
+            let dd=d.toString()
+            for(let i=0; i<15;i++)
+                date=date+dd[i]
+                exam.date= date
+            exam['date']=date    
+            exam['_id'] = i++;
+            //get the user name and other details from the database using user_id from order detail.
+            axios.get(`https://api.mazglobal.co.uk/maz-api/users/${exam.user_id}`,config, )
+              .then(res => {
+                exam['name'] = res.data.data.first_name;
+                row.push(exam)
+              })
+              .catch(error => console.log(error));
+          }),
+          setList(row);
+          setData(response.data.data);
+        
+      })
+      .catch(err => console.log(err));
+    }
   }, []);
 
   //filters the searched user orders from the order list
@@ -100,12 +131,12 @@ const OrderPage = memo(props => {
     };
   
     axios
-      .delete(`http://95.111.240.143:8080/ecom-api/orders/${id}`, config)
+      .delete(`https://api.mazglobal.co.uk/maz-api/orders/${id}`, config)
       .then(response => {
         console.log(response);
         toggle();
         axios
-          .get(`http://95.111.240.143:8080/ecom-api/orders`, config)
+          .get(`https://api.mazglobal.co.uk/maz-api/orders`, config)
           .then(res => {
             setData(res.data.data);
           })
@@ -119,11 +150,11 @@ const OrderPage = memo(props => {
     { field: '_id', headerName: 'ID', width: 150 },
 
     { field: 'payment_status', headerName: ' Payment Status', width: 190 },
-    {
-      field: 'fulfillment_status',
-      headerName: 'FulFilment Status',
-      width: 190,
-    },
+    // {
+    //   field: 'fulfillment_status',
+    //   headerName: 'FulFilment Status',
+    //   width: 190,
+    // },
     { field: 'name', headerName: 'User Name', width: 180 },
     { field: 'date', headerName: 'Date', width: 210 },
     { field: 'total_amount', headerName: 'Total_Amount', width: 210 },

@@ -31,14 +31,23 @@ function NavLeft(props) {
             return (
               <>
               {user.role_id==1?
+              <>
+              {  item.label.toLowerCase()=='brand profile' ?
+              <div>
+
+              </div>:
               <ListGroupItem
-                key={`l${k}`}
-                active={isActive}
-                tag={item.as}
-                href={item.href}
-              >
-                {item.icon && <i className={item.icon}></i>} {item.label}
-              </ListGroupItem>:
+              key={`l${k}`}
+              active={isActive}
+              tag={item.as}
+              href={item.href}
+            >
+              {item.icon && <i className={item.icon}></i>} {item.label}
+            </ListGroupItem>
+
+              }
+              </>
+              :
               <>
               {item.label.toLowerCase()=='users' || item.label.toLowerCase()=='suppliers'
                || item.label.toLowerCase()=='coupons' ?

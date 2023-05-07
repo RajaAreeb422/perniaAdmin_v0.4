@@ -1,0 +1,126 @@
+.profilemain{
+    flex: 4;
+    margin-left: 30px;
+    
+  }
+  .profile {
+    flex: 4;
+    margin-left: 130px;
+    margin-top: 50px;
+    width:900px;
+    -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  }
+  .profileTitle{
+    margin-left: 330px;
+    margin-top: 50px;
+  }
+  
+  .profileForm {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .profileItem {
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    margin-right: 20px;
+    margin-left: 260px;
+  }
+  .profileFlexItem {
+    width: 400px;
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+    margin-right: 20px;
+    margin-left: 260px;
+  }
+  .profileinnerBox{
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .profileinnerBox > label {
+    margin-bottom: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    color: rgb(151, 150, 150);
+  }
+  
+  .profileinnerBox > input {
+    height: 40px;
+    padding: 10px;
+    border: 1px solid gray;
+    border-radius: 5px;
+    
+  }
+  
+  
+  .profileItem > label {
+    margin-bottom: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    color: rgb(151, 150, 150);
+  }
+  
+  .profileItem > input {
+    height: 40px;
+    padding: 10px;
+    border: 1px solid gray;
+    border-radius: 5px;
+    
+  }
+  
+  .profileGender > input {
+    margin-top: 15px;
+  }
+  
+  .profileGender>label{
+      margin: 10px;
+      font-size: 18px;
+      color: #555;
+  }
+  
+  .profileSelect{
+      height: 40px;
+      border-radius: 5px;
+    
+  }
+  .label{
+    height: 40px;
+    border-radius: 5px;
+  }
+  
+  .profileButton{
+      width: auto;
+      border: none;
+      margin-left: -40px;
+      background-color: rgb(52, 114, 196);;
+      color: white;
+      padding: 7px 10px;
+      font-weight: 600;
+      border-radius: 10px;
+      margin:10px;
+      cursor: pointer;
+  
+  }
+  .profiledesp{
+   
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    margin-right: 20px;
+    margin-left: 260px;
+    
+  }
+  
+  .profiledesp >input{
+    
+    height: 130px;
+    padding: 10px;
+    border: 1px solid gray;
+    border-radius: 5px;
+  }

@@ -28,18 +28,18 @@ const EditShoppingCart = ( props) => {
   useEffect(()=>{
    
     let x=props.img;
-    if(x.includes("//95.111.240.143/ecom-api"))
-          {
+    // if(x.includes("//95.111.240.143/ecom-api"))
+    //       {
           
-            x="http:"+props.img
-            console.log("new img",x)
-          }
+    //         x="http:"+props.img
+    //         console.log("new img",x)
+    //       }
           
-          else
-          {
-          x="http://95.111.240.143/ecom-api/"+props.img
-          console.log("new img",x)
-          }
+    //       else
+    //       {
+          x="https://api.mazglobal.co.uk"+props.img
+       
+        //  }
     // props.img.includes("http://95.111.240.143/ecom-api/")
     // if(x.includes("http://95.111.240.143/ecom-api/"))
     // {
@@ -49,7 +49,7 @@ const EditShoppingCart = ( props) => {
     // else{
     //   x="http://95.111.240.143/ecom-api/"+props.img
     // }
-    console.log("xxxxxxxxxxxxx",x)
+    
       setTotal(props.total)
       setCount(props.qty)
       
@@ -147,14 +147,14 @@ const EditShoppingCart = ( props) => {
         </Details>
       </ProductDetail>
       <PriceDetail>
-        <ProductAmountContainer>
+        {/* <ProductAmountContainer>
           <AmountBtn> <Remove onClick={()=>setProductCount(count)} /></AmountBtn>
           <Amount><strong>{count}</strong></Amount>
           <AmountBtn> <Add onClick={()=>ProductCount(count)} /></AmountBtn>
-          {/* <AmountBtnDel> <DeleteOutline onClick={() => removeFromCart()} /></AmountBtnDel> */}
 
-        </ProductAmountContainer>
-        <ProductPrice>${props.price*count }</ProductPrice>
+
+        </ProductAmountContainer> */}
+        <ProductPrice>{props.price*count } PKR</ProductPrice>
       </PriceDetail>
 
 
@@ -178,6 +178,7 @@ const Product = styled.div`
 const ProductDetail = styled.div`
   flex: 2;
   display: flex;
+  padding-bottom:12px ;
 `;
 
 const Image = styled.img`

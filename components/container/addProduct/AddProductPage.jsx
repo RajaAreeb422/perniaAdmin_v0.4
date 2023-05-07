@@ -48,8 +48,10 @@ const AddProductPage = memo(props => {
   const [supplier, setSupplier] = useState([]);
   const [sub, setSub] = useState(state.category_id);
   const [protext, setProText] = useState('');
+  const [msg, setMsg] = useState('');
   const [prolist, setProList] = useState(false);
   const [user, setUser] = useState({});
+  const [bCollection, setBrandCollection] = useState({});
   const [profilterrow, setProFilterrow] = useState([]);
   const [collectiondiv, setCollectionDiv] = useState(false);
   const [collections, setCollections] = useState([]);
@@ -114,6 +116,7 @@ const AddProductPage = memo(props => {
     };
     setLoader(true)
     e.preventDefault();
+    let comQty=0;
     let pp=state.price
     let qq=state.quantity
     let col=0;
@@ -131,6 +134,9 @@ const AddProductPage = memo(props => {
     {
     state.variants = variantss[0];
     state.combinations = variantss[1];
+    state.combinations.map(com=>{
+      comQty=parseInt(comQty)  + parseInt(com.sku)
+    })
     
     }
     else{
@@ -139,6 +145,8 @@ const AddProductPage = memo(props => {
 
     }
    
+    
+
     if(user.role_id==1)
     {
 
@@ -147,12 +155,20 @@ const AddProductPage = memo(props => {
     {
 
             setLoader(false)
+            setMsg('Please Fill All The Fields')
              toggle()
     }
     else if(selected.length==0)
     {
       setLoader(false)
       Imgtoggle()
+    }
+    else if(state.quantity<comQty)
+    {
+      setMsg(`Quantity sum for combinations is ${comQty} While actual product qunatity is 
+      ${state.quantity} `)
+      setLoader(false)
+      toggle()
     }
    
     else{
@@ -204,6 +220,7 @@ const AddProductPage = memo(props => {
       )
       {
        setLoader(false)
+       setMsg('Please Fill All The Fields')
        toggle()
       }
     else if(selected.length==0)
@@ -211,7 +228,12 @@ const AddProductPage = memo(props => {
       setLoader(false)
       Imgtoggle()
     }
-   
+    else if(comQty>state.qty)
+    {
+      setMsg(`Quantity sum for combinations is ${comQty} While actual product qunatity is ${state.quantity} `)
+      setLoader(false)
+      toggle()
+    }
     else{
      
      // https://api.mazglobal.co.uk/maz-api/products
@@ -290,11 +312,16 @@ const AddProductPage = memo(props => {
   const handleCollChange = name => e => {
     const name = e.target.name;
     const value = e.target.value;
-
     setState({
       ...state,
       [name]: value,
     });
+    
+    axios.get(`https://api.mazglobal.co.uk/maz-api/collections/${value}`)
+    .then(col=>{
+      setBrandCollection(col)
+    }).catch(err=>console.log(err))
+
   }
   const handleChange = name => e => {
     const name = e.target.name;
@@ -650,7 +677,8 @@ const AddProductPage = memo(props => {
           >
             Add Collection
           </button>
-          </div>
+          <p style={{color:'black'}}>{bCollection.name} </p>
+      </div>
       <div className="newaddpro1">
         <label className="imgdiv">Images</label>
 
@@ -667,7 +695,7 @@ const AddProductPage = memo(props => {
       <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader toggle={toggle}>Product Status</ModalHeader>
         <ModalBody>
-          <>Please Fill all the Fields</>
+          <>{msg}</>
         </ModalBody>
         <ModalFooter>
           <Button color="primary" onClick={toggle}>

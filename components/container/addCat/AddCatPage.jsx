@@ -15,6 +15,8 @@ toast.configure();
 const AddCatPage = memo(props => {
   const [modal, setModal] = React.useState(false);
   const toggle = () => setModal(!modal);
+  const [categorymodal, setCategoryModal] = React.useState(false);
+  const categorytoggle = () => setCategoryModal(!categorymodal);
   const [dbmodal, setDBModal] = React.useState(false);
   const dbtoggle = () => setDBModal(!dbmodal);
   const [errormodal, setErrorModal] = React.useState(false);
@@ -84,6 +86,11 @@ const AddCatPage = memo(props => {
 
     setLoader(false)
     errortoggle()
+    }
+    else if(parnt_cat.length==8)
+    {
+      setLoader(false)
+      categorytoggle()
     } 
     else{
  
@@ -364,6 +371,17 @@ const AddCatPage = memo(props => {
         </ModalBody>
         <ModalFooter>
           <Button color="primary" onClick={errortoggle}>
+            OK
+          </Button>
+        </ModalFooter>
+      </Modal>
+      <Modal isOpen={categorymodal} toggle={categorytoggle}>
+        <ModalHeader toggle={categorytoggle}>Alert</ModalHeader>
+        <ModalBody>
+          <>Maximum 8 Categories can be added</>
+        </ModalBody>
+        <ModalFooter>
+          <Button color="primary" onClick={categorytoggle}>
             OK
           </Button>
         </ModalFooter>

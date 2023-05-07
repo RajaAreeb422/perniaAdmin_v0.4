@@ -91,8 +91,9 @@ const AddUserPage = memo(props => {
         { },
       )
       .then(response => {
+        console.log("res",response)
         toggle()
-      
+        
       })
       .catch(error => {
        
