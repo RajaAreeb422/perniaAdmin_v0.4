@@ -171,24 +171,14 @@ const LoginPage = () => {
             <legend className="text-primary bg-gradient-primary font-weight-bold uppercase">
               <h3 className="mt-2 ml-3 text-light text-center">Login</h3>
             </legend>
-<<<<<<< HEAD
-            <FormGroup>
-              <Label for="exampleInputEmail3" style={{ width: '60%' }}
-              >
-=======
             <FormGroup style={{ width: '80%'}}>
               <Label for="exampleInputEmail3" >
->>>>>>> 313fa0cd7397e78406f47ec058e8f11e83ee8231
                 Email address
               </Label>
               <Input
                 type="email"
                 className="form-control"
-<<<<<<< HEAD
-                style={{ width: '60%' }}
-=======
                 style={{ width: '350px'}}
->>>>>>> 313fa0cd7397e78406f47ec058e8f11e83ee8231
                 id="exampleInputEmail3"
                 name="email"
                 value={validate.email}
@@ -196,13 +186,8 @@ const LoginPage = () => {
                 onChange={handleChange('email')}
               />
             </FormGroup>
-<<<<<<< HEAD
-            <FormGroup>
-              <Label for="exampleInputPassword3" style={{ width: 'auto' }}>
-=======
             <FormGroup style={{ width: '80%' }}>
               <Label for="exampleInputPassword3" s >
->>>>>>> 313fa0cd7397e78406f47ec058e8f11e83ee8231
                 Password
               </Label>
 
@@ -210,11 +195,7 @@ const LoginPage = () => {
                 type={values.showPassword ? 'text' : 'password'}
                 value={validate.password}
                 className="form-control"
-<<<<<<< HEAD
-                style={{ width: 'auto' }}
-=======
                 style={{ width: '350px'}}
->>>>>>> 313fa0cd7397e78406f47ec058e8f11e83ee8231
                 name="password"
                 onChange={handleChange('password')}
                 endAdornment={
@@ -240,10 +221,6 @@ const LoginPage = () => {
           </fieldset>
           {/* disabled={disable} */}
           <Button
-<<<<<<< HEAD
-            
-=======
->>>>>>> 313fa0cd7397e78406f47ec058e8f11e83ee8231
             color="primary"
             block
             size="lg"
