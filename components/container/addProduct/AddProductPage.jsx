@@ -83,19 +83,19 @@ const AddProductPage = memo(props => {
     // 95.111.240.143
     // axios.get(`http://localhost:8080/ecom-api/products`).then(response => {
       if (mounted) {
-        if(decoded.result.role_id==1)
-        {
+        // if(decoded.result.role_id==1)
+        // {
       axios
       .get(`https://api.mazglobal.co.uk/maz-api/categories`)
       .then(res => setParent(res.data.data))
       .catch(err => console.log(err));
-          }
-    else{
-      axios
-      .get(`https://api.mazglobal.co.uk/maz-api/categories/getCategoriesBySupplierId/${decoded.result.supplier_id}`)
-      .then(res => setParent(res.data.data))
-      .catch(err => console.log(err));
-         }
+         // }
+    // else{
+    //   axios
+    //   .get(`https://api.mazglobal.co.uk/maz-api/categories/getCategoriesBySupplierId/${decoded.result.supplier_id}`)
+    //   .then(res => setParent(res.data.data))
+    //   .catch(err => console.log(err));
+    //      }
         axios
           .get('https://api.mazglobal.co.uk/maz-api/suppliers')
           .then(res => setSupplier(res.data.data))

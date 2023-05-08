@@ -42,8 +42,8 @@ const CategoryPage = memo(props => {
       },
     };
    
-    if(decoded.result.role_id==1)
-    {
+    // if(decoded.result.role_id==1)
+    // {
       axios
       .get('https://api.mazglobal.co.uk/maz-api/categories', config)
       .then(response => {
@@ -88,53 +88,53 @@ const CategoryPage = memo(props => {
         }
     
       });
-    }
-    else{
-      axios
-      .get(`https://api.mazglobal.co.uk/maz-api/categories/getCategoriesBySupplierId/${decoded.result.supplier_id}`, config)
-      .then(response => {
+ //   }
+    // else{
+    //   axios
+    //   .get(`https://api.mazglobal.co.uk/maz-api/categories/getCategoriesBySupplierId/${decoded.result.supplier_id}`, config)
+    //   .then(response => {
         
-        if (mounted) {
-          var i = 1;
-         let activelist=[]
-          response.data.data.map(exam => {
-            exam['_id'] = i++;
+    //     if (mounted) {
+    //       var i = 1;
+    //      let activelist=[]
+    //       response.data.data.map(exam => {
+    //         exam['_id'] = i++;
           
-            let pp = 'https://api.mazglobal.co.uk/' + exam.path;
-            pp=pp.toString();
-            exam['path']=pp
+    //         let pp = 'https://api.mazglobal.co.uk/' + exam.path;
+    //         pp=pp.toString();
+    //         exam['path']=pp
          
             
-            setPath(pp)
-            if (exam.parent) {
+    //         setPath(pp)
+    //         if (exam.parent) {
               
-              response.data.data.map(p_v => {
-                if (exam.parent == p_v.id) {
-                  exam['parent_name'] = p_v.name;
+    //           response.data.data.map(p_v => {
+    //             if (exam.parent == p_v.id) {
+    //               exam['parent_name'] = p_v.name;
                  
                   
-                }
-              });
-            } else {
-              exam['parent_name'] = 'null';
-            }
+    //             }
+    //           });
+    //         } else {
+    //           exam['parent_name'] = 'null';
+    //         }
 
-            switchstate['switch-' + exam.id] = exam.status;
-            activelist[exam.id]={
-              id:exam.id,
-              status:exam.status
-            }
-          }),
-          setSactive(activelist) 
-          setData(response.data.data);
-          setList(response.data.data)
+    //         switchstate['switch-' + exam.id] = exam.status;
+    //         activelist[exam.id]={
+    //           id:exam.id,
+    //           status:exam.status
+    //         }
+    //       }),
+    //       setSactive(activelist) 
+    //       setData(response.data.data);
+    //       setList(response.data.data)
           
-          setState(switchstate);
+    //       setState(switchstate);
          
-        }
+    //     }
     
-      });
-    }
+    //   });
+    // }
   
 
     //return () => mounted = false;
@@ -276,12 +276,15 @@ const CategoryPage = memo(props => {
     { field: 'parent_name', headerName: 'Parent Category', width: 190 },
 
 
+
     {
       field: 'action',
       headerName: 'Action',
       width: 350,
       renderCell: params => {
         return (
+          <>
+          {user.role_id==1? 
           <>
             <Link href="/editcat/[id]" as={`/editcat/${params.row.id}`}>
               <Edit className="userEdit"></Edit>
@@ -305,6 +308,9 @@ const CategoryPage = memo(props => {
               label={Sactive[params.row.id].status==1 ? 'active' : 'Inactive'}
               // label={statusValues ? 'active' : 'Inactive'}
             />
+            </>
+            :''
+            }
           </>
         );
       },
@@ -316,11 +322,13 @@ const CategoryPage = memo(props => {
       <h1>Categories</h1>
 
       {/* Link to Add Category Page */}
+      {user.role_id==1 &&
       <Link href="/addCat/addCat">
         <a>
           <button className="AddButton">Add Category</button>
         </a>
       </Link>
+      }
        
         {/* Search Bar */}
            <input

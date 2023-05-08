@@ -54,23 +54,25 @@ const AddCollectionPage = memo(props => {
     .get('https://api.mazglobal.co.uk/maz-api/tags')
     .then(res => setTag(res.data.data))
     .catch(err => console.log(err));
+
+    axios
+    .get(`https://api.mazglobal.co.uk/maz-api/categories`)
+    .then(res => setCategories(res.data.data))
+    .catch(err => console.log(err));
     if(decoded.result.role_id==1)
     {
-      axios
-      .get(`https://api.mazglobal.co.uk/maz-api/categories`)
-      .then(res => setCategories(res.data.data))
-      .catch(err => console.log(err));
+     
       axios
       .get(`https://api.mazglobal.co.uk/maz-api/suppliers`)
       .then(res => setSupplier(res.data.data))
       .catch(err => console.log(err));
     }
-    else{
-      axios
-      .get(`https://api.mazglobal.co.uk/maz-api/categories/getCategoriesBySupplierId/${decoded.result.supplier_id}`)
-      .then(res => setCategories(res.data.data))
-      .catch(err => console.log(err));
-    }
+    // else{
+    //   axios
+    //   .get(`https://api.mazglobal.co.uk/maz-api/categories/getCategoriesBySupplierId/${decoded.result.supplier_id}`)
+    //   .then(res => setCategories(res.data.data))
+    //   .catch(err => console.log(err));
+    // }
    
   }, []);
   
