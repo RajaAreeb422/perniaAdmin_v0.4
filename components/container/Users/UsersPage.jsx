@@ -146,6 +146,7 @@ const UsersPage = memo(props => {
     { field: 'name', headerName: 'Name', width: 190 },
 
     { field: 'email', headerName: 'Email', width: 150 },
+    { field: 'type', headerName: 'Type', width: 150 },
 
     { field: 'phone', headerName: 'Phone No', width: 210 },
     { field: 'date_of_birth', headerName: 'Date Of Birth', width: 210 },
