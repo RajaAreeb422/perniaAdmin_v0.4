@@ -288,7 +288,7 @@ const AddProductPage = memo(props => {
     }).catch(err=>
       {
         setLoader(false)
-        setDBError("Database Problem")
+        setDBError(`${err.response.data.message}`)
         dbtoggle()
         console.log(err)
       })
