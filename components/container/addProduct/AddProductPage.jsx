@@ -151,11 +151,15 @@ const AddProductPage = memo(props => {
     {
 
       if(state.name=='' || state.category_id=='' || state.category_id==null||state.sku==''||state.quantity==null||state.price==null||state.product_description==''
-      || state.supplier_id==null)
+      || state.supplier_id==null || state.collection_id==null || state.collection_id==0)
     {
-
+            let reqFields;
             setLoader(false)
-            setMsg('Please Fill All The Fields')
+            Object.keys(state).map(v => {
+              if(!data[v])
+                reqFields=reqFields+v
+            })
+            setMsg(`Please Fill ${reqFields} Fields`)
              toggle()
     }
     else if(selected.length==0)
@@ -216,11 +220,17 @@ const AddProductPage = memo(props => {
     }
     else{
    
-    if(state.name=='' || state.category_id=='' || state.category_id==null||state.sku==''||state.quantity==null||state.price==null||state.product_description==''
+    if(state.name=='' || state.category_id=='' || state.category_id==null||state.sku==''||
+    state.quantity==null||state.price==null||state.product_description=='' || state.collection_id==null 
+    || state.collection_id==0
       )
       {
        setLoader(false)
-       setMsg('Please Fill All The Fields')
+       Object.keys(state).map(v => {
+        if(!data[v])
+          reqFields=reqFields+v
+      })
+      setMsg(`Please Fill ${reqFields} Fields`)
        toggle()
       }
     else if(selected.length==0)
@@ -312,6 +322,8 @@ const AddProductPage = memo(props => {
   const handleCollChange = name => e => {
     const name = e.target.name;
     const value = e.target.value.id;
+
+    console.log("ee",e)
     setState({
       ...state,
       [name]: value,
