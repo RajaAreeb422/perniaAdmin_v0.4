@@ -321,19 +321,20 @@ const AddProductPage = memo(props => {
 
   const handleCollChange = name => e => {
     const name = e.target.name;
-    const value = e.target.value.id;
+    const value = e.target.value;
 
-    console.log("ee",e)
+    console.log("ee",e.target.value)
     setState({
       ...state,
       [name]: value,
     });
-    setBrandCollection(e.target.value.name)
+    //setBrandCollection(e.target.value.name)
     
-    // axios.get(`https://api.mazglobal.co.uk/maz-api/collections/${value}`)
-    // .then(col=>{
-    //   setBrandCollection(col)
-    // }).catch(err=>console.log(err))
+    axios.get(`https://api.mazglobal.co.uk/maz-api/collections/${value}`)
+    .then(col=>{
+      console.log("coll",col)
+      setBrandCollection(col)
+    }).catch(err=>console.log(err))
 
   }
   const handleChange = name => e => {
@@ -804,11 +805,11 @@ const AddProductPage = memo(props => {
                     id="collection"
                     required
                     name="collection_id"
-                    onChange={handleCollChange('collection_id')}
+                    onChange={e=>handleCollChange(e)}
                    >
                   {collections.map((com, i) => {
                     return (
-                      <option value={com}>{com.name}</option>
+                      <option value={com.id}>{com.name}</option>
                      
                     );
                   })}
