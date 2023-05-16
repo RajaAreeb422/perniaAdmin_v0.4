@@ -696,7 +696,7 @@ const AddProductPage = memo(props => {
       <div className="newaddpro1">
       <h3>Collection</h3>
       <center>
-      <p style={{color:'black'}}>{bCollection.name} </p>
+      <p style={{color:'black'}}>{bCollection.name?bCollection.name:"Not Added"} </p>
       </center>
       
       </div>
