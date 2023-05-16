@@ -159,7 +159,7 @@ const AddProductPage = memo(props => {
               if(!state[v])
                 reqFields=reqFields+v
             })
-            setMsg(`Please Fill ${reqFields} Fields`)
+            setMsg(`Please Fill All Fields including Collection`)
              toggle()
     }
     else if(selected.length==0)
@@ -230,7 +230,7 @@ const AddProductPage = memo(props => {
         if(!state[v])
           reqFields=reqFields+v
       })
-      setMsg(`Please Fill ${reqFields} Fields`)
+      setMsg(`Please Fill All Fields including Collection`)
        toggle()
       }
     else if(selected.length==0)
@@ -805,7 +805,7 @@ const AddProductPage = memo(props => {
                     id="collection"
                     required
                     name="collection_id"
-                    onChange={e=>handleCollChange(e)}
+                    onChange={handleCollChange("collection_id")}
                    >
                   {collections.map((com, i) => {
                     return (
