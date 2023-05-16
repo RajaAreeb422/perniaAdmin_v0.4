@@ -333,7 +333,7 @@ const AddProductPage = memo(props => {
     axios.get(`https://api.mazglobal.co.uk/maz-api/collections/${value}`)
     .then(col=>{
       console.log("coll",col)
-      setBrandCollection(col)
+      setBrandCollection(col.data.data)
     }).catch(err=>console.log(err))
 
   }
@@ -694,7 +694,11 @@ const AddProductPage = memo(props => {
           
       </div>
       <div className="newaddpro1">
-      <p style={{color:'black'}}>{bCollection} </p>
+      <h3>Collection</h3>
+      <center>
+      <p style={{color:'black'}}>{bCollection.name} </p>
+      </center>
+      
       </div>
       <div className="newaddpro1">
         <label className="imgdiv">Images</label>
