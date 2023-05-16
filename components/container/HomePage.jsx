@@ -129,7 +129,7 @@ const HomePage = (props) => {
     //getting categories from database..
     let list=data
     axios
-      .get('http://95.111.240.143:8080/ecom-api/orders/month/month', config)
+      .get('https://api.mazglobal.co.uk/maz-api/orders/month/month', config)
       .then(response => {
         
         response.data.data.map((exam,i) => {
@@ -170,7 +170,7 @@ const HomePage = (props) => {
       }).catch(err=>console.log(err));
 
       axios
-      .get('http://95.111.240.143:8080/ecom-api/orders/month/currentWeek', config)
+      .get('https://api.mazglobal.co.uk/maz-api/orders/month/currentWeek', config)
       .then(res => {
         let list1=data2
         res.data.data.map(ex => {
