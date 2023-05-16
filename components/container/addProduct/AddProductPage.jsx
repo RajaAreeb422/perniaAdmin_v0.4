@@ -51,7 +51,7 @@ const AddProductPage = memo(props => {
   const [msg, setMsg] = useState('');
   const [prolist, setProList] = useState(false);
   const [user, setUser] = useState({});
-  const [bCollection, setBrandCollection] = useState({});
+  const [bCollection, setBrandCollection] = useState();
   const [profilterrow, setProFilterrow] = useState([]);
   const [collectiondiv, setCollectionDiv] = useState(false);
   const [collections, setCollections] = useState([]);
