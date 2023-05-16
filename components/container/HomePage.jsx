@@ -1,14 +1,13 @@
-
-import React from "react";
-import {useState,useEffect} from 'react';
+import React from 'react';
+import { useState, useEffect } from 'react';
 // node.js library that concatenates classes (strings)
-import classnames from "classnames";
+import classnames from 'classnames';
 // javascipt plugin for creating charts
-import {Chart} from "chart.js";
+import { Chart } from 'chart.js';
 import axios from 'axios';
 // react plugin used to create charts
-import { Line, Bar } from "react-chartjs-2";
-import { Chart as ChartJS } from 'chart.js/auto'
+import { Line, Bar } from 'react-chartjs-2';
+import { Chart as ChartJS } from 'chart.js/auto';
 // reactstrap components
 import {
   Button,
@@ -23,7 +22,7 @@ import {
   Container,
   Row,
   Col,
-} from "reactstrap";
+} from 'reactstrap';
 // layout for this page
 //import Admin from "layouts/Admin.js";
 // core components
@@ -34,12 +33,10 @@ import {
 //   chartExample2,
 // } from "./charts.js";
 
-
-
-const HomePage = (props) => {
+const HomePage = props => {
   const [activeNav, setActiveNav] = React.useState(1);
-  const [chartExample1Data, setChartExample1Data] = React.useState("data1");
-  const [data,setData] = useState({
+  const [chartExample1Data, setChartExample1Data] = React.useState('data1');
+  const [data, setData] = useState({
     labels: [],
     datasets: [
       {
@@ -61,11 +58,11 @@ const HomePage = (props) => {
         pointHoverBorderWidth: 2,
         pointRadius: 1,
         pointHitRadius: 10,
-        data: []
-      }
-    ]
+        data: [],
+      },
+    ],
   });
-  const [data1,setData1] = useState({
+  const [data1, setData1] = useState({
     labels: [],
     datasets: [
       {
@@ -87,11 +84,11 @@ const HomePage = (props) => {
         pointHoverBorderWidth: 2,
         pointRadius: 1,
         pointHitRadius: 10,
-        data: []
-      }
-    ]
+        data: [],
+      },
+    ],
   });
-  const [data2,setData2] = useState({
+  const [data2, setData2] = useState({
     labels: [],
     datasets: [
       {
@@ -113,116 +110,80 @@ const HomePage = (props) => {
         pointHoverBorderWidth: 2,
         pointRadius: 1,
         pointHitRadius: 10,
-        data: []
-      }
-    ]
+        data: [],
+      },
+    ],
   });
 
   useEffect(() => {
     let mounted = true;
-    
+
     const config = {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token'),
       },
     };
     //getting categories from database..
-    let list=data
+    let list = data;
     axios
-      .get('https://api.mazglobal.co.uk/maz-api/orders/month/month', config)
+      .get('http://95.111.240.143:8080/ecom-api/orders/month/month', config)
       .then(response => {
-        
-        response.data.data.map((exam,i) => {
-          let count=1
-          let status=false
-          let date=''
+        response.data.data.map((exam, i) => {
+          let count = 1;
+          let status = false;
+          let date = '';
           const d = new Date(exam.date);
-          let dd=d.toString()
-          for(let i=0; i<15;i++)
-              date=date+dd[i]
-              exam.date= date
-          exam['date']=date
-          for(let j=0;j<i;j++)
-          {
-           
-            if(response.data.data[j].date==date)
-            {
-            
-              list.datasets[0].data[j]=list.datasets[0].data[j]+1
-              status=true
-           
-            }
+          let dd = d.toString();
+          for (let i = 0; i < 15; i++) {
+            date = date + dd[i];
           }
-           
-          
-       if(status==false)
-       {
-        list.labels.push(date)
-        list.datasets[0].data.push(count) 
-       }
+            exam.date = date;
+            exam['date'] = date;
+            for (let j = 0; j < i; j++) {
+              if (response.data.data[j].date == date) {
+                list.datasets[0].data[j] = list.datasets[0].data[j] + 1;
+                status = true;
+              }
+          }
 
-       
+          if (status == false) {
+            list.labels.push(date);
+            list.datasets[0].data.push(count);
+          }
+        });
 
-        })
-        
-        setData(list)
-        setData1(list)
-      }).catch(err=>console.log(err));
+        setData(list);
+        setData1(list);
+      })
+      .catch(err => console.log(err));
 
-      axios
-      .get('https://api.mazglobal.co.uk/maz-api/orders/month/currentWeek', config)
+    axios
+      .get(
+        'http://95.111.240.143:8080/ecom-api/orders/month/currentWeek',
+        config,
+      )
       .then(res => {
-        let list1=data2
+        let list1 = data2;
         res.data.data.map(ex => {
-          let date=''
+          let date = '';
           const d = new Date(ex.date);
-          let dd=d.toString()
-          for(let i=0; i<15;i++)
-              date=date+dd[i]
-              ex.date= date
-          ex['date']=date
-           
-          list1.labels.push(date)
-       
-        list1.datasets[0].data.push(ex.total_items) 
+          let dd = d.toString();
+          for (let i = 0; i < 15; i++) date = date + dd[i];
+          ex.date = date;
+          ex['date'] = date;
 
-        })
-        
-        setData2(list1)
-      }).catch(err=>console.log(err));
+          list1.labels.push(date);
+
+          list1.datasets[0].data.push(ex.total_items);
+        });
+
+        setData2(list1);
+      })
+      .catch(err => console.log(err));
     //return () => mounted = false;
   }, []);
 
-
-
-
-
-
-// const data2 = {
-//   labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-//   datasets: [{
-//     label: '# of Votes',
-//     data: [12, 19, 3, 5, 2, 3],
-//     backgroundColor: [
-//       'rgba(255, 99, 132, 0.2)',
-//       'rgba(54, 162, 235, 0.2)',
-//       'rgba(255, 206, 86, 0.2)',
-//       'rgba(75, 192, 192, 0.2)',
-//       'rgba(153, 102, 255, 0.2)',
-//       'rgba(255, 159, 64, 0.2)'
-//     ],
-//     borderColor: [
-//       'rgba(255, 99, 132, 1)',
-//       'rgba(54, 162, 235, 1)',
-//       'rgba(255, 206, 86, 1)',
-//       'rgba(75, 192, 192, 1)',
-//       'rgba(153, 102, 255, 1)',
-//       'rgba(255, 159, 64, 1)'
-//     ],
-//     borderWidth: 1
-//   }]
-// }
-
+ 
   if (window.Chart) {
     parseOptions(Chart, chartOptions());
   }
@@ -230,14 +191,10 @@ const HomePage = (props) => {
   const toggleNavs = (e, index) => {
     e.preventDefault();
     setActiveNav(index);
-    if(index==1)
-    {
-      
-    setData(data1)
-    }
-    else
-    {
-    setData(data2)
+    if (index == 1) {
+      setData(data1);
+    } else {
+      setData(data2);
     }
   };
   return (
@@ -260,11 +217,11 @@ const HomePage = (props) => {
                     <Nav className="justify-content-end" pills>
                       <NavItem>
                         <NavLink
-                          className={classnames("py-2 px-3", {
+                          className={classnames('py-2 px-3', {
                             active: activeNav === 1,
                           })}
                           href="#pablo"
-                          onClick={(e) => toggleNavs(e, 1)}
+                          onClick={e => toggleNavs(e, 1)}
                         >
                           <span className="d-none d-md-block">Month</span>
                           <span className="d-md-none">M</span>
@@ -272,12 +229,12 @@ const HomePage = (props) => {
                       </NavItem>
                       <NavItem>
                         <NavLink
-                          className={classnames("py-2 px-3", {
+                          className={classnames('py-2 px-3', {
                             active: activeNav === 2,
                           })}
                           data-toggle="tab"
                           href="#pablo"
-                          onClick={(e) => toggleNavs(e, 2)}
+                          onClick={e => toggleNavs(e, 2)}
                         >
                           <span className="d-none d-md-block">Week</span>
                           <span className="d-md-none">W</span>
@@ -287,13 +244,10 @@ const HomePage = (props) => {
                   </div>
                 </Row>
               </CardHeader>
-               <CardBody>
+              <CardBody>
                 <div className="chart">
-                  <Line
-                  data={data?data:[]}
-                  width={400}
-                  height={400}/>
-                  </div>
+                  <Line data={data ? data : []} width={400} height={400} />
+                </div>
                 {/* <div className="chart">
                   <Line
                     data={chartExample1[chartExample1Data]}
@@ -301,7 +255,7 @@ const HomePage = (props) => {
                     getDatasetAtEvent={(e) => console.log(e)}
                   />
                 </div> */}
-              </CardBody> 
+              </CardBody>
             </Card>
           </Col>
           <Col xl="4">
@@ -317,20 +271,18 @@ const HomePage = (props) => {
                 </Row>
               </CardHeader>
               <CardBody>
-           
-              <div className="chart">
-              <Bar
-          data={data?data:[]}
-          width={400}
-          height={600}
-          options={{
-            maintainAspectRatio: false
-          }}
-        />
+                <div className="chart">
+                  <Bar
+                    data={data ? data : []}
+                    width={400}
+                    height={600}
+                    options={{
+                      maintainAspectRatio: false,
+                    }}
+                  />
                 </div>
 
-
-{/*                
+                {/*                
                  <div className="chart">
                   <Bar
                     data={chartExample2.data}
