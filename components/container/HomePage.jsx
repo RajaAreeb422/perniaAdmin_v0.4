@@ -290,7 +290,7 @@ const HomePage = (props) => {
                <CardBody>
                 <div className="chart">
                   <Line
-                  data={data}
+                  data={data?data:[]}
                   width={400}
                   height={400}/>
                   </div>
@@ -320,7 +320,7 @@ const HomePage = (props) => {
            
               <div className="chart">
               <Bar
-          data={data}
+          data={data?data:[]}
           width={400}
           height={600}
           options={{
