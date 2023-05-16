@@ -156,7 +156,7 @@ const AddProductPage = memo(props => {
             let reqFields;
             setLoader(false)
             Object.keys(state).map(v => {
-              if(!data[v])
+              if(!state[v])
                 reqFields=reqFields+v
             })
             setMsg(`Please Fill ${reqFields} Fields`)
@@ -227,7 +227,7 @@ const AddProductPage = memo(props => {
       {
        setLoader(false)
        Object.keys(state).map(v => {
-        if(!data[v])
+        if(!state[v])
           reqFields=reqFields+v
       })
       setMsg(`Please Fill ${reqFields} Fields`)
