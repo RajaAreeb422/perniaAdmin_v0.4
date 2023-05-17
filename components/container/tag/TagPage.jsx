@@ -105,7 +105,7 @@ const TagPage = memo(props => {
           {user.role_id==1?
           <div>
             <Link
-              href="../editTag/[id]"
+              href="/editTag/[id]"
               as={`/editTag/${params.row.id}`}
             >
               <EditOutlined className="tag1Edit">Edit</EditOutlined>
