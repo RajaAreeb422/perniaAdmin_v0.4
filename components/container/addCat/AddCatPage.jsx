@@ -86,11 +86,6 @@ const AddCatPage = memo(props => {
 
     setLoader(false)
     errortoggle()
-    }
-    else if(parnt_cat.length==8)
-    {
-      setLoader(false)
-      categorytoggle()
     } 
     else{
  
