@@ -1,8 +1,9 @@
 import React from 'react';
 
-import MainLayout from '../../layout/MainLayout';
-import EditTagContainer from '../../components/container/editTag/EditTagContainer';
-import HeadDefault from '../../layout/head/HeadDefault';
+import MainLayout from '../../../layout/MainLayout';
+
+import HeadDefault from '../../../layout/head/HeadDefault';
+import EditTagContainer from '../../../components/container/editTag/EditTagContainer';
 
 class EditTag extends React.Component {
   constructor(props) {

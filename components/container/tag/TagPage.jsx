@@ -104,12 +104,12 @@ const TagPage = memo(props => {
           <>
           {user.role_id==1?
           <div>
-            {/* <Link
-              href="../editSupplier/[id]"
-              as={`/editSupplier/${params.row.id}`}
+            <Link
+              href="../editTag/[id]"
+              as={`/editTag/${params.row.id}`}
             >
               <EditOutlined className="tag1Edit">Edit</EditOutlined>
-            </Link> */}
+            </Link>
 
             <DeleteOutline
               className="tag1ListDelete"
