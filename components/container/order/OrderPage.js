@@ -55,7 +55,7 @@ const OrderPage = memo(props => {
                 config,
               )
               .then(res => {
-                exam['name'] = res.data.data.first_name;
+                exam['name'] = res.data.data.first_name + " "+ res.data.data.last_name;
                 row.push(exam)
               })
               .catch(error => console.log(error));
@@ -131,7 +131,7 @@ const OrderPage = memo(props => {
     };
   
     axios
-      .delete(`https://api.mazglobal.co.uk/maz-api/orders/${id}`, config)
+      .delete(`https://api.mazglobal.co.uk/maz-api/orders/${id}`)
       .then(response => {
         console.log(response);
         toggle();
