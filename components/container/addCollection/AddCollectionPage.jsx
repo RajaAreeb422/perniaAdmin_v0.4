@@ -67,12 +67,7 @@ const AddCollectionPage = memo(props => {
       .then(res => setSupplier(res.data.data))
       .catch(err => console.log(err));
     }
-    // else{
-    //   axios
-    //   .get(`https://api.mazglobal.co.uk/maz-api/categories/getCategoriesBySupplierId/${decoded.result.supplier_id}`)
-    //   .then(res => setCategories(res.data.data))
-    //   .catch(err => console.log(err));
-    // }
+
    
   }, []);
   
@@ -86,9 +81,6 @@ const AddCollectionPage = memo(props => {
       },
     };
 
-    // if(state.coupon_code==''||state.coupon_type==''||state.coupon_description==''||state.expiry_date==''
-    // ||state.discount_type==''|| state.discount_value==null || state.usage_limit_per_coupon==null ||state.usage_limit_per_user==null)
-   
    if(user.role_id==1)
    {
     if(state.name=='' || state.category_id=='' || state.category_id==null
@@ -193,27 +185,7 @@ const AddCollectionPage = memo(props => {
       console.log(err)
     })
         
-    // axios
-    // .post(
-    //   `http://95.111.240.143:8080/ecom-api/coupons`,
-    //   state,config,
-
-    //   { headers: { 'content-type': 'application/json' } },
-    // )
-
-    // .then(response => {
-    //   toggle()
-      
-    //   console.log("respoooos coupon",response);
-    // })
-    // .catch(error => {
-    //   console.log('error',error)
-    //   toast.notify(`Sorry! Coupon code is not unique..`,{
-    //     type:'error'
-    //   })
-     
-    // });
-
+  
     }
 
   }
@@ -271,25 +243,7 @@ const AddCollectionPage = memo(props => {
                 onChange={handleChange('name')}
               />
             </div>
-          
-            {/* <div style={{padding:'20px',width:'400px'}}>
-            <label style={{marginLeft:'60px'}}>Brand</label>
-            <select
-            className="form-control"
-            id="parent"
-            required
-         
-            name="brand_id"
-            style={{marginBottom:'10px',width:'300px',marginLeft:'60px'}}
-             onChange={handleChange('brand_id')}
-            >
-                {brand.map(it=>(
-                    <option value={it.id}>{it.name}</option>
-                ))
-
-                }
-            </select>
-            </div> */}
+   
              <div style={{padding:'20px',width:'400px'}}>
             <label style={{marginLeft:'0px'}}>Tag</label>
             <select
@@ -357,15 +311,6 @@ const AddCollectionPage = memo(props => {
             <div style={{width:'700px',marginLeft:'20px'}}>
               <label>Image</label>
               <Drop parentCall={handleChild}/>
-              {/* <textarea
-                type="date"
-                style={{height:'120px'}}
-                value={state.coupon_description}
-                placeholder="details....."
-                name="coupon_description"
-                onChange={handleChange('coupon_description')}
-                className="form-control"
-              /> */}
             </div>
           </div>
           

@@ -147,7 +147,7 @@ const OrderPage = memo(props => {
 
 //sets the columns name for the orer list and the syntax is built in for the DataGrid component 
   const columns = [
-    { field: '_id', headerName: 'ID', width: 150 },
+    { field: 'id', headerName: 'Order ID', width: 150 },
 
     { field: 'payment_status', headerName: ' Payment Status', width: 190 },
     // {

@@ -10,6 +10,8 @@ import router from 'next/router';
 import { useRouter } from 'next/router';
 import { toast, ToastContainer } from 'react-nextjs-toast';
 import Drop from './Drop';
+import jwt_decode from "jwt-decode";
+
 const EditCollectionPage = memo(props => {
   const [state, setState] = useState({
     name: '',
@@ -19,13 +21,13 @@ const EditCollectionPage = memo(props => {
   });
 
   const [selected, setSelected] = useState([]);
-
+  const [user, setUser] = useState({});
   const [brand, setBrand] = useState([]);
   const [tag, setTag] = useState([]);
   const [path, setPath] = useState([]);
   const [categories, setCategories] = useState([]);
   const [file, setFile] = useState();
-  const [data, setData] = useState([]);
+  const [suppliers, setSuppliers] = useState([]);
   const [error, setError] = useState('');
   const [mydiv, setDiv] = useState(false);
 
@@ -37,12 +39,16 @@ const EditCollectionPage = memo(props => {
   const router = useRouter();
   const { id } = router.query;
   useEffect(() => {
+
+    var decoded = jwt_decode(localStorage.getItem('token'));
+    setUser(decoded.result)
     if(!id){
       return
     }
     axios
       .get(`https://api.mazglobal.co.uk/maz-api/collections/${id}`)
       .then(response => {
+        console.log("collection",response.data.data)
         setState(response.data.data);
         let server_path = [];
         server_path.push(
@@ -66,6 +72,12 @@ const EditCollectionPage = memo(props => {
       .get('https://api.mazglobal.co.uk/maz-api/categories')
       .then(res => setCategories(res.data.data))
       .catch(err => console.log(err));
+  
+      axios
+      .get('https://api.mazglobal.co.uk/maz-api/suppliers')
+      .then(res => setSuppliers(res.data.data))
+      .catch(err => console.log(err));
+
   }, [id]);
 
   const submitHandler = e => {
@@ -191,6 +203,7 @@ const EditCollectionPage = memo(props => {
                 id="parent"
                 required
                 name="tag_id"
+                value={state.tag_id}
                 style={{
                   marginBottom: '10px',
                   width: '300px',
@@ -212,6 +225,7 @@ const EditCollectionPage = memo(props => {
                 className="form-control"
                 id="parent"
                 required
+                value={state.category_id}
                 name="category_id"
                 style={{
                   marginBottom: '10px',
@@ -225,6 +239,25 @@ const EditCollectionPage = memo(props => {
                 ))}
               </select>
             </div>
+            {user.role_id==1 &&
+            <div style={{ padding: '20px', width: '360px' }}>
+            <label style={{marginLeft:'0px'}}>Supplier</label>
+            <select
+              className="form-control"
+              id="brand"
+              required
+              name="brand_id"
+              readonly={true}
+              value={state.brand_id}
+              onChange={handleChange(name)}
+            >
+              {suppliers.map(p => (
+                <option value={p.id}>{p.name}</option>
+              ))}
+              <option value="null">Select Supplier</option>
+            </select>
+          </div>
+          }
           </div>
 
           <div className="newCouponItem1">

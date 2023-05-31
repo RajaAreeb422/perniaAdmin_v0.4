@@ -214,13 +214,7 @@ const LoginPage = () => {
               />
             </FormGroup>
 
-            <FormGroup check>
-              <Input
-                type="checkbox"
-                className="form-check-input"
-                id="exampleCheck3"
-              />
-            </FormGroup>
+            
           </fieldset>
           {/* disabled={disable} */}
           <Button
@@ -234,7 +228,7 @@ const LoginPage = () => {
           {access && <Alert color="danger">Invalid email or password</Alert>}
           
         </Form>
-        <p style={{cursor:'pointer',textDecoration:'underline'}} onClick={()=>forgetpassword()}>Forget Password ?</p>
+        <p style={{cursor:'pointer',textDecoration:'underline'}} onClick={()=>forgetpassword()}>Forgot Password ?</p>
       </CardBody>
     </Card>
 

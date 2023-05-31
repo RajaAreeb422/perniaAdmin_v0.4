@@ -1,6 +1,8 @@
 import React, { memo } from 'react';
 import { useState, useEffect } from 'react';
 import { DataGrid } from '@material-ui/data-grid';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import Link from 'next/link';
 import { DeleteOutline, EditOutlined } from '@material-ui/icons';
@@ -34,7 +36,7 @@ const TagPage = memo(props => {
             exam['_id'] = i++;
         
           }),
-            setData(response.data.data);
+          setData(response.data.data);
           setList(response.data.data);
       
         //console.log(response.data)
@@ -90,7 +92,7 @@ const TagPage = memo(props => {
   
 //sets the column name for the supplier list and the syntax is built in for the DataGrid component.
   const columns = [
-    { field: '_id', headerName: 'ID', width: 220 },
+
     //{ field: 'id', headerName: 'UID', with: 240 },
     { field: 'name', headerName: 'Name', width: 240 },
 
@@ -115,7 +117,22 @@ const TagPage = memo(props => {
               className="tag1ListDelete"
               onClick={() => handleDelete(params.row.id)}
             />
-            </div>:<div></div>}
+              <FormControlLabel
+              control={
+                <Switch
+                  // checked={statusValues['switch-' + params.row.id]}
+                 // checked={Sactive[params.row.id].status==1?true:false}
+                  name={'status' + params.row.id}
+               //   onChange={handleSwitchChange(params.row.id)}
+                  color="primary"
+                />
+              }
+              labelPlacement="start"
+              //label={Sactive[params.row.id].status==1 ? 'active' : 'Inactive'}
+              // label={statusValues ? 'active' : 'Inactive'}
+            />
+            </div>
+            :<div></div>}
           </>
         );
       },

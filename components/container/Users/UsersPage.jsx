@@ -141,7 +141,7 @@ const UsersPage = memo(props => {
 
   // Sets Column Names for the User list and the syntax used is built in for DataGrid Component.
   const columns = [
-    { field: '_id', headerName: 'ID', width: 150 },
+  
 
     { field: 'name', headerName: 'Name', width: 190 },
 

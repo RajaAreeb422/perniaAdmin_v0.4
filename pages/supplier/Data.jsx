@@ -107,7 +107,7 @@ const Data = memo(props => {
   
 //sets the column name for the supplier list and the syntax is built in for the DataGrid component.
   const columns = [
-    { field: '_id', headerName: 'ID', width: 220 },
+    
     //{ field: 'id', headerName: 'UID', with: 240 },
     { field: 'name', headerName: 'Name', width: 240 },
     { field: 'email', headerName: 'Email', width: 240 },

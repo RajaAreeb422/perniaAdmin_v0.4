@@ -38,6 +38,7 @@ const ProductPage = memo(props => {
         let productList=[]
         response.data.data.map(exam => {
           exam['_id'] = i++;
+
           //get the category name from category id
           if(exam.collection_id!=0 )
           {
@@ -104,6 +105,9 @@ const ProductPage = memo(props => {
     //return () => mounted = false;
   }, []);
 
+  const onCheckBoxSelect=()=>{
+    console.log("in check boxxxxxxxx")
+  }
   //Deletes the selcted product from database and generates new product list..
   const cnfrmDelete = id => {
     const config = {
@@ -151,7 +155,7 @@ const ProductPage = memo(props => {
 
   //Set Columns Name to display on interface..Build in syntax for DataGrid Component..
   const columns = [
-    { field: '_id', headerName: 'ID', width: 100 },
+    { field: 'sku', headerName: 'SKU', width: 100 },
     // {field:"id",headerName:"UID",with:190},
     {
       field: 'image',
@@ -228,6 +232,7 @@ const ProductPage = memo(props => {
         pageSize={8}
         autoHeight={true}
         checkboxSelection
+        onSelectionModelChange={()=>onCheckBoxSelect()}
       />
 
       <div className="probtnclass"></div>

@@ -21,9 +21,11 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import { toast, ToastContainer } from 'react-nextjs-toast'
 import jwt_decode from "jwt-decode";
+import { Audio,RevolvingDot } from 'react-loader-spinner';
 
 const ProfilePage = memo(props => {
 const [user,setUser]=useState({})
+const [loader, setLoader] = React.useState(false);
 const [newPassword,setNewPassword]=useState({})
 const [confirmPswd,setConfirmPassword]=useState({})
 const [msg, setMsg] = useState();
@@ -43,6 +45,7 @@ const [state, setState] = useState({
   type: '',
   email: '',
   password: '',
+  address:'',
   phone: '',
   mobile: '',
   date_of_birth: '',
@@ -126,26 +129,34 @@ const handleInfoChange = e => {
 
 const updateInfo = ()=> {
 //https://api.mazglobal.co.uk/maz-api
-
+setLoader(true)
 
 if(info.email==undefined && !info.email)
 {
    info.email=state.email
 }
-if(info.first_name==undefined && info.last_name==undefined)
+if(
+  (info.first_name==undefined || info.first_name=='') 
+&& (info.last_name==undefined || info.first_name=='' )
+&& (info.phone==undefined || info.phone=='') 
+&& (info.address==undefined || info.address=='')
+)
 {
+  setLoader(false)
   infotoggle()
-  setMsg('Please Fill Out First Name And Last Name Fields')
+  setMsg('Nothing To Update')
   msgtoggle()
 }
 else{
   axios
   .put(`https://api.mazglobal.co.uk/maz-api/users/${user.id}`,info)
   .then(response => {
+    setLoader(false)
     setMsg(response.data.message)
     infotoggle()
     msgtoggle()
   }).catch(err=>{
+    setLoader(false)
     setMsg(err.response.data.message)
     infotoggle()
     msgtoggle()
@@ -230,11 +241,7 @@ const load=()=>{
             <PermIdentity className="userShowIcon" />
             <span className="userShowInfoTitle">{state.first_name+" "}{state.last_name}</span>
           </div>
-          <div className="userShowInfo">
-            <CalendarToday className="userShowIcon" />
 
-            <span className="userShowInfoTitle">{state.date_of_birth}</span>
-          </div>
           <div className="userShowInfo">
             <Accessibility className="userShowAccessIcon" />
 
@@ -310,7 +317,7 @@ const load=()=>{
               <input
                 type="text"
                 style={{marginLeft:'0px',width:'300px'}}
-                placeholder=""
+                placeholder={state.first_name}
                 className="form-control"
                 required
                 name="first_name"
@@ -323,7 +330,7 @@ const load=()=>{
               <input
                 type="text"
                 style={{marginLeft:'0px',width:'300px'}}
-                placeholder=""
+                placeholder={state.last_name}
                 required
                 className="form-control"
                 name="last_name"
@@ -332,9 +339,35 @@ const load=()=>{
               />
             </div>
             <div style={{padding:'20px'}}>
-              <label  style={{marginLeft:'0px'}}>Email</label>
+              <label  style={{marginLeft:'0px'}}>Phone</label>
               <input
                 type="text"
+                style={{marginLeft:'0px',width:'300px'}}
+                placeholder={state.phone}
+                required
+                className="form-control"
+                name="phone"
+                value={info.phone}
+                onChange={e=>handleInfoChange(e)}
+              />
+            </div>
+            <div style={{padding:'20px'}}>
+              <label  style={{marginLeft:'0px'}}>Address</label>
+              <input
+                type="text"
+                style={{marginLeft:'0px',width:'300px'}}
+                placeholder={state.address}
+                required
+                className="form-control"
+                name="address"
+                value={info.address}
+                onChange={e=>handleInfoChange(e)}
+              />
+            </div>
+            <div style={{padding:'20px'}}>
+              <label  style={{marginLeft:'0px'}}>Email</label>
+              <input
+                type="email"
                 style={{marginLeft:'0px',width:'300px'}}
                 placeholder={state.email}
                 required
@@ -347,8 +380,20 @@ const load=()=>{
         </ModalBody>
         <ModalFooter>
           
-          <Button color="primary" onClick={updateInfo}>
-            Update
+          <Button color="primary" onClick={updateInfo}
+            style={{display:'flex'}} >
+            {loader ?
+              <RevolvingDot
+               height="80"
+               width="80"
+               radius="9"
+               color="black"
+               ariaLabel="loading"
+               wrapperStyle
+               wrapperClass
+              />
+             : <span>Update</span>
+            }
           </Button>
          
         </ModalFooter>

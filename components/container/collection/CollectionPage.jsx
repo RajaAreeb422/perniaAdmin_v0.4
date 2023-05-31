@@ -27,13 +27,12 @@ const CollectionPage = memo(props => {
       },
     };
     let mounted = true;
-
+    console.log('decoded',decoded.result)
     if(decoded.result.role_id==1)
     {
       axios
       .get('https://api.mazglobal.co.uk/maz-api/collections')
       .then(res => {
-       
         let list=[]
         if (mounted) {
           res.data.data.map(it=>{
@@ -42,7 +41,10 @@ const CollectionPage = memo(props => {
             }).catch(error=>console.log(error))
             axios.get(`https://api.mazglobal.co.uk/maz-api/categories/${it.category_id}`).then(ress=>{
               it['category']=ress.data.data.name;
-            }).catch()
+            }).catch(error=>console.log(error))
+            axios.get(`https://api.mazglobal.co.uk/maz-api/suppliers/${it.brand_id}`).then(ress=>{
+              it['supplier']=ress.data.data.name;
+            }).catch(error=>console.log(error))
           })
           
           setState(res.data.data);
@@ -61,9 +63,11 @@ const CollectionPage = memo(props => {
           res.data.data.map(it=>{
             axios.get(`https://api.mazglobal.co.uk/maz-api/tags/${it.tag_id}`).then(respp=>{
               it['tag']=respp.data.data.name;
+              it['supplier']=decoded.result.first_name
             }).catch(error=>console.log(error))
             axios.get(`https://api.mazglobal.co.uk/maz-api/categories/${it.category_id}`).then(ress=>{
               it['category']=ress.data.data.name;
+              it['supplier']=decoded.result.first_name
             }).catch()
           })
           
@@ -137,6 +141,13 @@ const CollectionPage = memo(props => {
       headerName: 'Category',
       width: 180,
     },
+ 
+    {
+      field: 'supplier',
+      headerName: 'Brand/Supplier',
+      width: 180,
+    },
+    
     
     {
       field: 'action',

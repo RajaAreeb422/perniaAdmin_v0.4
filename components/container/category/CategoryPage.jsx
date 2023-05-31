@@ -2,12 +2,15 @@ import React, { memo } from 'react';
 //import { render } from 'node-sass';
 import { useState, useEffect } from 'react';
 import { DataGrid } from '@material-ui/data-grid';
+// import {
+//   DataGridPro,
+// } from '@mui/x-data-grid-pro';
 import SearchBar from 'material-ui-search-bar';
 import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import Link from 'next/link';
-import { DeleteOutline, Edit } from '@material-ui/icons';
+import { DeleteOutline, Edit,AddBox } from '@material-ui/icons';
 import './clist.scss';
 import useFetch from 'react-fetch-hook';
 import axios from 'axios';
@@ -53,7 +56,7 @@ const CategoryPage = memo(props => {
          let activelist=[]
           response.data.data.map(exam => {
             exam['_id'] = i++;
-          
+            exam['expand']=false
             let pp = 'https://api.mazglobal.co.uk/' + exam.path;
             pp=pp.toString();
             exam['path']=pp
@@ -88,56 +91,6 @@ const CategoryPage = memo(props => {
         }
     
       });
- //   }
-    // else{
-    //   axios
-    //   .get(`https://api.mazglobal.co.uk/maz-api/categories/getCategoriesBySupplierId/${decoded.result.supplier_id}`, config)
-    //   .then(response => {
-        
-    //     if (mounted) {
-    //       var i = 1;
-    //      let activelist=[]
-    //       response.data.data.map(exam => {
-    //         exam['_id'] = i++;
-          
-    //         let pp = 'https://api.mazglobal.co.uk/' + exam.path;
-    //         pp=pp.toString();
-    //         exam['path']=pp
-         
-            
-    //         setPath(pp)
-    //         if (exam.parent) {
-              
-    //           response.data.data.map(p_v => {
-    //             if (exam.parent == p_v.id) {
-    //               exam['parent_name'] = p_v.name;
-                 
-                  
-    //             }
-    //           });
-    //         } else {
-    //           exam['parent_name'] = 'null';
-    //         }
-
-    //         switchstate['switch-' + exam.id] = exam.status;
-    //         activelist[exam.id]={
-    //           id:exam.id,
-    //           status:exam.status
-    //         }
-    //       }),
-    //       setSactive(activelist) 
-    //       setData(response.data.data);
-    //       setList(response.data.data)
-          
-    //       setState(switchstate);
-         
-    //     }
-    
-    //   });
-    // }
-  
-
-    //return () => mounted = false;
   }, []);
 
 
@@ -205,6 +158,12 @@ const CategoryPage = memo(props => {
     toggle();
   };
 
+  const expandRow=(id)=>{
+    data.map(ro=>{
+      if(ro.id===id)
+      ro.expand=!ro.expand
+    })
+  }
   //filters the searched value from the list of categories
   const requestSearch =(name)=> (e) => {
     
@@ -224,8 +183,7 @@ const CategoryPage = memo(props => {
   }
   };
 
-  //for the purpose of active or inactive of category when the toggle button is clicked.
-  //Request goes to backend that changes the status to active/inactive..
+
   const handleSwitchChange = id => e => {
     const newlist=Sactive
     const value = e.target.checked;
@@ -254,9 +212,9 @@ const CategoryPage = memo(props => {
 
   //set the columns and to be displayed on the interface.. Built in syntax for DataGrid Component..
   const columns = [
-    { field: '_id', headerName: 'ID', width: 150 },
+    { field: 'id', headerName: 'ID', width: 150 },
     {
-      field: 'patn',
+      field: 'path',
       headerName: 'Image',
       width: 240,
 
@@ -286,9 +244,11 @@ const CategoryPage = memo(props => {
           <>
           {user.role_id==1? 
           <>
+            <AddBox style={{width:'20%'}} onClick={()=>expandRow(params.row.id)}/>
             <Link href="/editcat/[id]" as={`/editcat/${params.row.id}`}>
-              <Edit className="userEdit"></Edit>
+              <Edit style={{color:'black'}}className="userEdit"></Edit>
             </Link>
+            
 
             <DeleteOutline
               className="userListDelete"
@@ -350,8 +310,10 @@ const CategoryPage = memo(props => {
         columns={columns}
         pageSize={8}
         autoHeight={true}
-        checkboxSelection
+  
+        
       />
+    
 
       {/* Alert Box Code */}
       <div className="btnclass"></div>
