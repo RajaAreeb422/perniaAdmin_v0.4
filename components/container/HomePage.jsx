@@ -274,7 +274,7 @@ const HomePage = props => {
 
   return (
     <>
-    {user.role_id==1 ?
+    {user ?user.role_id==1:1==2 ?
     <div>
       <div className="containerspaceee">
         
