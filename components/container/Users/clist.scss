@@ -1,63 +1,184 @@
 .userList {
-    flex: 4;
-  }
-  
-  .userListUser {
-    display: flex;
-    align-items: center;
-  }
-  
-  .userListImg {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-right: 10px;
-  }
-  
-  .userListEdit{
-      border: none;
-      border-radius: 10px;
-      padding: 5px 10px;
-      background-color: #3bb077;
-      color: white;
-      cursor: pointer;
-      margin-right: 20px;
-  }
-  
-  .userListDelete{
-      color: red;
-      cursor: pointer;
-  }
-  .userEdit{
-  
+  flex: 4;
+}
+.userList h1{
+  font-family: serif;
+  font-size: 40px;
+  font-weight: 600;
+}
+.userListUser {
+  display: flex;
+  align-items: center;
+}
+
+.userListImg {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.userListEdit{
+    border: none;
+    border-radius: 10px;
+    padding: 5px 10px;
+    background-color: #3bb077;
+    color: white;
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+.userListDelete{
+    color: red;
     cursor: pointer;
 }
-  
+.userEdit{
+
+  cursor: pointer;
+}
+
+
   .AddButton {
-    width: 100px;
+ 
     border: none;
-    padding: 5px;
+    padding: 7px 20px !important;
     background-color: rgb(65, 105, 158);
     border-radius: 5px;
     cursor: pointer;
     color: white;
-    font-size: 13px;
+    font-size: 16px !important;
+    font-weight: 500 !important;
     float: right;
     margin-top: -40px;
-    // margin:auto;
-    // margin-left: 1040px;
+    
     margin-bottom: 30px;
   }
-  .AddButton:hover {
-    background-color: rgb(55, 116, 196);
-  }
-  .btnclass{
-    margin-top: 30px;
-    margin-right: 30px;
-  }
-  .shift{
-    float:right;
-    margin-bottom: -100px;
-    margin-right: 90px;
-  }
+
+.AddButton:hover {
+  background-color: rgb(55, 116, 196);
+}
+.btnclass{
+  margin-top: 30px;
+  margin-right: 30px;
+}
+.shift{
+  float:right;
+  margin-bottom: -100px;
+  margin-right: 90px;
+}
+
+.spaceee{
+margin: 50px 0px;
+}
+
+.all-user{
+background-color: #000;
+color: #fff;
+display: flex;
+justify-content: space-between;
+padding: 50px;
+align-items: center;
+}
+
+.income-info.bar h2 {
+color: #41699e;
+}
+.income-box {
+  background-color: #41699e;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  padding: 50px;
+  align-items: center;
+  transition: 0.6s;
+  box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+ 
+ 
+}
+
+.income-box:hover  ,.all-icome:hover ,.all-user:hover{ 
+background-color: #fff;
+color: #000;
+transform: translateY(-20px);
+transition: 0.6s;
+box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+}
+.all-icome {
+transition: 0.6s;
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 50px;
+background-color: #e3002f;
+color: #fff;
+box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+}
+.icon-box {
+  width: 50px;
+  height: 50px;
+  background-color: #fff !important;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+}
+.income-info h2{
+font-size: 22px;
+font-weight: 600;
+font-family: serif;
+}
+.income-info p{
+font-size: 20px;
+font-weight: 500;
+}
+svg.icons-size {
+  color: #000;
+  display: flex;
+  justify-content: center;
+  font-size: 25px;
+}
+
+.bar-box {
+box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+ padding: 30px 0px;
+}
+
+.income-info.bar {
+padding: 0px 0px 14px 30px;
+border-bottom: 1px solid #b1abb1cc;
+}
+
+.bar-space{
+padding: 10px 30px 14px 30px;
+}
+
+.top-ppoints {
+padding: 10px 30px 0px 30px;
+}
+.same-line {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 5px;
+margin: 5px ;
+/* padding: 10px 30px 0px 30px; */
+}
+
+.same-line h5 {
+font-size: 16px;
+font-weight: 600;
+margin-bottom: 0px;
+font-family: serif;
+}
+.same-line p{
+margin-bottom: 0px;
+}
+
+.same-line:hover {
+background-color: #000;
+color: #fff;
+
+
+}

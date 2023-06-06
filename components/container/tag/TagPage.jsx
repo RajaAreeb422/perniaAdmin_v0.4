@@ -17,7 +17,7 @@ const TagPage = memo(props => {
   const toggle = () => setModal(!modal);
   const [data, setData] = useState([]);
   const [valu, setValue] = useState('');
-  const [list, setList] = useState([]);
+  const [list, setList] = useState();
   const [user,setUser]=useState({
   })
 
@@ -34,7 +34,7 @@ const TagPage = memo(props => {
           var i = 1;
           response.data.data.map(exam => {
             exam['_id'] = i++;
-        
+       
           }),
           setData(response.data.data);
           setList(response.data.data);
@@ -66,6 +66,30 @@ const TagPage = memo(props => {
     setId(id);
     toggle();
   };
+
+  const handleSwitchChange=(id)=>{
+     let selectedtag={};
+     let tagList=[];
+    list.map(tag=>{
+      if(tag.id==id){
+        tag.status=!tag.status
+        selectedtag=tag
+      }
+      tagList.push(tag)
+    })
+
+    setData(tagList)
+
+    axios
+      .put(`https://api.mazglobal.co.uk/maz-api/tags/${id}`,{status:selectedtag.status})
+      .then(response => {
+         console.log(response.data.data)
+         setData(tagList)
+      }).catch(err=>{
+        console.log(err)
+      })
+        
+  }
 
   //deletes the selected supplier from the database and creates new list
   const move = () => {
@@ -121,14 +145,14 @@ const TagPage = memo(props => {
               control={
                 <Switch
                   // checked={statusValues['switch-' + params.row.id]}
-                 // checked={Sactive[params.row.id].status==1?true:false}
+                  checked={params.row.status==1?true:false}
                   name={'status' + params.row.id}
-               //   onChange={handleSwitchChange(params.row.id)}
+                  onChange={()=>handleSwitchChange(params.row.id)}
                   color="primary"
                 />
               }
               labelPlacement="start"
-              //label={Sactive[params.row.id].status==1 ? 'active' : 'Inactive'}
+              label={params.row.status==1 ? 'active' : 'Inactive'}
               // label={statusValues ? 'active' : 'Inactive'}
             />
             </div>
@@ -172,7 +196,7 @@ const TagPage = memo(props => {
         columns={columns}
         pageSize={8}
         autoHeight={true}
-        checkboxSelection
+        //checkboxSelection
       />
 
       <div className="tag1btnclass"></div>

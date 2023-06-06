@@ -12,7 +12,7 @@ import { toast, ToastContainer } from 'react-nextjs-toast';
 const AddTagPage = memo(props => {
   const [state, setState] = useState({
     name: '',
-    
+    status:1
   });
 
   

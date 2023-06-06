@@ -9,6 +9,7 @@ import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import { AirlineSeatIndividualSuite } from '@material-ui/icons';
 import router from 'next/router';
 import jwt_decode from "jwt-decode";
+
 //import 'react-toastify/dist/ReactToastify.css';
 toast.configure();
 
@@ -265,7 +266,7 @@ const AddCatPage = memo(props => {
               onChange={handleChange(name)}
             />
           </div>
-          <div className="addCategoryItem">
+          {/* <div className="addCategoryItem">
             <label for="exampleFormControlSelect1">Parent Category</label>
             <select
               className="addCategorySelect"
@@ -298,7 +299,7 @@ const AddCatPage = memo(props => {
                 <option value="null">Select Cataegory</option>
               </select>
             </div>
-          )}
+          )} */}
 
            {user.role_id==1 &&
            <div className="addCategoryItem">

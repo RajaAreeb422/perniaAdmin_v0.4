@@ -45,6 +45,7 @@ const AddProductPage = memo(props => {
   });
   const [parnt_cat, setParent] = useState([]);
   const [tags, setTags] = useState([]);
+  const [ptag, setPTag] = useState();
   const [supplier, setSupplier] = useState([]);
   const [brand, setBrand] = useState();
   const [sub, setSub] = useState(state.category_id);
@@ -528,7 +529,8 @@ const AddProductPage = memo(props => {
 
     setState({
       ...state,
-      ['collection_id']: coll.id
+      ['collection_id']: coll.id,
+      ['category_id']:coll.category_id
     })
     collections.map(cl => {
       if (cl.id === coll.id) {
@@ -539,6 +541,13 @@ const AddProductPage = memo(props => {
         cl.status = false
       }
 
+    })
+
+    tags.map(tag=>{
+      
+      if(tag.id==coll.tag_id){
+        setPTag(tag)
+      }
     })
 
   }
@@ -607,34 +616,34 @@ const AddProductPage = memo(props => {
               </div>
 
               <div className="flexdiv">
-                <div className="newaddpro1Select" style={{ marginLeft: '30px' }}>
-                  <label for="exampleFormControlSelect1"  >Category</label>
-                  <select
-                    className="qtySelect"
-                    id="parent"
-                    required
-                    name="category_id"
-                    style={{
-                      width: '285px',
-                      border: ' 1px solid gray',
-                      borderRadius: '5px',
-                      height: '35px',
-                    }}
-                    value={state.category_id}
-                    onChange={handleChange(name)}
-                  >
-                   
-                    <option value="">Select Category</option>
-                    {parnt_cat.map(p => {
-                      if (!p.parent) return <option value={p.id}>{p.name}</option>;
-                    })}
-                  </select>
-                </div>
+                {user.role_id == 1 &&
+                 <div className="newaddpro1Select" style={{marginLeft:'30px'}}>
+                <label for="exampleFormControlSelect1">Supplier</label>
+                <select
+                  className="qtySelect"
+                  id="supplier"
+                  required
+                  name="supplier_id"
+                  style={{
+                    width: '285px',
+                    border: ' 1px solid gray',
+                    borderRadius: '5px',
+                    height: '35px',
+                  }}
+                  value={state.supplier_id}
+                  onChange={handleBrandChange(name)}
+                >
+                  {supplier.map(p => (
+                    <option value={p.id}>{p.name}</option>
+                  ))}
+                  <option value="null">Select Supplier</option>
+                </select>
+              </div>
+            }
               </div>
             </div>
 
-            {/* Category Module */}
-            {mydiv && (
+            {/* {mydiv && (
               <div className="newaddproItem">
                 <label for="exampleFormControlSelect1">Sub Category</label>
                 <select
@@ -653,7 +662,7 @@ const AddProductPage = memo(props => {
                   })}
                 </select>
               </div>
-            )}
+            )} */}
 
 
             <div className="newaddproflexItem">
@@ -696,25 +705,68 @@ const AddProductPage = memo(props => {
                 </div>
               </div>
             </div>
+            <div className="newaddproflexItem" style={{marginTop:'10px'}}>
+              <div className="flexdiv">
+            <div className="newaddpro1Select">
+                  <label for="exampleFormControlSelect1">
+                    Category 
+                    {!ptag &&<small>(enabled on collection select)</small>}
+                  </label>
+               
+                  <select
+                    className="qtySelect"
+                    id="parent"
+                    required
+                    name="category_id"
+                    disabled
+                    style={{
+                      width: '285px',
+                      border: ' 1px solid gray',
+                      borderRadius: '5px',
+                      height: '35px',
+                    }}
+                    value={state.category_id}
+                    onChange={handleChange(name)}
+                  >
+                   
+                    <option value="">Select Category</option>
+                    {parnt_cat.map(p => {
+                      if (!p.parent) return <option value={p.id}>{p.name}</option>;
+                    })}
+                  </select>
+                </div>
+                </div>
 
-            {user.role_id == 1 &&
-              <div className="newaddproItem">
-                <label for="exampleFormControlSelect1">Supplier</label>
-                <select
-                  className="newaddproSelect"
-                  id="supplier"
-                  required
-                  name="supplier_id"
-                  value={state.supplier_id}
-                  onChange={handleBrandChange(name)}
-                >
-                  {supplier.map(p => (
-                    <option value={p.id}>{p.name}</option>
-                  ))}
-                  <option value="null">Select Supplier</option>
-                </select>
-              </div>
-            }
+                <div className="flexdiv">
+            <div className="newaddpro1Select"  style={{ marginLeft: '30px' }}>
+                  <label for="exampleFormControlSelect1" >
+                    Tag
+                    {!ptag &&<small>(enabled on collection select)</small>}
+                    </label>
+                  <select
+                    className="qtySelect"
+                    id="tag"
+                    required
+                    name="tag"
+                    disabled
+                    style={{
+                      width: '285px',
+                      border: ' 1px solid gray',
+                      borderRadius: '5px',
+                      height: '35px',
+                    }}
+                    value={ptag?ptag.id:''}
+                    onChange={handleChange(name)}
+                  >
+                   
+                    <option value="">Select Tag</option>
+                    {tags.map(p => {
+                     return <option value={p.id}>{p.name}</option>;
+                    })}
+                  </select>
+                </div>
+                </div>
+                </div>
 
             <div className="newaddproItem">
               <label for="exampleFormControlSelect1">Description</label>

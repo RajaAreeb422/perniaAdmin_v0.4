@@ -203,7 +203,7 @@ const CollectionPage = memo(props => {
         columns={columns}
         pageSize={8}
         autoHeight={true}
-        checkboxSelection
+        //checkboxSelection
       />
 
       <div className="copbtnclass"></div>

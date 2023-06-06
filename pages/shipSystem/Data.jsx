@@ -134,11 +134,11 @@ const Data = memo(props => {
       <h1>Shippers</h1>
 
       {/* Link to Add Shipper Page */}
-      <Link href="../addShipper/index">
+      {/* <Link href="../addShipper/index">
         <a>
           <button className="proAddButton">Add Shipper</button>
         </a>
-      </Link>
+      </Link> */}
 
       {/* Search Bar */}
 
@@ -161,7 +161,7 @@ const Data = memo(props => {
         columns={columns}
         pageSize={8}
         autoHeight={true}
-        checkboxSelection
+        //checkboxSelection
       />
 
       {/* Alert box Code */}

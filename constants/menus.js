@@ -8,6 +8,13 @@ const MENUS = [
     icon: 'fas fa-user',
   },
   {
+    name: 'Users',
+    as: 'a',
+    href: '/users/Users',
+    label: 'Users',
+    icon: 'fas fa-user',
+  },
+  {
     name: 'categories',
     as: 'a',
     href: '/category/Category',
@@ -22,12 +29,13 @@ const MENUS = [
     icon: 'fab fa-product-hunt',
   },
   {
-    name: 'Users',
+    name: 'Collections',
     as: 'a',
-    href: '/users/Users',
-    label: 'Users',
-    icon: 'fas fa-user',
+    href: '/collections/Collection',
+    label: 'Collections',
+    icon: 'fas fa-gift',
   },
+  
 
   {
     name: 'Orders',
@@ -64,13 +72,6 @@ const MENUS = [
     href: '/tag/tag',
     label: 'Tags',
     icon: 'fas fa-tags',
-  },
-  {
-    name: 'Collections',
-    as: 'a',
-    href: '/collections/Collection',
-    label: 'Collections',
-    icon: 'fas fa-gift',
   }
 ];
 

@@ -5,9 +5,14 @@ import classnames from 'classnames';
 // javascipt plugin for creating charts
 import { Chart } from 'chart.js';
 import axios from 'axios';
+import jwt_decode from 'jwt-decode';
 // react plugin used to create charts
 import { Line, Bar } from 'react-chartjs-2';
 import { Chart as ChartJS } from 'chart.js/auto';
+import faker from 'faker';
+import { AiOutlineUsergroupAdd, AiOutlineDollar } from 'react-icons/ai';
+import './Users/clist.scss';
+import { FaDolly } from 'react-icons/fa';
 // reactstrap components
 import {
   Button,
@@ -23,21 +28,47 @@ import {
   Row,
   Col,
 } from 'reactstrap';
-// layout for this page
-//import Admin from "layouts/Admin.js";
-// core components
-// import {
-//   chartOptions,
-//   parseOptions,
-//   chartExample1,
-//   chartExample2,
-// } from "./charts.js";
+const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July','August','September','October','November','December'];
 
+const labels1 = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday','Saturday','Sunday'];
+
+
+export const graphoptions = {
+  responsive: true,
+  plugins: {
+    legend: {
+      position: 'top',
+    },
+    title: {
+      display: true,
+      text: 'Total Revenue By Year',
+    },
+  },
+};
 const HomePage = props => {
   const [activeNav, setActiveNav] = React.useState(1);
+   const [graphdata,setGraphData] =useState({
+      labels,
+      datasets: [
+        {
+          label: 'Total Month Income',
+          data: [],
+          backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        }
+        // {
+        //   label: 'Dataset 2',
+        //   data: labels.map(() => faker.datatype.number({ min: 0, max: 100 })),
+        //   backgroundColor: 'rgba(53, 162, 235, 0.5)',
+        // },
+      ],
+    
+   }) 
+  const [revenue, setRevenue] = React.useState();
+  const [revenuegraph,setRevenueGraph]=useState()
   const [chartExample1Data, setChartExample1Data] = React.useState('data1');
   const [data, setData] = useState({
     labels: [],
+
     datasets: [
       {
         label: 'Month Data',
@@ -117,73 +148,115 @@ const HomePage = props => {
 
   useEffect(() => {
     let mounted = true;
+    var decoded = jwt_decode(localStorage.getItem('token'));
 
+    setUser(decoded.result);
     const config = {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token'),
       },
     };
+
+    axios
+      .get('https://api.mazglobal.co.uk/maz-api/orders/month/month', config)
+      .then(res=>{
+           setRevenue(res.data.data)
+          
+      }).catch(err=>console.log(err))
+
+      let gdata={
+        labels,
+        datasets:[
+          {
+      label: 'Total Month Income',
+      data: [],
+      backgroundColor: 'rgba(255, 99, 132, 0.5)'
+          }
+  ],
+}
+        axios
+        .get('https://api.mazglobal.co.uk/maz-api/orders/month/allMonths', config)
+        .then(res=>{
+          let list=[]
+          res.data.data.map((data)=>{
+             labels.map((lb,key) =>{
+      
+              if(data.MonthName==key+1)
+              {
+                gdata.datasets[0].data[key]=data.Profits
+                //faker.datatype.number({ min: 0, max: data.Profits })
+              }
+             
+            })
+           // graphdata.datasets[0].data[key]=rvnu
+            
+          })
+            console.log('graph data',gdata.datasets[0].data)
+          setGraphData(gdata)
+        }).catch(err=>console.log(err))
+      
+
+   
     //getting categories from database..
     let list = data;
-    axios
-      .get('http://95.111.240.143:8080/ecom-api/orders/month/month', config)
-      .then(response => {
-        response.data.data.map((exam, i) => {
-          let count = 1;
-          let status = false;
-          let date = '';
-          const d = new Date(exam.date);
-          let dd = d.toString();
-          for (let i = 0; i < 15; i++) {
-            date = date + dd[i];
-          }
-            exam.date = date;
-            exam['date'] = date;
-            for (let j = 0; j < i; j++) {
-              if (response.data.data[j].date == date) {
-                list.datasets[0].data[j] = list.datasets[0].data[j] + 1;
-                status = true;
-              }
-          }
+    // axios
+    //   .get('http://95.111.240.143:8080/ecom-api/orders/month/month', config)
+    //   .then(response => {
+    //     response.data.data.map((exam, i) => {
+    //       let count = 1;
+    //       let status = false;
+    //       let date = '';
+    //       const d = new Date(exam.date);
+    //       let dd = d.toString();
+    //       for (let i = 0; i < 15; i++) {
+    //         date = date + dd[i];
+    //       }
+    //       exam.date = date;
+    //       exam['date'] = date;
+    //       for (let j = 0; j < i; j++) {
+    //         if (response.data.data[j].date == date) {
+    //           list.datasets[0].data[j] = list.datasets[0].data[j] + 1;
+    //           status = true;
+    //         }
+    //       }
 
-          if (status == false) {
-            list.labels.push(date);
-            list.datasets[0].data.push(count);
-          }
-        });
+    //       if (status == false) {
+    //         list.labels.push(date);
+    //         list.datasets[0].data.push(count);
+    //       }
+    //     });
 
-        setData(list);
-        setData1(list);
-      })
-      .catch(err => console.log(err));
+    //     setData(list);
+    //     setData1(list);
+    //   })
+    //   .catch(err => console.log(err));
 
-    axios
-      .get(
-        'http://95.111.240.143:8080/ecom-api/orders/month/currentWeek',
-        config,
-      )
-      .then(res => {
-        let list1 = data2;
-        res.data.data.map(ex => {
-          let date = '';
-          const d = new Date(ex.date);
-          let dd = d.toString();
-          for (let i = 0; i < 15; i++) date = date + dd[i];
-          ex.date = date;
-          ex['date'] = date;
+    // axios
+    //   .get(
+    //     'http://95.111.240.143:8080/ecom-api/orders/month/currentWeek',
+    //     config,
+    //   )
+    //   .then(res => {
+    //     let list1 = data2;
+    //     res.data.data.map(ex => {
+    //       let date = '';
+    //       const d = new Date(ex.date);
+    //       let dd = d.toString();
+    //       for (let i = 0; i < 15; i++) date = date + dd[i];
+    //       ex.date = date;
+    //       ex['date'] = date;
 
-          list1.labels.push(date);
+    //       list1.labels.push(date);
 
-          list1.datasets[0].data.push(ex.total_items);
-        });
+    //       list1.datasets[0].data.push(ex.total_items);
+    //     });
 
-        setData2(list1);
-      })
-      .catch(err => console.log(err));
+    //     setData2(list1);
+    //   })
+    //   .catch(err => console.log(err));
     //return () => mounted = false;
   }, []);
 
- 
   if (window.Chart) {
     parseOptions(Chart, chartOptions());
   }
@@ -197,10 +270,83 @@ const HomePage = props => {
       setData(data2);
     }
   };
+
   return (
     <>
-      {/* <Header /> */}
-      {/* Page content */}
+    {user.role_id==1 ?
+    <div>
+      <div className="containerspaceee">
+        
+        <div className="row">
+          <div className="col-lg-4">
+            <div className="all-icome">
+              <div className="income-info">
+                <h2> Total Income</h2>
+                <p> {revenue?revenue.Profits:''}</p>
+              </div>
+
+              <div className="icon-box">
+                <AiOutlineDollar className="icons-size" />
+              </div>
+            </div>
+          </div>
+          <div className="col-lg-4">
+            <div className="all-user">
+              <div className="income-info">
+                <h2> All Users</h2>
+                <p> 100</p>
+              </div>
+
+              <div className="icon-box">
+                <AiOutlineUsergroupAdd className="icons-size" />
+              </div>
+            </div>
+          </div>
+          <div className="col-lg-4">
+            <div className="income-box">
+              <div className="income-info">
+                <h2> Total Orders</h2>
+                <p>{revenue?revenue.total:''}</p>
+              </div>
+
+              <div className="icon-box">
+                <FaDolly className="icons-size" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="spaceee"> </div>
+        <div className="row">
+          <div className="col-lg-6">
+            <div className="bar-box">
+              <div className="income-info bar">
+                <h2> Summary</h2>
+              </div>
+              <div className="bar-space">
+                {graphdata &&
+                <Bar options={graphoptions} data={graphdata} />
+                }
+              </div>
+            </div>
+          </div>
+
+          <div className="col-lg-6">
+            <div className="bar-box">
+              <div className="income-info bar">
+                <h2> Top Selling Brands</h2>
+              </div>
+              <div className="top-ppoints">
+                <div className='same-line  '>
+                <h5> J.</h5>   <p>  255160 Rs </p>  </div>
+                <div className='same-line  '>  <h5> Maheen Zaib</h5>  <p>  1114000 Rs </p> </div>
+                <div className='same-line  '>  <h5> Luxiro</h5><p>  112000 Rs</p>  </div>
+                <div className='same-line  '>  <h5> Silk Route </h5><p>  800012 Rs</p> </div>
+                <div className='same-line  '>  <h5> Pernia Friend </h5><p>  75212 Rs</p> </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <Container className="mt--7" fluid>
         <Row>
           <Col className="mb-5 mb-xl-0" xl="8">
@@ -246,7 +392,11 @@ const HomePage = props => {
               </CardHeader>
               <CardBody>
                 <div className="chart">
-                  <Line data={data ? data : []} width={400} height={400} />
+                  <Line
+                    data={graphdata ? graphdata : []}
+                    width={400}
+                    height={300}
+                  />
                 </div>
                 {/* <div className="chart">
                   <Line
@@ -258,7 +408,7 @@ const HomePage = props => {
               </CardBody>
             </Card>
           </Col>
-          <Col xl="4">
+          {/* <Col xl="4">
             <Card className="shadow">
               <CardHeader className="bg-transparent">
                 <Row className="align-items-center">
@@ -282,204 +432,15 @@ const HomePage = props => {
                   />
                 </div>
 
-                {/*                
-                 <div className="chart">
-                  <Bar
-                    data={chartExample2.data}
-                    options={chartExample2.options}
-                  />
-                </div> */}
               </CardBody>
             </Card>
-          </Col>
+          </Col> */}
         </Row>
-        {/* <Row className="mt-5">
-          <Col className="mb-5 mb-xl-0" xl="8">
-            <Card className="shadow">
-              <CardHeader className="border-0">
-                <Row className="align-items-center">
-                  <div className="col">
-                    <h3 className="mb-0">Page visits</h3>
-                  </div>
-                  <div className="col text-right">
-                    <Button
-                      color="primary"
-                      href="#pablo"
-                      onClick={(e) => e.preventDefault()}
-                      size="sm"
-                    >
-                      See all
-                    </Button>
-                  </div>
-                </Row>
-              </CardHeader>
-              <Table className="align-items-center table-flush" responsive>
-                <thead className="thead-light">
-                  <tr>
-                    <th scope="col">Page name</th>
-                    <th scope="col">Visitors</th>
-                    <th scope="col">Unique users</th>
-                    <th scope="col">Bounce rate</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">/argon/</th>
-                    <td>4,569</td>
-                    <td>340</td>
-                    <td>
-                      <i className="fas fa-arrow-up text-success mr-3" /> 46,53%
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">/argon/index.html</th>
-                    <td>3,985</td>
-                    <td>319</td>
-                    <td>
-                      <i className="fas fa-arrow-down text-warning mr-3" />{" "}
-                      46,53%
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">/argon/charts.html</th>
-                    <td>3,513</td>
-                    <td>294</td>
-                    <td>
-                      <i className="fas fa-arrow-down text-warning mr-3" />{" "}
-                      36,49%
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">/argon/tables.html</th>
-                    <td>2,050</td>
-                    <td>147</td>
-                    <td>
-                      <i className="fas fa-arrow-up text-success mr-3" /> 50,87%
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">/argon/profile.html</th>
-                    <td>1,795</td>
-                    <td>190</td>
-                    <td>
-                      <i className="fas fa-arrow-down text-danger mr-3" />{" "}
-                      46,53%
-                    </td>
-                  </tr>
-                </tbody>
-              </Table>
-            </Card>
-          </Col>
-          <Col xl="4">
-            <Card className="shadow">
-              <CardHeader className="border-0">
-                <Row className="align-items-center">
-                  <div className="col">
-                    <h3 className="mb-0">Social traffic</h3>
-                  </div>
-                  <div className="col text-right">
-                    <Button
-                      color="primary"
-                      href="#pablo"
-                      onClick={(e) => e.preventDefault()}
-                      size="sm"
-                    >
-                      See all
-                    </Button>
-                  </div>
-                </Row>
-              </CardHeader>
-              <Table className="align-items-center table-flush" responsive>
-                <thead className="thead-light">
-                  <tr>
-                    <th scope="col">Referral</th>
-                    <th scope="col">Visitors</th>
-                    <th scope="col" />
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">Facebook</th>
-                    <td>1,480</td>
-                    <td>
-                      <div className="d-flex align-items-center">
-                        <span className="mr-2">60%</span>
-                        <div>
-                          <Progress
-                            max="100"
-                            value="60"
-                            barClassName="bg-gradient-danger"
-                          />
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Facebook</th>
-                    <td>5,480</td>
-                    <td>
-                      <div className="d-flex align-items-center">
-                        <span className="mr-2">70%</span>
-                        <div>
-                          <Progress
-                            max="100"
-                            value="70"
-                            barClassName="bg-gradient-success"
-                          />
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Google</th>
-                    <td>4,807</td>
-                    <td>
-                      <div className="d-flex align-items-center">
-                        <span className="mr-2">80%</span>
-                        <div>
-                          <Progress max="100" value="80" />
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Instagram</th>
-                    <td>3,678</td>
-                    <td>
-                      <div className="d-flex align-items-center">
-                        <span className="mr-2">75%</span>
-                        <div>
-                          <Progress
-                            max="100"
-                            value="75"
-                            barClassName="bg-gradient-info"
-                          />
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">twitter</th>
-                    <td>2,645</td>
-                    <td>
-                      <div className="d-flex align-items-center">
-                        <span className="mr-2">30%</span>
-                        <div>
-                          <Progress
-                            max="100"
-                            value="30"
-                            barClassName="bg-gradient-warning"
-                          />
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </Table>
-            </Card>
-          </Col>
-        </Row> */}
+       
       </Container>
+      </div>:
+      <h3>Dashboard</h3>
+        }
     </>
   );
 };

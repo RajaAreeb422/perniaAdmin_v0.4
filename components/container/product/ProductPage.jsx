@@ -147,7 +147,14 @@ const ProductPage = memo(props => {
       setData(filteredRows);
     } else {
       const filteredRows = data.filter(row => {
-        return row.name.toLowerCase().includes(x.toLowerCase());
+       
+        // 
+     //  return  row.name.toLowerCase().includes(x.toLowerCase()) 
+     if(row.sku)
+       return  row.sku.toLowerCase().includes(x.toLowerCase()) ||
+       row.name.toLowerCase().includes(x.toLowerCase())
+     else
+      return row.name.toLowerCase().includes(x.toLowerCase())
       });
       setData(filteredRows);
     }
@@ -155,7 +162,7 @@ const ProductPage = memo(props => {
 
   //Set Columns Name to display on interface..Build in syntax for DataGrid Component..
   const columns = [
-    { field: 'sku', headerName: 'SKU', width: 100 },
+    { field: 'sku', headerName: 'SKU', width: 170 },
     // {field:"id",headerName:"UID",with:190},
     {
       field: 'image',
@@ -219,7 +226,7 @@ const ProductPage = memo(props => {
         value={valu}
         style={{ height: '50px' }}
         autoComplete="off"
-        placeholder="  Search Product"
+        placeholder="  Search Product By SKU or Name"
         className="form-control"
         onChange={requestSearch('search')}
       />
@@ -231,7 +238,7 @@ const ProductPage = memo(props => {
         columns={columns}
         pageSize={8}
         autoHeight={true}
-        checkboxSelection
+        //checkboxSelection
         onSelectionModelChange={()=>onCheckBoxSelect()}
       />
 

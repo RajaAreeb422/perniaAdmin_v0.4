@@ -143,11 +143,11 @@ const Data = memo(props => {
       <h1>Suppliers</h1>
      
      {/* Link to Add Supplier Page */}
-     <Link href="../addSupplier/index">
+     {/* <Link href="../addSupplier/index">
         <a>
           <button className="proAddButton">Add Supplier</button>
         </a>
-      </Link>
+      </Link> */}
        
        {/* Search Bar */}
       <input
@@ -169,7 +169,7 @@ const Data = memo(props => {
         columns={columns}
         pageSize={8}
         autoHeight={true}
-        checkboxSelection
+       // checkboxSelection
       />
 
       <div className="probtnclass"></div>

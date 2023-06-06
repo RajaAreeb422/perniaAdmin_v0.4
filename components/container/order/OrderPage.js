@@ -211,7 +211,7 @@ const OrderPage = memo(props => {
         columns={columns}
         pageSize={8}
         autoHeight={true}
-        checkboxSelection
+        //checkboxSelection
       />
 
       <div className="btnclass"></div>
