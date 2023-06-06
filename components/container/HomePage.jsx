@@ -47,6 +47,7 @@ export const graphoptions = {
 };
 const HomePage = props => {
   const [activeNav, setActiveNav] = React.useState(1);
+  const [user, setUser] = React.useState();
    const [graphdata,setGraphData] =useState({
       labels,
       datasets: [
