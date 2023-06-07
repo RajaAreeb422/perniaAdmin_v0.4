@@ -14,7 +14,7 @@ import './product.scss';
 import useFetch from 'react-fetch-hook';
 import axios from 'axios';
 import jwt_decode from "jwt-decode";
-
+import '../Styles/SuperAdmin.scss';
 const ProductPage = memo(props => {
   const switchstate = {};
   const [data, setData] = useState([]);
@@ -209,6 +209,7 @@ const ProductPage = memo(props => {
 
   return (
     <div className="proList">
+           <div className='same-box'>
       <h1>Products</h1>
 
       {/* Link to Add Product Page */}
@@ -217,7 +218,7 @@ const ProductPage = memo(props => {
           <button className="proAddButton">Add Product</button>
         </a>
       </Link>
-
+</div>
       {/* Search Bar */}
       <input
         type="text"

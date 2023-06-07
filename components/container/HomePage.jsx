@@ -12,6 +12,7 @@ import { Chart as ChartJS } from 'chart.js/auto';
 import faker from 'faker';
 import { AiOutlineUsergroupAdd, AiOutlineDollar } from 'react-icons/ai';
 import './Users/clist.scss';
+import "./Styles/SuperAdmin.scss";
 import { FaDolly } from 'react-icons/fa';
 // reactstrap components
 import {
@@ -151,7 +152,7 @@ const HomePage = props => {
     let mounted = true;
     var decoded = jwt_decode(localStorage.getItem('token'));
 
-    setUser(decoded.result);
+    // setUser(decoded.result);
     const config = {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -274,7 +275,7 @@ const HomePage = props => {
 
   return (
     <>
-    {user ?user.role_id==1:1==2 ?
+    
     <div>
       <div className="containerspaceee">
         
@@ -347,11 +348,11 @@ const HomePage = props => {
             </div>
           </div>
         </div>
-      </div>
-      <Container className="mt--7" fluid>
-        <Row>
-          <Col className="mb-5 mb-xl-0" xl="8">
-            <Card className="shadow">
+     
+      <div className="spaceee"> </div>
+      <div className='row'>
+        <div className='col-lg-8 m-auto'>
+        <Card className="shadow">
               <CardHeader className="bg-transparent">
                 <Row className="align-items-center">
                   <div className="col">
@@ -408,40 +409,16 @@ const HomePage = props => {
                 </div> */}
               </CardBody>
             </Card>
-          </Col>
-          {/* <Col xl="4">
-            <Card className="shadow">
-              <CardHeader className="bg-transparent">
-                <Row className="align-items-center">
-                  <div className="col">
-                    <h6 className="text-uppercase text-muted ls-1 mb-1">
-                      Performance
-                    </h6>
-                    <h2 className="mb-0">Total orders</h2>
-                  </div>
-                </Row>
-              </CardHeader>
-              <CardBody>
-                <div className="chart">
-                  <Bar
-                    data={data ? data : []}
-                    width={400}
-                    height={600}
-                    options={{
-                      maintainAspectRatio: false,
-                    }}
-                  />
-                </div>
-
-              </CardBody>
-            </Card>
-          </Col> */}
-        </Row>
+        </div>
+      </div>
+      
+      </div>
+          
+          
        
-      </Container>
-      </div>:
+      </div>
       <h3>Dashboard</h3>
-        }
+        
     </>
   );
 };

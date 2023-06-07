@@ -4,7 +4,7 @@ import React, { memo } from 'react';
 
 import { useState, useEffect } from 'react';
 
-import './adduser.scss';
+import '../Styles/SuperAdmin.scss';
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import router from 'next/router';
 import { AirlineSeatIndividualSuite } from '@material-ui/icons';
@@ -121,9 +121,14 @@ const AddUserPage = memo(props => {
   // className="newUserForm"
 
   const PostCategory = () => (
-    <div className="main">
+    <div className='col-lg-8 m-auto'>
+      <div className='outer-box'>
+      <div className="main">
       <div className="newUser">
+        <div className='user-header'>
         <h1 className="newUserTitle">Create User</h1>
+        </div>
+        <div className='user-info-box'>
         <form onSubmit={submitHandler}>
           <div className="newUserItem">
             <div className="form-group">
@@ -262,12 +267,13 @@ const AddUserPage = memo(props => {
             </div>
           </div>
 
-          <div className="newUserItem">
+          <div className="middle-box">
             <button type="submit" className="newUserButton">
               Create
             </button>
           </div>
         </form>
+        </div>
       </div>
 
       <Modal isOpen={modal} toggle={toggle}>
@@ -293,6 +299,10 @@ const AddUserPage = memo(props => {
         </ModalFooter>
       </Modal>
     </div>
+      </div>
+      
+       </div>
+   
   );
 
   return (

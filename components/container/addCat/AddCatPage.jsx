@@ -9,7 +9,7 @@ import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import { AirlineSeatIndividualSuite } from '@material-ui/icons';
 import router from 'next/router';
 import jwt_decode from "jwt-decode";
-
+import '../Styles/SuperAdmin.scss';
 //import 'react-toastify/dist/ReactToastify.css';
 toast.configure();
 
@@ -241,6 +241,7 @@ const AddCatPage = memo(props => {
   };
 
   const PostCategory = () => (
+    <div class="col-lg-8 m-auto"> 
     <div className="main">
            {loader && <div className="Loader" />}
       <div
@@ -250,14 +251,16 @@ const AddCatPage = memo(props => {
         }
       >
       <div className="addCategory">
-        
-        <h1 className="addCategoryTitle">New Category</h1>
+      <div class="user-header">
+        <h1 className="addCategoryTitle">New Category</h1>  </div>
+
+        <div class="user-info-box"> 
         <form className="addCategoryForm" onSubmit={submitHandler} >
           <div  className="addCategoryItem">
             <label for="exampleInputName">Name</label>
             <input
               type="text"
-              className="catlabel"
+              className="form-control  catlabel"
               id="name"
               placeholder="Your Category Label"
               required
@@ -305,7 +308,8 @@ const AddCatPage = memo(props => {
            <div className="addCategoryItem">
             <label for="exampleFormControlSelect1">Supplier</label>
             <select
-              className="addCategorySelect"
+            
+              className="form-control addCategorySelect"
               id="supplier"
               required
               name="supplier_id"
@@ -329,7 +333,7 @@ const AddCatPage = memo(props => {
               <input
               
                 type="file"
-                
+                className='form-control '
                 id="name"
                 placeholder="Your Category Label"
                 required
@@ -339,13 +343,16 @@ const AddCatPage = memo(props => {
               />
             </div>
 
-            
+            <div className='middle-box'>
             <button type="submit" className="addCategoryButton" >
               Add
             </button>
+            </div>
+           
            
           
-        </form>
+        </form> </div>
+       
       </div>
       </div>
       <Modal isOpen={modal} toggle={toggle}>
@@ -395,7 +402,8 @@ const AddCatPage = memo(props => {
       </Modal>
 
 
-    </div>
+    </div> </div>
+    
   );
 
   return <>{PostCategory()}</>;

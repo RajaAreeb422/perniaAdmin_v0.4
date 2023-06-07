@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { DeleteOutline, EditOutlined,EmailOutlined } from '@material-ui/icons';
 import './coupon.scss';
 import useFetch from 'react-fetch-hook';
+import '../Styles/SuperAdmin.scss';
 import axios from 'axios';
 import { data } from '../../../data';
 import jwt_decode from "jwt-decode";
@@ -178,6 +179,7 @@ const CollectionPage = memo(props => {
 
   return (
     <div className="copList">
+        <div className='same-box'> 
       <h1>Collections</h1>
 
       <Link href="/addCollection/AddCollection">
@@ -185,6 +187,7 @@ const CollectionPage = memo(props => {
           <button className="copAddButton">Add New</button>
         </a>
       </Link>
+      </div>
       <input
         type="text"
         name="search"

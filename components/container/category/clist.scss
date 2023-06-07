@@ -34,24 +34,7 @@
   color:blue;
 }
 
-.AddButton {
- 
-  border: none;
-  padding: 7px 20px !important;
-  background-color: rgb(65, 105, 158);
-  border-radius: 5px;
-  cursor: pointer;
-  color: white;
-  font-size: 16px !important;
-  font-weight: 500 !important;
-  float: right;
-  margin-top: -40px;
-  
-  margin-bottom: 30px;
-}
-.AddButton:hover {
-  background-color: rgb(55, 116, 196);
-}
+
 
 
 .btnclass{
@@ -65,12 +48,24 @@
 }
 
 .userList h1 ,  .proList h1{
-  font-family: serif;
-  font-size: 40px;
-  font-weight: 600;
+  // font-family: serif;
+  // font-size: 40px;
+  // font-weight: 600;
 }
 
 .MuiDataGrid-window{
   overflow:  hidden !important;
   overflow-y:  hidden !important;
+}
+
+
+.modal-header{
+  background-color: #20344f;
+  color: #fff;
+
+}
+
+h5.modal-title {
+  font-family: serif;
+  letter-spacing: 1px;
 }

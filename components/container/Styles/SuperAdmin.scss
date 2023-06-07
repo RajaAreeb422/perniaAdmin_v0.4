@@ -1,0 +1,81 @@
+.wrapper-left {
+    overflow-y:  hidden !important;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+  padding: 30px 20px; 
+}
+.wrapper-list-group {
+    max-height: 100vh !important;
+    overflow-y: hidden !important;
+}
+
+.containerspaceee {
+    padding: 50px 20px;
+}
+.AddButton  ,.proAddButton , .copAddButton ,.tag1AddButton , .newUserButton , .addCategoryButton {
+ 
+    border: none;
+    padding: 8px 30px !important;
+    background-color: rgb(65, 105, 158);
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+    font-size: 16px !important;
+    font-weight: 500 !important;
+   
+  }
+.newUser{
+    margin-left:0px !important ;
+}
+
+.MuiDataGrid-window {
+    overflow-x: hidden !important;
+}
+.userList{
+    padding: 20px;
+}
+
+
+.same-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+.same-box h1{
+    font-size: 30px;
+    font-weight: 600;
+    font-family: serif;
+    letter-spacing: 1px;
+}
+.outer-box{
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+
+}
+.user-info-box{
+    padding: 30px;
+}
+.user-header {
+    background-color: #41699e;
+    color: #fff;
+    padding: 20px;
+}
+h1.newUserTitle ,h1.addCategoryTitle {
+    font-size: 25px;
+    font-family: serif;
+    letter-spacing: 1px;
+}
+
+.middle-box{
+    margin: 40px 0px 20px 0px;
+    text-align: center;
+}
+@media only screen and (min-width: 600px)  {
+
+
+
+.modal-dialog{
+max-width: 800px !important;
+padding: 20px;
+}
+
+}

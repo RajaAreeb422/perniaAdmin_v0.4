@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState,useEffect } from 'react';
+
 import {
   Collapse,
   Navbar,
@@ -56,7 +57,7 @@ const NavBar = () => {
       <Navbar color="dark" dark expand="sm" fixed="top">
       {user.role_id==1 ?
         <NavbarBrand href="/">
-          <img src="https://i.ibb.co/KbgwHtX/Pngtree-accessories-beautiful-scarf-6258565.png" style={{height:'35px',width:"70px"}} />
+          <img src="../../public/images/brand/pernia-logo.png" style={{height:'35px',width:"70px"}} />
           Pernia
         </NavbarBrand>
         :

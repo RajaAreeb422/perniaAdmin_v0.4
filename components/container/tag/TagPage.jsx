@@ -10,7 +10,7 @@ import './tag1.scss';
 import useFetch from 'react-fetch-hook';
 import axios from 'axios';
 import jwt_decode from "jwt-decode";
-
+import '../Styles/SuperAdmin.scss';
 const TagPage = memo(props => {
   const [modal, setModal] = React.useState(false);
   const [id, setId] = useState(0);
@@ -165,6 +165,7 @@ const TagPage = memo(props => {
 
   return (
     <div className="tag1List">
+         <div className='same-box'> 
       <h1>Tags</h1>
      
      {/* Link to Add Supplier Page */}
@@ -175,7 +176,7 @@ const TagPage = memo(props => {
         </a>
       </Link>:<div></div>
 }
-       
+     </div>  
        {/* Search Bar */}
       <input
         type="text"

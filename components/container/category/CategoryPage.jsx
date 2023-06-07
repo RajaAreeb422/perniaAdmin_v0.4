@@ -12,7 +12,7 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import jwt_decode from 'jwt-decode';
 import { Audio, RevolvingDot } from 'react-loader-spinner';
-
+import '../Styles/SuperAdmin.scss';
 const CategoryPage = memo(props => {
   const switchstate = {};
   const router = useRouter();
@@ -591,6 +591,7 @@ const CategoryPage = memo(props => {
 
   return (
     <div className="userList">
+         <div className='same-box'>
       <h1>Categories</h1>
 
       {/* Link to Add Category Page */}
@@ -601,7 +602,7 @@ const CategoryPage = memo(props => {
           </a>
         </Link>
       )}
-
+</div>
       {/* Search Bar */}
       <input
         type="text"

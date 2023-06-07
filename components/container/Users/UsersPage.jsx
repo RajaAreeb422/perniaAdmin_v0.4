@@ -5,6 +5,8 @@ import SearchBar from 'material-ui-search-bar';
 import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
+import '../Styles/SuperAdmin.scss';
+
 import {
   CalendarToday,
   LocationSearching,
@@ -175,14 +177,17 @@ const UsersPage = memo(props => {
 
   return (
     <div className="userList">
+      <div className='same-box'>
       <h1>Users</h1>
 
-      {/* Link to Add User Page */}
-      <Link href="/addUser/addUser">
-        <a>
-          <button className="AddButton">Create User</button>
-        </a>
-      </Link>
+{/* Link to Add User Page */}
+<Link href="/addUser/addUser">
+  <a>
+    <button className="AddButton">Create User</button>
+  </a>
+</Link>
+      </div>
+    
 
       {/* Search Bar */}
       <input
@@ -202,7 +207,7 @@ const UsersPage = memo(props => {
         rows={data}
         disableSelectionOnClick
         columns={columns}
-        pageSize={8}
+        // pageSize={8}
         autoHeight={true}
        // checkboxSelection
       />
