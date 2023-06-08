@@ -12,7 +12,6 @@ import { Chart as ChartJS } from 'chart.js/auto';
 import faker from 'faker';
 import { AiOutlineUsergroupAdd, AiOutlineDollar } from 'react-icons/ai';
 import './Users/clist.scss';
-import "./Styles/SuperAdmin.scss";
 import { FaDolly } from 'react-icons/fa';
 // reactstrap components
 import {
@@ -49,6 +48,7 @@ export const graphoptions = {
 const HomePage = props => {
   const [activeNav, setActiveNav] = React.useState(1);
   const [user, setUser] = React.useState();
+  const [usersCount, setUsersCount] = React.useState();
    const [graphdata,setGraphData] =useState({
       labels,
       datasets: [
@@ -152,7 +152,7 @@ const HomePage = props => {
     let mounted = true;
     var decoded = jwt_decode(localStorage.getItem('token'));
 
-    // setUser(decoded.result);
+    setUser(decoded.result);
     const config = {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -197,7 +197,11 @@ const HomePage = props => {
           setGraphData(gdata)
         }).catch(err=>console.log(err))
       
-
+        axios
+        .get('https://api.mazglobal.co.uk/maz-api/users/count', config)
+        .then(res=>{
+          setUsersCount(res.data.data.total)
+        }).catch(err=>console.log(err))
    
     //getting categories from database..
     let list = data;
@@ -275,7 +279,7 @@ const HomePage = props => {
 
   return (
     <>
-    
+    {user && user.role_id==1?
     <div>
       <div className="containerspaceee">
         
@@ -296,7 +300,7 @@ const HomePage = props => {
             <div className="all-user">
               <div className="income-info">
                 <h2> All Users</h2>
-                <p> 100</p>
+                <p> {usersCount}</p>
               </div>
 
               <div className="icon-box">
@@ -348,11 +352,11 @@ const HomePage = props => {
             </div>
           </div>
         </div>
-     
-      <div className="spaceee"> </div>
-      <div className='row'>
-        <div className='col-lg-8 m-auto'>
-        <Card className="shadow">
+      </div>
+      <Container className="mt--7" fluid>
+        <Row>
+          <Col className="mb-5 mb-xl-0" xl="8">
+            <Card className="shadow">
               <CardHeader className="bg-transparent">
                 <Row className="align-items-center">
                   <div className="col">
@@ -409,16 +413,40 @@ const HomePage = props => {
                 </div> */}
               </CardBody>
             </Card>
-        </div>
-      </div>
-      
-      </div>
-          
-          
+          </Col>
+          {/* <Col xl="4">
+            <Card className="shadow">
+              <CardHeader className="bg-transparent">
+                <Row className="align-items-center">
+                  <div className="col">
+                    <h6 className="text-uppercase text-muted ls-1 mb-1">
+                      Performance
+                    </h6>
+                    <h2 className="mb-0">Total orders</h2>
+                  </div>
+                </Row>
+              </CardHeader>
+              <CardBody>
+                <div className="chart">
+                  <Bar
+                    data={data ? data : []}
+                    width={400}
+                    height={600}
+                    options={{
+                      maintainAspectRatio: false,
+                    }}
+                  />
+                </div>
+
+              </CardBody>
+            </Card>
+          </Col> */}
+        </Row>
        
-      </div>
+      </Container>
+      </div>:
       <h3>Dashboard</h3>
-        
+        }
     </>
   );
 };
@@ -426,3 +454,4 @@ const HomePage = props => {
 //Dashboard.layout = Admin;
 
 export default HomePage;
+

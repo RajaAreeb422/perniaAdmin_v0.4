@@ -1,3 +1,5 @@
+
+
 import axios from 'axios';
 import React, { memo } from 'react';
 import './addproduct.scss';
@@ -593,7 +595,7 @@ const AddProductPage = memo(props => {
               />
             </div>
             <div className="newaddproflexItem">
-              <div className="flexdiv">
+              {/* <div className="flexdiv">
                 <div className="newaddpro1Select">
                   <label for="exampleInputName">Product Sku</label>
                   <input
@@ -613,11 +615,11 @@ const AddProductPage = memo(props => {
                     onChange={handleChange(name)}
                   />
                 </div>
-              </div>
+              </div> */}
 
               <div className="flexdiv">
                 {user.role_id == 1 &&
-                 <div className="newaddpro1Select" style={{marginLeft:'30px'}}>
+                 <div className="newaddpro1Select" >
                 <label for="exampleFormControlSelect1">Supplier</label>
                 <select
                   className="qtySelect"
