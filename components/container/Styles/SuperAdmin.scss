@@ -11,7 +11,7 @@
 .containerspaceee {
     padding: 50px 20px;
 }
-.AddButton  ,.proAddButton , .copAddButton ,.tag1AddButton , .newUserButton , .addCategoryButton {
+.AddButton  ,  .newCouponButton , .proAddButton , .copAddButton ,.tag1AddButton , .newUserButton , .addCategoryButton  ,.newaddproButton {
  
     border: none;
     padding: 8px 30px !important;
@@ -68,6 +68,11 @@ h1.newUserTitle ,h1.addCategoryTitle {
 .middle-box{
     margin: 40px 0px 20px 0px;
     text-align: center;
+    width: 100%;
+}
+
+.flexdiv {
+    width: 50%;
 }
 @media only screen and (min-width: 600px)  {
 

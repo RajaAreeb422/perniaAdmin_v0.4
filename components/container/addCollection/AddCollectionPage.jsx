@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { memo } from 'react';
 //import { response } from "express";
-
+import '../Styles/SuperAdmin.scss';
 import { useState, useEffect } from 'react';
 import { data } from '../../../data';
 import './addcoupon.scss';
@@ -214,7 +214,9 @@ const AddCollectionPage = memo(props => {
   }
 
   const PostCategory = () => (
-    <div className="main">
+
+    <div className='col-lg-8 m-auto'>
+ <div className="main">
       {loader && <div className="Loader" />}
       <div
         className="order"
@@ -231,11 +233,11 @@ const AddCollectionPage = memo(props => {
         
         <form className="newCouponForm" onSubmit={submitHandler}>
           <div className="newCouponItem">
-            <div style={{padding:'20px'}}>
+            <div >
               <label  style={{marginLeft:'0px'}}>Collection Name</label>
               <input
                 type="text"
-                style={{marginLeft:'0px',width:'300px'}}
+                
                 placeholder="name"
                 className="form-control"
                 name="name"
@@ -244,14 +246,14 @@ const AddCollectionPage = memo(props => {
               />
             </div>
    
-             <div style={{padding:'20px',width:'400px'}}>
+             <div >
             <label style={{marginLeft:'0px'}}>Tag</label>
             <select
             className="form-control"
             id="parent"
             required
             name="tag_id"
-            style={{marginBottom:'10px',width:'300px',marginLeft:'0px'}}
+           
              onChange={handleChange('tag_id')}
             >
                 {tag.map(it=>(
@@ -268,7 +270,7 @@ const AddCollectionPage = memo(props => {
           <div className="newCouponItem">
          
        
-          <div style={{padding:'20px'}}>
+          <div>
             <label style={{marginLeft:'0px'}}>Category</label>
             <select
             className="form-control"
@@ -276,7 +278,7 @@ const AddCollectionPage = memo(props => {
             required
          
             name="category_id"
-            style={{marginBottom:'10px',width:'300px',marginLeft:'0px'}}
+            
              onChange={handleChange('category_id')}
             >
             {categories.map(it=>(
@@ -288,7 +290,7 @@ const AddCollectionPage = memo(props => {
             </div>
 
            {user.role_id==1 &&
-           <div style={{padding:'20px',width:'340px'}}>
+           <div >
             <label style={{marginLeft:'0px'}}>Supplier</label>
             <select
               className="form-control"
@@ -308,14 +310,14 @@ const AddCollectionPage = memo(props => {
           </div>
 
           <div className="newCouponItem1">
-            <div style={{width:'700px',marginLeft:'20px'}}>
+            <div>
               <label>Image</label>
               <Drop parentCall={handleChild}/>
             </div>
           </div>
           
       
-          <div className="newCouponItem">
+          <div className="middle-box">
             <button type="submit" className="newCouponButton">
               Add
             </button>
@@ -362,6 +364,8 @@ const AddCollectionPage = memo(props => {
       </Modal>
      </div> 
     </div>
+    </div>
+   
   );
 
   return (

@@ -10,7 +10,7 @@ import router from 'next/router';
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import jwt_decode from "jwt-decode";
 import { Audio,RevolvingDot } from 'react-loader-spinner';
-
+import '../Styles/SuperAdmin.scss';
 
 const AddProductPage = memo(props => {
   const [state, setState] = useState({
@@ -569,6 +569,8 @@ const AddProductPage = memo(props => {
   }
 
   const PostProduct = () => (
+    <div>
+  <div class="col-lg-8 m-auto"> 
     <div className="addpromain">
       {loader && <div className="Loader" />}
       <div
@@ -577,7 +579,10 @@ const AddProductPage = memo(props => {
           loader === true ? { backgroundColor: 'black', opacity: '0.2' } : {}
         }
       >
-        <h1 className="newaddproTitle">New Product</h1>
+
+<div class="user-header">
+  <h1 class="addCategoryTitle">New Product</h1>  </div>
+    
 
         <div className="newaddpro">
           <form >
@@ -585,7 +590,7 @@ const AddProductPage = memo(props => {
               <label for="exampleInputName">Name</label>
               <input
                 type="text"
-                className="newaddproSelect"
+                className="form-control newaddproSelect"
                 id="name"
                 placeholder="Your Product Label"
                 required
@@ -595,43 +600,18 @@ const AddProductPage = memo(props => {
               />
             </div>
             <div className="newaddproflexItem">
-              {/* <div className="flexdiv">
-                <div className="newaddpro1Select">
-                  <label for="exampleInputName">Product Sku</label>
-                  <input
-                    type="text"
-                    className="newaddproSelect"
-                    id="name"
-                    placeholder="Stock Keeping Unit"
-                    required
-                    name="sku"
-                    style={{
-                      width: '285px',
-                      border: ' 1px solid gray',
-                      borderRadius: '5px',
-                      height: '35px',
-                    }}
-                    value={state.sku}
-                    onChange={handleChange(name)}
-                  />
-                </div>
-              </div> */}
+            
 
               <div className="flexdiv">
                 {user.role_id == 1 &&
                  <div className="newaddpro1Select" >
                 <label for="exampleFormControlSelect1">Supplier</label>
                 <select
-                  className="qtySelect"
+                  className="form-control qtySelect"
                   id="supplier"
                   required
                   name="supplier_id"
-                  style={{
-                    width: '285px',
-                    border: ' 1px solid gray',
-                    borderRadius: '5px',
-                    height: '35px',
-                  }}
+                 
                   value={state.supplier_id}
                   onChange={handleBrandChange(name)}
                 >
@@ -645,26 +625,7 @@ const AddProductPage = memo(props => {
               </div>
             </div>
 
-            {/* {mydiv && (
-              <div className="newaddproItem">
-                <label for="exampleFormControlSelect1">Sub Category</label>
-                <select
-                  className="newaddproSelect"
-                  id="sub"
-                  required
-                  name="category"
-                  value={sub}
-                  onChange={handleSubChange(name)}
-                >
-                  {console.log('cat is', state.category_id)}
-                  <option value={state.category_id}>Select Category</option>
-                  {parnt_cat.map(p => {
-                    if (p.parent == state.category_id)
-                      return <option value={p.id}>{p.name}</option>;
-                  })}
-                </select>
-              </div>
-            )} */}
+           
 
 
             <div className="newaddproflexItem">
@@ -675,13 +636,9 @@ const AddProductPage = memo(props => {
                     required
                     type="number"
                     name="price"
+                    className='form-control'
                     placeholder="  Price in Rs..."
-                    style={{
-                      width: '285px',
-                      border: ' 1px solid gray',
-                      borderRadius: '5px',
-                      height: '35px',
-                    }}
+                  
                     value={state.price}
                     onChange={handleChange(name)}
                   />
@@ -691,16 +648,12 @@ const AddProductPage = memo(props => {
                 <div className="newaddpro1Select" style={{ marginLeft: '30px' }}>
                   <label for="exampleFormControlSelect1">Quantity</label>
                   <input
-                    style={{
-                      width: '285px',
-                      border: ' 1px solid gray',
-                      borderRadius: '5px',
-                      height: '35px',
-                    }}
+                   
                     required
                     placeholder="  Quantity"
                     name="quantity"
                     type="number"
+                    className='form-control'
                     value={state.quantity}
                     onChange={handleChange(name)}
                   />
@@ -721,12 +674,7 @@ const AddProductPage = memo(props => {
                     required
                     name="category_id"
                     disabled
-                    style={{
-                      width: '285px',
-                      border: ' 1px solid gray',
-                      borderRadius: '5px',
-                      height: '35px',
-                    }}
+                  
                     value={state.category_id}
                     onChange={handleChange(name)}
                   >
@@ -746,17 +694,12 @@ const AddProductPage = memo(props => {
                     {!ptag &&<small>(enabled on collection select)</small>}
                     </label>
                   <select
-                    className="qtySelect"
+                    className=" qtySelect"
                     id="tag"
                     required
                     name="tag"
                     disabled
-                    style={{
-                      width: '285px',
-                      border: ' 1px solid gray',
-                      borderRadius: '5px',
-                      height: '35px',
-                    }}
+                   
                     value={ptag?ptag.id:''}
                     onChange={handleChange(name)}
                   >
@@ -775,7 +718,7 @@ const AddProductPage = memo(props => {
 
               <textarea
                 name="product_description"
-                style={{ width: '600px', height: '80px' }}
+                className='form-control'
                 required
                 onChange={handleChange('product_description')} />
 
@@ -831,9 +774,10 @@ const AddProductPage = memo(props => {
         <span>
           <Variants variantCall={handleVariant} />
         </span>
-        <button type="submit" onClick={submitHandler} className="newaddproButton">
+        <div class="middle-box">   <button type="submit" onClick={submitHandler} className="newaddproButton">
           Save
-        </button>
+        </button>  </div>
+       
       </div>
       <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader toggle={toggle}>Product Status</ModalHeader>
@@ -1038,6 +982,9 @@ const AddProductPage = memo(props => {
 
 
     </div>
+    </div>
+    </div>
+  
   );
 
   return <>{PostProduct()}</>;

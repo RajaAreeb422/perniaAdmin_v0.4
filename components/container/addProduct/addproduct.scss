@@ -31,11 +31,11 @@
  
   .newaddpro {
     flex: 4;
-    margin-left: 130px;
-    margin-top: 50px;
+   
+padding: 20px;
     margin-bottom: 20px;
     border-style: groove;
-    width:700px;
+ 
     -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
     box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
   }
@@ -78,16 +78,16 @@
   }
   .newaddpro1 {
     flex: 4;
-    margin-left: 130px;
+    padding: 20px;
     margin-top: 50px;
     margin-bottom: 20px;
     border-style: groove;
-    width:700px;
+   
     -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
     box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
   }
   .newaddpro2 {
-   width:400px;
+  
     margin-left: 130px;
     margin-top: 50px;
     margin-bottom: 20px;
@@ -96,15 +96,15 @@
   }
   .newaddpro2{
     flex: 4;
-    margin-left: 130px;
+   
     margin-top: 50px;
     margin-bottom: 20px;
+
     -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
     box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
   }
   .newaddproTitle{
-    margin-left: 330px;
-    margin-top: 50px;
+  
   }
   
   .newaddproForm {
@@ -114,13 +114,9 @@
   }
   
   .newaddproItem {
-    width: 400px;
     display: flex;
     flex-direction: column;
-    margin-top: 10px;
-    margin-right: 20px;
-    margin-left: 50px;
-    margin-bottom: 20px;
+   
   }
   .newaddproDivide {
     width: 180px;
@@ -142,8 +138,8 @@
   .newaddproItem > input {
     height: 40px;
     padding: 10px;
-    border: 1px solid gray;
-    border-radius: 5px;
+  
+    border-radius: 5px !important;
     
   }
   
@@ -163,7 +159,7 @@
   .newaddproflexItem{
     display: flex;
     flex-direction: row;
-    margin-left: 50px;
+  
   }
   .flexdiv>input{
     height: 40px;
@@ -192,19 +188,19 @@
   }
   
   .newaddproSelect{
-      height: 40px;
-      border-radius: 5px;
-      width:600px;
+   
+    
   }
   .qtySelect{
-    height: 35px;
+    height: 40px;
     border-radius: 5px;
-    width:285px;
+    
     margin-bottom: 20px;
 }
   .newaddpro1Select{
     display: flex;
     flex-direction: column;
+    margin-top: 10px;
 }
   .newaddproSelectD{
     height: 40px;
@@ -225,18 +221,7 @@
     margin-top: 77px;
   }
   .newaddproButton{
-      width: 200px;
-      border: none;
-     
-      background-color: rgb(52, 114, 196);
-      color: white;
-      padding: 7px 10px;
-      text-align: center;
-      font-weight: 600;
-      border-radius: 10px;
-      margin-top: 30px;
-      margin-left: 400px;
-      cursor: pointer;
+    
 
   }
   .content {
